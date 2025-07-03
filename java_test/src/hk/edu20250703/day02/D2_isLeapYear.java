@@ -1,5 +1,7 @@
 package hk.edu20250703.day02;
 
+import java.util.Scanner;
+
 public class D2_isLeapYear {
 
 	public static void main(String[] args) {
@@ -45,6 +47,26 @@ public class D2_isLeapYear {
 		//Scanner 클래스
 		//콘솔에 입력된 값을 자바코드로 전달해서 사용할 수 있도록 지원
 		//년도 범위를 직접 입력 받아서 윤년인 년도를 출력하기
+		
+		Scanner scan=new Scanner(System.in);
+		
+		System.out.println("시작년도를 입력하세요.");
+		System.out.print("입력:");
+		int startYear=scan.nextInt();//시작년도
+		
+		System.out.println("마지막년도를 입력하세요.");
+		System.out.print("입력:");
+		int endYear=scan.nextInt();//마지막년도
+		
+		System.out.println("===============================");
+		//for문에 입력된 년도 범위 적용
+		for (int i = startYear; i <= endYear; i++) {
+			int year=i;
+			if(isLeapYear(year)) {
+				System.out.println(year+"년은 윤년이다.");
+			}
+		}
+		
 	}
 
 	//윤년을 판단하는 메서드: 반환타입은 true/false
