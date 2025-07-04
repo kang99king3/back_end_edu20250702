@@ -1,5 +1,7 @@
 package hk.edu20250704.day03;
 
+import java.util.Iterator;
+
 public class D1_ControlFlow {
 
 	public static void main(String[] args) {
@@ -40,9 +42,55 @@ public class D1_ControlFlow {
 		default:
 			System.out.println("일치하는 값이 없습니다.");break;
 		}
+		
+		//반복문 
+		//for문 : 기본형식(index기반의 실행), 향상된 for문(기본형식의 for문보다 간결함)
+		//1.초기값 선언 2.조건확인 3.코드실행 4.스텝증가 --> 반복
+		for (int i = 0; i < 10; i++) {
+			//실행코드
+			if(i==5) {
+//				break;
+				continue;
+			}
+			System.out.println(i);
+		}
+		//향상된 for문
+		int[] i= {1,2,3,4,5,6};
+		
+		for (int val : i) {
+			System.out.println(val);
+		}
+		
+		for (int j = 0; j < i.length; j++) {
+			System.out.println(i[j]);
+		}
+		
+		int w=0;
+		while(true) {
+			System.out.println("while문 실행");
+			if(w>5) {
+				break;
+			}
+			w++;
+		}
+		
+		//do~while문: 최초 한번은 코드를 실행해야 된다면...
+		do {
+			System.out.println("조건에 해당되지 않아도 한번은 실행해요");
+		} while (10<5);
+	}
+	
+	public void test() {
+		
 	}
 
 }
+
+
+
+
+
+
 
 
 
