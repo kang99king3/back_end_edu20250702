@@ -101,7 +101,14 @@ public class D2_ControlEX {
 			System.out.println("----------------------");
 			System.out.print("선택>");
 			
-			int input=Integer.parseInt(scan.nextLine());
+			int input=0;
+			if(scan.hasNextInt()) {// hasNextInt는 줄바꿈을 읽지 않음, 그래서 "abcd\n"이 남아 있어서 계속 입력되는 현상발생
+				input=Integer.parseInt(scan.nextLine());				
+			}else {	
+				System.out.println("숫자만 입력하세요");
+				scan.nextLine();//남아 있는 한줄을 제거하고 새롭게 입력을 받을 준비를 함
+				continue;
+			}
 			
 			if(input==1) {//예금
 				System.out.print("예금액>");
@@ -126,7 +133,6 @@ public class D2_ControlEX {
 			}
 			
 		}
-		
 		
 		
 		
