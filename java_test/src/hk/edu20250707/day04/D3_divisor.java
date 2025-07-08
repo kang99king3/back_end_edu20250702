@@ -14,6 +14,9 @@ public class D3_divisor {
 		D3_divisor divisor=new D3_divisor();
 		divisor.divisor(12);
 		int a=divisor.greateDivisor(50, 85);
+		divisor.lowestMultiple(2, 4);
+		divisor.amicable(1, 4000);
+		divisor.perfectNumber(1, 1000);
 	}
 	
 	//약수를 구하는 메서드 
@@ -52,6 +55,44 @@ public class D3_divisor {
 		return a;
 	}
 	
+	//최소공배수 구하는 매서드 : a*b/(a,b이 최대공약수)
+	public void lowestMultiple(int a, int b) {
+		//최대공약수 구하기
+		int number=greateDivisor(a, b);//재사용성(반복적으로 사용되는 기능)
+		int result=a*b/number;
+		System.out.printf("%d와 %d의 최소공배수는 %d입니다.\n",a,b,result);
+	}
+	
+	//진약수의 합을 구하는 메서드
+	public int sumDivisor(int a) {
+		int sum=0;//합을 저장하는 변수
+		for (int i = 1; i < a; i++) {
+			if(a%i==0) {
+				sum+=i;
+			}
+		}
+		return sum;
+	}
+	
+	//친화수 구하기
+	public void amicable(int s, int e) {
+		for (int i = s; i < e; i++) {
+			if(i!=sumDivisor(i) && i==sumDivisor(sumDivisor(i))) {
+				System.out.printf("%d와%d는 친화수 관계입니다.\n",i,sumDivisor(i));
+			}
+		}
+	}
+	
+	//완전수를 구하는 메서드 : 진약수의 합과 자신의 수가 같은 경우
+	//  1, 2 , 3 == 6
+	public void perfectNumber(int s, int e) {
+	
+		for (int i = s; i < e; i++) {
+			if(i==sumDivisor(i)) {
+				System.out.println(i+"는 완전수입니다.");
+			}
+		}
+	}
 }
 
 
