@@ -26,7 +26,7 @@ public class D1_StringMethodTest {
 	public void sTest2(String s) {//파라미터 -> "ABCDEF"
 		int s1=s.indexOf("AB");//단어를 처음부터 검색
 		int s2=s.indexOf("C",2);// 검색 시작 인덱스도 지정 가능
-		int s3=s.indexOf("DF",2,5);
+		int s3=s.indexOf("DE",2,5);
 		int s4=s.lastIndexOf("F");
 		
 		System.out.printf("%d,%d,%d,%d\n",s1,s2,s3,s4);
@@ -49,6 +49,34 @@ public class D1_StringMethodTest {
 		s.replace("자바", "java");//원본 s의 내용이 바뀌지 않는다 (immutable)
 		s=s.replace("자바", "java");//다시 대입해야 된다.
 		System.out.println(s);
+	}
+	
+	//5.문자열을 추출하기: substring()
+	//substring(idx): idx에서 부터 끝까지 추출
+	//substring(sIdx,eIdx): 시작인덱스부터 종료인덱스-1까지 추출
+	public void sTest5(String s) {
+		String ss=s.substring(2);
+		String ss2=s.substring(1, 3);
+		System.out.println(ss+","+ss2);
+	}
+	
+	//예제:
+		//문자열에서 해당 검색어가 존재하는지 판단하여 존재한다면 해당 검색어를 추출하여
+		//출력하고, "###"으로 변경하여 처리하고, 계속 검색어가 존재하는지 확인하여
+		//앞에 작업을 진행한다.
+		// 
+		//1.해당 검색어가 존재하는 여부 판단해보기,해당검색어가 없으면 "검색어가 존재하지 않습니다."출력
+		//2.해당 검색어의 인덱스를 구해보기: 검색어 인덱스 출력하기
+		//3.해당 검색어를 추출해서 출력해보기: substring()을 사용해서 추출한뒤  출력하기
+		//4.해당 검색어를 문자열에서 ###으로 바꿔주기
+		//5.해당 검색어의 검색된 개수 출력하기[indexOf("검색어",검색시작인덱스)]
+	
+	public void search(String str) {//str = "카카오"
+		String s="카카오페이가 소상공인 상생 캠페인 '오래오래 함께가게'의 올해 두 번째 팝업스토어를 여의도 IFC몰에 오픈했다고 10일 밝혔다.\r\n"
+				+ "\r\n"
+				+ "오래오래 함께가게는 카카오페이와 함께일하는재단이 소상공인의 지속가능한 사업 성장을 위해 지원하는 상생 캠페인이다.\r\n"
+				+ "\r\n"
+				+ "2023년부터 시작한 오래오래 함께가게는 지난 5월 올해 첫 팝업스토어를 현대백화점에서 2주간 운영했다. 리빙, 패션잡화, 식품, 친환경제품 등 254개 소상공인 브랜드가 23만여명의 방문객을 만날 수 있도록 지원해 왔다.";
 	}
 }
 
