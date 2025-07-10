@@ -39,6 +39,16 @@ public class D2_Calculator {
 	// if 분기로 해당되는 사칙연산 메서드 실행하기: s값에서 "+"존재하면 +연산 메서드 실행, "-"가 존재하면...
 	// paramInt()메서드 활용하여 맴버필드 초기화
 	public void calcu(String s) { // s에 전달되는 아규먼트는 "5+10"과 같은 문자열
-		
+//		if() {
+//			
+//		}else if() {
+//			
+//		}
 	}
 }
+
+
+
+
+
+
