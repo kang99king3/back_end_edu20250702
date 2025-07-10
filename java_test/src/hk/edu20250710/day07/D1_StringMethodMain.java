@@ -12,6 +12,8 @@ public class D1_StringMethodMain {
 		System.out.println(smt.sTest03("ABCD"));
 		smt.sTest04();
 		smt.sTest5("ABCDEFG");
+		System.out.println("=======================");
+		smt.search("카카오");
 	}
 }
 

@@ -74,9 +74,33 @@ public class D1_StringMethodTest {
 	public void search(String str) {//str = "카카오"
 		String s="카카오페이가 소상공인 상생 캠페인 '오래오래 함께가게'의 올해 두 번째 팝업스토어를 여의도 IFC몰에 오픈했다고 10일 밝혔다.\r\n"
 				+ "\r\n"
-				+ "오래오래 함께가게는 카카오페이와 함께일하는재단이 소상공인의 지속가능한 사업 성장을 위해 지원하는 상생 캠페인이다.\r\n"
+				+ "오래오래 함께가게는 카카오페이와 함께일하는재단이 소상공인의 지속가능한 사업 성장을 위해 지원하는 상생 카카오페이 캠페인이다.\r\n"
 				+ "\r\n"
-				+ "2023년부터 시작한 오래오래 함께가게는 지난 5월 올해 첫 팝업스토어를 현대백화점에서 2주간 운영했다. 리빙, 패션잡화, 식품, 친환경제품 등 254개 소상공인 브랜드가 23만여명의 방문객을 만날 수 있도록 지원해 왔다.";
+				+ "2023년부터 카카오페이시작한 오래오래 함께가게는 지난 5월 올해 첫 팝업스토어를 현대백화점에서 2주간 운영했다. 리빙, 패션잡화, 식품, 친환경제품 등 254개 소상공인 브랜드가 23만여명의 방문객을 만날 수 있도록 지원해 왔다.";
+	
+		if(s.indexOf(str)!=-1) {// 존재한다면
+			//존재할경우 작업할 코드 작성
+			int idx=0;
+			int count=0;
+			while(s.indexOf(str,idx)!=-1) {
+				int sIdx=s.indexOf(str,idx);
+				System.out.println(s.indexOf(str,idx));	
+				String ss=s.substring(s.indexOf(str,idx), s.indexOf(str,idx)+str.length());
+				System.out.println(ss);
+				//첫글자인덱스+글자길이=해당단어 다음 인덱스를 구함
+				idx=s.indexOf(str,idx)+str.length();//첫글자인덱스+글자길이=해당단어 다음 인덱스를 구함
+				count++;
+			}
+			
+			s=s.replace(str, "###");
+			System.out.println(s);
+			System.out.println("검색된 검색어의 개수:"+count);
+		}else {
+			System.out.println("검색어가 존재하지 않습니다.");
+		}
+		
+		
+		
 	}
 }
 
