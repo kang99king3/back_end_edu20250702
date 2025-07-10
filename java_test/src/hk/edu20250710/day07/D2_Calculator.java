@@ -13,8 +13,10 @@ public class D2_Calculator {
 	// String을 int형으로 변환
 	//           String s는"5+10" ,  String cal은 "+","/","-","*" 사칙연산자
 	public void paramInt(String s,String cal) {
-		this.num1=     // s-> "5+10" -> "5"만 추출해서 정수형으로 변환하여 num1에 저장
-		this.num2=     // s-> "5+10" -> "10"만 추출해서 정수형으로 변환하여 num2에 저장
+		// s-> "5+10" -> "5"만 추출해서 정수형으로 변환하여 num1에 저장
+		this.num1=Integer.parseInt(s.substring(0, s.indexOf(cal)));
+		 // s-> "5+10" -> "10"만 추출해서 정수형으로 변환하여 num2에 저장
+		this.num2=Integer.parseInt(s.substring(s.indexOf(cal)+1));
 	}
 	
 	//+,-,*,/를 실행하는 메서드 4개를 수정없이 그냥 사용해야 함 
@@ -41,13 +43,25 @@ public class D2_Calculator {
 	// paramInt()메서드 활용하여 맴버필드 초기화
 	public void calcu(String s) { // s에 전달되는 아규먼트는 "5+10"과 같은 문자열
 		
-//		if() { //s라는 문자열에서 "+"문자열이 존재하는지 확인하는 조건
+		if(s.indexOf("+")!=-1) { //s라는 문자열에서 "+"문자열이 존재하는지 확인하는 조건
 //			// 맴버필드  num1,num2를 초기화해주는 코드(paramInt(s,cal)사용)
+			paramInt(s, "+");
 		    // 연산결과 출력 코드 작성
-//		}else if() {
+			System.out.println(a(num1, num2));
+		}else if(s.indexOf("-")!=-1) {
 //			// 맴버필드  num1,num2를 초기화해주는 코드(paramInt(s,cal)사용)
+			paramInt(s, "-");
 	        // 연산결과 출력 코드 작성
-//		}
+			System.out.println(b(num1, num2));
+		}else if(s.indexOf("/")!=-1) {
+			paramInt(s, "/");
+			System.out.println(d(num1, num2));
+		}else if(s.indexOf("*")!=-1) {
+			paramInt(s, "*");
+			System.out.println(c(num1, num2));
+		}else {
+			System.out.println("연산식을 확인하세요");
+		}
 	}
 }
 
