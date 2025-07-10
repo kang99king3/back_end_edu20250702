@@ -13,7 +13,8 @@ public class D2_Calculator {
 	// String을 int형으로 변환
 	//           String s는"5+10" ,  String cal은 "+","/","-","*" 사칙연산자
 	public void paramInt(String s,String cal) {
-		
+		this.num1=     // s-> "5+10" -> "5"만 추출해서 정수형으로 변환하여 num1에 저장
+		this.num2=     // s-> "5+10" -> "10"만 추출해서 정수형으로 변환하여 num2에 저장
 	}
 	
 	//+,-,*,/를 실행하는 메서드 4개를 수정없이 그냥 사용해야 함 
@@ -39,10 +40,13 @@ public class D2_Calculator {
 	// if 분기로 해당되는 사칙연산 메서드 실행하기: s값에서 "+"존재하면 +연산 메서드 실행, "-"가 존재하면...
 	// paramInt()메서드 활용하여 맴버필드 초기화
 	public void calcu(String s) { // s에 전달되는 아규먼트는 "5+10"과 같은 문자열
-//		if() {
-//			
+		
+//		if() { //s라는 문자열에서 "+"문자열이 존재하는지 확인하는 조건
+//			// 맴버필드  num1,num2를 초기화해주는 코드(paramInt(s,cal)사용)
+		    // 연산결과 출력 코드 작성
 //		}else if() {
-//			
+//			// 맴버필드  num1,num2를 초기화해주는 코드(paramInt(s,cal)사용)
+	        // 연산결과 출력 코드 작성
 //		}
 	}
 }
