@@ -88,7 +88,66 @@ public class D1_ArrayTest {
 	    System.out.println(Arrays.toString(c));
 	    
 	    //참조타입 배열: Person 클래스 작성 --> [person,person...]
+	    Person[] person= {new Person("박보영"),
+	    		          new Person("이준영"), 
+	    		          new Person("최우식")};
 	    
+//	    Person[] person2=person;//얕은 복사
+	    
+	    Person[] person2=new Person[person.length];
+//	    System.arraycopy(person, 0, person2, 0, person.length);//얕은 복사
+	    
+	    for (int i = 0; i < person.length; i++) {
+			person2[i]=person[i].clone();//깊은 복사
+		}
+	    
+	    person2[0].name="김태희";
+	    System.out.println(person2[0].name);
+	    System.out.println(person[0].name);
+	    
+	    //2차원 배열 선언방법
+	    int[][] aa= {{1,2,3},{4,5,6}};
+	    int[][] bb=new int[][] {{1,2,3},{4,5,6}};
+	    int[][] cc=new int[2][3];
+	    cc[0]=new int[] {1,2,3};
+	    cc[1]=new int[] {4,5,6};
+	    
+	    //배열의 길이값
+	    System.out.println("aa의 배열의 길이:"+aa.length);
+	    System.out.println("aa의 배열의 내부 배열 길이:"+aa[0].length);
+	    
+	    for (int i = 0; i < aa.length; i++) {
+			for (int j = 0; j < aa[0].length; j++) {
+				System.out.print(aa[i][j]+"("+i+","+j+")\t");
+			}
+			System.out.println();
+		}
+	    
+	    //배열 변환
+	    
+	    //2차원배열 --> 1차원배열 변환
+	    int[] dd=new int[bb.length*bb[0].length];
+	    //공식: i*col+j = 0*3+0 = 0
+	    //     i*col+j = 1*3+0 = 1
+	    for (int i = 0; i < bb.length; i++) {
+			for (int j = 0; j < bb[0].length; j++) {
+				dd[i*bb[0].length+j]=bb[i][j];
+				System.out.printf(
+			      "(%d),(%d,%d)\n",i*bb[0].length+j,i,j);
+			}
+		}
+	    
+	    //1차원배열 ---> 2차원배열 변환
+	    //공식: [i/col][i%col]
+	    int [][] ee=new int[2][3];
+	    int col=ee[0].length;
+	    for (int i = 0; i < dd.length; i++) {
+			ee[i/col][i%col]=dd[i];
+			System.out.printf("(%d,%d)\n",i/col,i%col);
+		}
+	    for (int i = 0; i < ee.length; i++) {
+			System.out.println(Arrays.toString(ee[i]));
+		}
 	}
 
 }
