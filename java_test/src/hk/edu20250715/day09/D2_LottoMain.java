@@ -9,12 +9,14 @@ public class D2_LottoMain {
 //		lotto.makeLotto();//로또번호 생성해서 배열에 담는다
 //		System.out.println(Arrays.toString(lotto.getLots()));
 
-		D2_Lotto[] lottostore=new D2_Lotto[]{new D2_Lotto(),
-										     new D2_Lotto(),
-										     new D2_Lotto(),
-										     new D2_Lotto(),
-										     new D2_Lotto()};
+//		D2_Lotto[] lottostore=new D2_Lotto[]{new D2_Lotto(),
+//										     new D2_Lotto(),
+//										     new D2_Lotto(),
+//										     new D2_Lotto(),
+//										     new D2_Lotto()};
 		
+		D3_LottoStore lottoStore=new D3_LottoStore(20);
+		D2_Lotto[] lottostore=lottoStore.getLottoStore();
 		for (int i = 0; i < lottostore.length; i++) {
 			System.out.println(
 						Arrays.toString(lottostore[i].getLots())	  
