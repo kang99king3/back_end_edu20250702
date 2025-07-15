@@ -15,7 +15,7 @@ public class D2_LottoMain {
 //										     new D2_Lotto(),
 //										     new D2_Lotto()};
 		
-		D3_LottoStore lottoStore=new D3_LottoStore(20);
+		D2_LottoStore lottoStore=new D2_LottoStore(20);
 		D2_Lotto[] lottostore=lottoStore.getLottoStore();
 		for (int i = 0; i < lottostore.length; i++) {
 			System.out.println(

@@ -1,16 +1,16 @@
 package hk.edu20250715.day09;
 
 //로또를 여러장 생성하여 저장하는 클래스
-public class D3_LottoStore {
+public class D2_LottoStore {
 	
 	//lottoStore[Lotto,Lotto,Lotto,Lotto,Lotto]
 	private D2_Lotto[] lottoStore;
 	
-	public D3_LottoStore() {
+	public D2_LottoStore() {
 		this(5);
 	}
 	
-	public D3_LottoStore(int n) {
+	public D2_LottoStore(int n) {
 		this.lottoStore=new D2_Lotto[n];
 		makeLotto();  
 	}
