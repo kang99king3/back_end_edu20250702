@@ -23,6 +23,13 @@ public class D1_Child extends D1_Parent{
 	public void parentMethod() {
 		System.out.println("자식 클래스에 맞게 기능을 재정의한다.:parentMethod()");
 	}
+	
+	//Object클래스에 toString()
+	@Override
+	public String toString() {
+
+		return "나는 Child객체야~~";
+	}
 }
 
 
