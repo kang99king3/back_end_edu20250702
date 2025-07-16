@@ -79,6 +79,7 @@ public class D2_Calendar {
 		
 		//실습: 1. 2025년 1월~12월까지 출력하기
 		//     2. 나의 살아온 날 구하기
+		//     3. Calendar API사용해서 구현해보기
 	}
 }
 
