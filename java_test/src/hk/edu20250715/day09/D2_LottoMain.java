@@ -15,15 +15,20 @@ public class D2_LottoMain {
 //										     new D2_Lotto(),
 //										     new D2_Lotto()};
 		
-		D2_LottoStore lottoStore=new D2_LottoStore(20);
-		D2_Lotto[] lottostore=lottoStore.getLottoStore();
-		for (int i = 0; i < lottostore.length; i++) {
-			System.out.println(
-						Arrays.toString(lottostore[i].getLots())	  
-						);
-		}//for종료
+//		D2_LottoStore lottoStore=new D2_LottoStore(20);
+//		D2_Lotto[] lottostore=lottoStore.getLottoStore();
+//		for (int i = 0; i < lottostore.length; i++) {
+//			System.out.println(
+//						Arrays.toString(lottostore[i].getLots())	  
+//						);
+//		}//for종료
 		
-		
+		D2_LottoCompare lottoCom=new D2_LottoCompare();
+		lottoCom.compareBall();
 	}
 
 }
+
+
+
+

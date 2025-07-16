@@ -18,7 +18,7 @@ public class D2_LottoStore {
 	public void makeLotto() {
 		//Lotto객체를 생성해서 lottoStore배열에 담기
 		for (int i = 0; i < lottoStore.length; i++) {
-			lottoStore[i]=new D2_Lotto();
+			this.lottoStore[i]=new D2_Lotto();
 		}
 	}
 
