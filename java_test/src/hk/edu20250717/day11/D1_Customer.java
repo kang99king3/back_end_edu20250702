@@ -2,11 +2,12 @@ package hk.edu20250717.day11;
 
 public class D1_Customer {
 
-	private int customerID;//고객ID
-	private String customerName;//고객이름
-	private String customerGrade;//고객등급
-	private int bonusPoint;//보너스 포인트
-	private double bonusRatio;//보너스 적립률
+	//protected접근제한자: 상속관계일경우 public, 아닌경우 default로 사용된다.
+	protected int customerID;//고객ID
+	protected String customerName;//고객이름
+	protected String customerGrade;//고객등급
+	protected int bonusPoint;//보너스 포인트
+	protected double bonusRatio;//보너스 적립률
 	
 	//default생성자: 나중에 ID,Name 값을 따로 추가해야 된다.
 	public D1_Customer() {
