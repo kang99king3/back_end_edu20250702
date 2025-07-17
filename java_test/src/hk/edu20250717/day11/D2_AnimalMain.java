@@ -23,6 +23,8 @@ public class D2_AnimalMain {
 		moveAnimal(tiger);
 		moveAnimal(new D2_Human());
 		moveAnimal(new D2_Eagle());
+		
+		moveAnimal((Object)new D2_Human());
 	}
 	
 	//자식타입의 서로 다른 여러 객체들을 참조할 수 있다.
@@ -45,6 +47,7 @@ public class D2_AnimalMain {
 	
 	//Object클래스를 이용해서 객체 받아서 사용하기
 	public static void moveAnimal(Object obj) {
+		System.out.println("Object로 받을 경우");
 		if(obj instanceof D2_Human) {
 			D2_Human human=(D2_Human)obj;
 			human.move();
