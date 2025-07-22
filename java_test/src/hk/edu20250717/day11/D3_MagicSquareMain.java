@@ -3,6 +3,7 @@ package hk.edu20250717.day11;
 import java.util.Arrays;
 
 import hk.edu20250721.day13.D1_EvenMagicSquare;
+import hk.edu20250722.day14.D1_SixMagicSquare;
 
 public class D3_MagicSquareMain {
 
@@ -22,8 +23,18 @@ public class D3_MagicSquareMain {
 		D1_EvenMagicSquare evenMagic=new D1_EvenMagicSquare(10);
 		evenMagic.magicPrint();
 		
+		System.out.println("=========짝수마방진(4배수를 제외한 짝수)=============");
+		D1_SixMagicSquare sixMagic=new D1_SixMagicSquare(14);
+		sixMagic.make();
+		sixMagic.magicPrint();
 	}
 }
+
+
+
+
+
+
 
 
 
