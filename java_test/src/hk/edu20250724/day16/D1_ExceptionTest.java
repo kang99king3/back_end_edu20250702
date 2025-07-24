@@ -1,10 +1,18 @@
 package hk.edu20250724.day16;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class D1_ExceptionTest {
 
 	public static void main(String[] args) {
 //		exTest1("오");
-		exTest2("일");
+//		exTest2("일");
+		try {
+			userExceptionTest(12);
+		} catch (D1_UserException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	//예외처리를 안한다면..
@@ -44,6 +52,29 @@ public class D1_ExceptionTest {
 		}
 		
 		System.out.println("오류발생해도 프로그램은 종료되지 않는다");
+	}
+	
+	//사용자 예외처리
+	public static void userExceptionTest(int a) throws D1_UserException {
+		//a는 1~10까지의 숫자만 받을 수 있다.
+		if(!(a>0&&a<11)) {//1~10의 범위를 벗어난 숫자를 받았을 경우
+			throw new D1_UserException("1부터 10까지의 숫자만 입력가능");
+		}
+	}
+	
+	//java.io에 구현되어 있는 클래스들은 무조건 예외처리해야 함
+	public void exTest3() throws IOException {
+		InputStreamReader in=new InputStreamReader(null);
+		in.read();
+	}
+	
+	public void exTest4() {
+		try {
+			exTest3();//IOException을 직접 처리 안하고 던졌기때문에 반드시 처리해야 함
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
 
