@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class D2_StreamTest {
@@ -34,7 +35,30 @@ public class D2_StreamTest {
 			System.out.println(s);
 		}
 		
-	}
+		//List객체를 Stream객체로 생성한 후 맵핑과 수집 처리
+		//Stream은 원본데이터를 변경시키지 않는다
+		List<Integer> listNum=list.stream()
+//				                  .map(s->s.length())
+				                  .map(String::length)
+				                  .collect(Collectors.toList());
+		System.out.println(listNum.toString());
+		
+		System.out.println("---병렬처리---");
+		
+		List<String> list3=List.of("A","B","C","D");
+		
+		//일반 스트림
+		list3.stream().forEach(s->{
+			System.out.println(s+" - "+Thread.currentThread().getName());
+		});
+		
+		System.out.println("------------------");
+		//병렬 스트림
+		list3.parallelStream().forEach(s->{
+			System.out.println(s+" - "+Thread.currentThread().getName());
+		});
+		
+	}//main종료
 }
 
 
