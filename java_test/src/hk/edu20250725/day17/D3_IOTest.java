@@ -1,6 +1,7 @@
 package hk.edu20250725.day17;
 
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -13,7 +14,8 @@ public class D3_IOTest {
 
 	public static void main(String[] args) {
 //		test01();
-		test02();
+//		test02();
+		test02_1();
 	}
 	
 	//파일을 읽고 출력하기
@@ -96,6 +98,75 @@ public class D3_IOTest {
 		}
 	}
 	
+	//filter: 보조스트림을 이용해서 출력하기
+	public static void test02_1() {
+		String s="파일을 기록합니다.";
+		OutputStream out=null;//출력 파이프 준비
+		DataOutputStream dos=null;//filter로 기본타입 데이터를 이진데이터로 출력
+		
+		try {
+			out=new FileOutputStream("C:\\Users\\user\\output_data.txt");
+			dos=new DataOutputStream(out);//filter사용
+//			dos.writeUTF(s);//UTF-8형식으로 인코딩된 문자열을 출력한다.
+			                //문자열을 자동으로 byte단위로 나눠서 처리
+//			dos.writeChars(s);//char단위로 문자여러개를 표현
+			
+			//filter를 미사용시
+			byte[] b=s.getBytes();
+			out.write(b);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(dos!=null) {
+					dos.close();
+				}
+				if(out!=null) {
+					out.close();
+				}
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	//한번에 읽을때 크기를 설정해서 읽고 쓰기
+	public static void test03() {
+		InputStream in=null;
+		OutputStream out=null;
+		
+		try {
+			in=new FileInputStream("C:\\Users\\user\\test_img.png");
+			out=new FileOutputStream("C:\\Users\\user\\test_img_copy.png");
+			
+			//10byte 단위로 읽기
+			byte [] b=new byte[10];//{0,0,0,0,0,0,0...}
+			int i=0;//1byte씩 읽을때는 값이 저장-->배열로 byte를 읽으면 읽은 개수가 저장
+			while((i=in.read(b))!=-1) {
+				out.write(b);// [1,2,3,4,5,6,7,8,9,10]
+				             // [11,12,13,14,5,6,7,8,9,10]
+			                 //  ->나머지 데이터 5~10이 같이 출력된다.
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				if(out!=null) {
+					out.close();				
+				}
+				if(in!=null) {
+					in.close();				
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 }
 
 
