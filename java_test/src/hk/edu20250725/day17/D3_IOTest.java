@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
@@ -15,7 +16,9 @@ public class D3_IOTest {
 	public static void main(String[] args) {
 //		test01();
 //		test02();
-		test02_1();
+//		test02_1();
+//		test03();
+		test04();
 	}
 	
 	//파일을 읽고 출력하기
@@ -143,12 +146,14 @@ public class D3_IOTest {
 			out=new FileOutputStream("C:\\Users\\user\\test_img_copy.png");
 			
 			//10byte 단위로 읽기
-			byte [] b=new byte[10];//{0,0,0,0,0,0,0...}
+			byte [] b=new byte[6];//{0,0,0,0,0,0,0...}
 			int i=0;//1byte씩 읽을때는 값이 저장-->배열로 byte를 읽으면 읽은 개수가 저장
 			while((i=in.read(b))!=-1) {
-				out.write(b);// [1,2,3,4,5,6,7,8,9,10]
+//				out.write(b);// [1,2,3,4,5,6,7,8,9,10]
 				             // [11,12,13,14,5,6,7,8,9,10]
 			                 //  ->나머지 데이터 5~10이 같이 출력된다.
+				out.write(b,0,i);// [11,12,13,14,5,6,7,8,9,10]->11,12,13,14
+				//b배열의 0번째부터 읽은 개수만큼의 길이로 출력한다.-> 안정적(권장)
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -166,6 +171,41 @@ public class D3_IOTest {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	//Reader와 Writer를 이용해서 키보드로 입력받고, 출력하는 기능
+	public static void test04() {
+		InputStreamReader in=null;
+		OutputStreamWriter out=null;
+		System.out.println("입력하세요");
+		
+		try {
+			in=new InputStreamReader(System.in);
+			out=new OutputStreamWriter(System.out);
+			
+			char[] ch=new char[512];
+			int i=0;
+			while((i=in.read(ch))!=-1) {
+				System.out.println("입력값:");
+				out.write(ch, 0, i);
+				out.flush();//강제로 출력시키는 기능: System.out(콘솔로 출력) 다 채워질때까지 출력X
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(out!=null) {
+					out.close();
+				}
+				if(in!=null) {
+					in.close();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
 }
 
