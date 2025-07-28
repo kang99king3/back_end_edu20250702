@@ -57,7 +57,7 @@ public class D2_StreamTest {
 		list3.parallelStream().forEach(s->{
 			System.out.println(s+" - "+Thread.currentThread().getName());
 		});
-		
+
 	}//main종료
 }
 
