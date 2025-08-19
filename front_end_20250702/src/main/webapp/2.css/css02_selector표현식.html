@@ -46,6 +46,40 @@
   /* 속성선택자 */
   span[title]{background-color: red;}
   span[title='미국팀']{background-color: orange;}
+  
+  /* 가상 선택자 */
+  #container2 a:link{
+  	color:black;
+  }
+  #container2 a:visited{
+  	color:red;
+  }
+  #container2 a:active{
+  	color:yellow;
+  	font-size: 20px;
+  	background-color: green;
+  }
+  #container2 h1:hover{
+  	background-color: yellow;
+  	cursor: progress;
+  }
+  /* 수도 클래스 */
+  #container2 p:first-letter {
+	font-size:40px;
+  }
+  p:first-child {
+	font-size:40px;
+  }
+  #container2 p:after {
+/*   	 content:"뒤에 가상의 요소를 생성한다."; */
+	 content:"";
+	 display:block;
+	 width:200px;
+	 height:200px;
+	 background-color:orange;
+	 border: 3px solid red;
+	 border-radius: 50px;
+  }
 </style>
 </head>
 <body>
@@ -71,6 +105,7 @@
 	<p>인접한 p태그</p>
 </div>
 <div id="container2">
+	<p>첫번째요소일때 선택됨</p>
 	<h1>'손흥민 보러 가자'...이것이 바로 <strong id="a">파격적 쏘니 효과!</strong> 
 	    티켓 가격 무려 <strong>'5배' 상승</strong></h1>
 	<p>
@@ -85,8 +120,8 @@
 	압박하여 실수를 유도했고 상대 수비가 처리한 볼이 동료에게 흐르면서 골로 연결됐다.
 	</p>
 	<p class="c">
-	손흥민은 경기가 끝난 뒤 "난 매일매일, 매 순간을 즐기고 있다. 
-	원정에서 이길 때 더 기분이 좋다"라며 소감을 밝혔다.
+	<a href="https://www.donga.com/news/Inter/article/all/20250817/132198004/1">손흥민</a>은 경기가 끝난 뒤 "난 매일매일, 매 순간을 즐기고 있다. 
+	원정에서 이길 때 더 기분이 좋다"라며 <a>소감</a>을 밝혔다.
 	</p>
 </div>
 </body>

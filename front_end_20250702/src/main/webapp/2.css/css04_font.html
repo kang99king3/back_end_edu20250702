@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>css04_font.html</title>
+<style type="text/css">
+	.c{
+		font-size: 20px;
+		font-weight: bold;
+		font-style: italic;
+		font-variant: small-caps;
+		line-height: 50px;
+		font-family: "맑은 고딕" 굴림;
+	}
+	.d{
+		font-variant: small-caps;
+	}
+	h1{
+		background-color: yellow;
+		height: 100px;
+		text-align: center;
+		/* td요소, img등 특정요소만 적용됨*/
+/* 		vertical-align:middle;  */
+ 		line-height: 100px;/*행이 하나일때 위아래 정렬 효과*/ 
+	}
+	
+	/*
+		축약형 사용할때 순서 규칙
+		1. font: [font-weight / font-style / font-variant]
+		2. font: [font-size / line-height]
+		3. font: [font-family]
+		font:1 2 3 순으로 작성해야 함
+	*/
+	.d{
+		font:bold italic small-caps 20px/50px '맑은 고딕';
+	}
+</style>
+</head>
+<body>
+<h1>폰트 관련 속성</h1>
+<p class="c">손흥민(32·LA FC)이 미국 메이저리그사커(MLS) 선발 데뷔전에서 두 골을 도우면서 경기
+	공식 최우수선수(<span id="a">POM</span>·플레이어 오브 더 매치)에 뽑혔다. MLS 홈페이지도 손흥민의 활약을 ‘머리기사’로 다뤘다. 다만 기록
+	정정으로 공식 기록에는 도움 한 개만 남았다.</p>
+<p class="d">aaaa손흥민(32·la FC)이 미국 메이저리그사커(MLS) 선발 데뷔전에서 두 골을 도우면서 경기
+	공식 최우수선수(POM·플레이어 오브 더 매치)에 뽑혔다. MLS 홈페이지도 손흥민의 활약을 ‘머리기사’로 다뤘다. 다만 기록
+	정정으로 공식 기록에는 도움 한 개만 남았다.</p>
+</body>
+</html>
