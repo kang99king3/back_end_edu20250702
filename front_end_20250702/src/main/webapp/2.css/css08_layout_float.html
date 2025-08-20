@@ -33,7 +33,9 @@
 	}
 	#box3{
 		clear:both;
-		width:98%;
+		width:490px;/* container1:총 너비가 502px, box3:총 너비가 510px(width:500+margin:5+margin:5) 
+					   그래서 510-500=10  10만큼 500에서 빼준다. -> 490px*/
+		            
 	}
 	
 </style>
@@ -43,7 +45,7 @@
 <div id="container1">
 	<div id="box1">box1</div>
 	<div id="box2">box2</div>
-<!-- 	<div id="box3">box3</div> -->
+	<div id="box3">box3</div>
 </div>
 </body>
 </html>
