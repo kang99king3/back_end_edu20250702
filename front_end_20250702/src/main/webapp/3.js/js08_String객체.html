@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>js08_String객체.html</title>
+<script type="text/javascript">
+	function strTest01(){
+		//리터럴 방식
+		let string01="String";
+		let string02="Test";
+		
+		// + 연산자를 이용해서 문자열 합치기
+		let string03=string01+string02;
+		
+		//concat():여러 문자열을 합칠때 사용
+		var newString="String".concat("test","java","script");
+		console.log(string03,newString);
+		document.querySelectorAll(".result")[0]
+		                 .textContent=newString;
+	}
+	
+	function strTest02(){
+		// 동등연산자 ==(일전적인 비교), ===(엄격한 비교)
+		//,패턴으로 비교 match()(정규화 표현식)
+		
+		//동등연산자: ===
+		var numVal=10;// 숫자형
+		if(numVal=="10"){ // 비교할때 자동 형변환되서 비교를 한다.
+			console.log("==연산자사용: 숫자10이 맞습니다.");
+		}
+		
+		if(numVal==="10"){// 타입이 다르면 다르다고 비교해야 함.
+			console.log("===연산자사용: 숫자10이 맞습니다.");
+		}else{
+			console.log("===연산자사용: 숫자10이 아닙니다..");
+		}
+		
+		//객체와 비교(String)
+		let strLit="한경";
+		let strObj=new String("한경");//new 객체 정의
+		
+		if(strLit==strObj){
+			console.log("==연산자사용: 같다");
+		}
+		
+		if(strLit===strObj){
+			console.log("==연산자사용: 같다");
+		}else{
+			console.log("===연산자사용: 다르다");
+		}
+		
+		// match 함수사용
+		let strVal=prompt("당신의 이름은?","");
+		// isNaN() 함수: 숫자인지 판단하는 함수
+		if(strVal.match(/[0-9]/)){
+			alert("숫자가 포함되어 있어요!! 확인해주세요");
+		}else{
+			if(strVal=="한경"){
+				console.log("한경이 맞습니다.");
+				document.querySelectorAll(".result")[1]
+								.innerHTML="<b>"+strVal+"이 맞습니다.</b>";
+			}else{
+				console.log("한경이 아닙니다.");
+				document.querySelectorAll(".result")[1]
+								.innerHTML=`<b>${strVal}이 아닙니다.</b>`;
+			}
+		}
+	}
+</script>
+</head>
+<body>
+<h1>String 객체의 사용</h1>
+<h2>문자열 합치기<button onclick="strTest01()">확인</button> </h2>
+<p class="result"></p>
+<h2>문자열 비교하기<button onclick="strTest02()">확인</button> </h2>
+<p class="result"></p>
+</body>
+</html>
+
+
+
+
+
+
+
+

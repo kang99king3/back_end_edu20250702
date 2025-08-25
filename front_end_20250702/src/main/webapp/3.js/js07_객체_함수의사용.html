@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>js07_객체_함수의사용</title>
 <script type="text/javascript">
+
 	//선언적 함수: function 키워드를 사용하여 정의, 이름이 있다.
 	//           다른 객체나 함수에서 호출이 가능 -> 재사용
 	//          파라미터 선언: 변수명만 작성 -> func(a,b){} -> 호출할때 func(5,6) (O)
@@ -73,7 +74,7 @@
 			delete jsonObj["credit"]; // delete 개념
 			
 			console.log(jsonObj.subject,jsonObj.credit,jsonObj.test);
-			
+			//          jsonObj["subject"] : 대괄호에 key이름으로 호출 가능
 			//ES6에서 추가된 기능
 			//1.화살표 함수
 			jsonObj["arrowFunc"]=(a,b)=>{console.log(a,b);};
@@ -109,7 +110,7 @@
 			this.subject=subject;
 			this.credit=2;
 			this.printout=function(){ //생성자함수 내부에 익명함수 정의할때 화살표함수(X)
-					 		 return `${subject},${this.credit}학점`;
+					 		 return `${this.subject},${this.credit}학점`;
 						  };
 			
 			//외부에서 메서드를 통해 속성에 접근 가능
@@ -176,7 +177,9 @@
 			}
 		}();// ()를 추가한 이유: 부모함수() 실행하기 위함--> 
 								       //      자식함수 반환-> closureTeset3 할당
-		
+	
+		//확인방법: closureTest2_2 확인 -> closuerTest3확인하기
+								       
 	}//onload 종료
 	
 </script>
