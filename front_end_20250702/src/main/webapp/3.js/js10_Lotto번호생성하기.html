@@ -4,6 +4,33 @@
 <meta charset="UTF-8">
 <title>js10_Lotto번호생성하기</title>
 <script type="text/javascript">
+
+	//생성자 함수로 만들기:  this 예약어사용 선언..
+	function Lotto(){
+		
+		//번호를 저장하는 배열 선언
+		this.balls=new Array();
+		
+		//로또 번호 랜덤생성 메서드
+		this.makeBall=function(){
+			// new Math(); (X)
+			return Math.floor(Math.random()*45+1); //1~45숫자 반환
+		}
+		//배열에 저장하는 메서드
+		this.lottoBalls=function(){
+			let count=0;
+			while(count<7){
+				let ball=this.makeBall();//랜덤숫자 저장
+				if(this.balls.indexOf(ball)==-1){
+					this.balls.push(ball);
+					count++;
+				}
+			}
+			console.log(this.balls);
+		}
+	}
+
+
 	// random(): 0~1사이의 실수를 랜덤하게 생성
 	function makeBall(){
 		// new Math(); (X)
@@ -33,7 +60,27 @@
 	    //배열의 메서드 활용 : 정렬기능,특정문자로 조인해서 문자열로 반환 기능
 	    //                 shift,pop():잘라내기
 	    // DOM탐색메서드 활용
-		lottoBalls();
+	    
+// 		const balls=lottoBalls();//[1,2,3,45,6,7,56]
+		//생성자 함수 이용----------
+		const lotto=new Lotto();
+			  lotto.lottoBalls();
+	
+		const balls=lotto.balls;
+		//-----------------------
+	    let bonus=balls.pop();//56가져옴, 원본[1,2,3,45,6,7]
+	    balls.sort((a,b)=>a-b);//정렬하기(크기순, 오름차순)
+		let strballs=balls.join("-");// "1-2-3-6-7-45"
+		console.log(strballs,bonus);
+		
+		let spans=document.querySelectorAll("span");
+// 		spans[1].textContent=strballs;
+// 		spans[3].textContent=bonus;
+// 	    spans[1].innerHTML="<strong>"+strballs+"</strong>";
+		spans[1].innerHTML=`<strong>${strballs}</strong>`;
+		spans[3].innerHTML=`<strong>${bonus}</strong>`;
+	    
+// 	    document.getElementsByTagName("span")[0].innerText="text";
 	}
 </script>
 
