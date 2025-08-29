@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>js18_cookie.html</title>
+<script type="text/javascript">
+	/*
+		웹서비스 동작 방식: 클라이언트  --------------  서버
+		                       request     response
+		
+		-cookie : 클라인언트 측에 저장되고, 용량이 적은 데이터, 정보를 유지/관리
+		         서버로 전송됨, 용량은 4kb 제한, 도메인 하나당 쿠키 약 20개 정도
+		
+			-저장형식: 문자열 -> "key=value;id=hk;name=hankyung;....."
+			                  ;으로 구분한다.
+		    -저장내용: key, value, expires 기본 설정내용
+		    	- expires: 설정단위 UTC기준(세계표준시)으로 Date객체를 이용해서 설정
+		    	- domain: 쿠키사용범위 (주 도메인:  https://www.naver.com
+		    			             서브 도메인: https://www.cafe.naver.com
+		    			             주/서브도메인접근: .naver.com
+		    						)      
+		        - path : 쿠키사용범위(/admin/a/b, /admin/config)
+		        - secure : https로만 접근할 수 있는지 여부 - true/false
+		    
+		    - 유효기간 설정: 쿠키의 사용기간 -> 설정X 브라우저가 종료될때 삭제됨
+		                  설정방법 expires, max-age 두가지 방식 존재함
+	*/
+</script>
+</head>
+<body>
+<h1>쿠키사용하기</h1>
+<button onclick="setCookieTest()">쿠키추가</button>
+<button onclick="removeCookieTest()">쿠키삭제</button>
+<button onclick="getCookieTest()">쿠키값 가져오기</button>
+</body>
+</html>
+
+
+
