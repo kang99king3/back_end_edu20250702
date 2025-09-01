@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jq03_DOM처리메서드</title>
+<!-- CDN방식 -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+	$(function(){
+		$("button").eq(0).click(function(){
+			const $p=$("<p title='속성'></p>");
+			$p.text("prepend메서드");// textConent와 동일한 기능
+			$p.addClass("prepend");//class속성을 추가하는 메서드
+			$(".insert1").prepend($p);//자식요소중 가장 앞에 추가한다.
+			
+			//문자열로 요소를 바로 추가할 수 도 있다.
+// 			$(".insert1").prepend("<p title='속성'>prepend</p>");
+		});
+		
+		$("button").eq(1).click(function(){
+			$(".insert1").append("<p title='속성'>append</p>");
+		});
+		
+		//요소를 이동시킬때 요소를 선택해서 append하면 된다.
+		$("button").eq(4).click(function(){
+			const $ele=$(".insert1").children().first();
+			$(".insert2").append($ele);
+		});
+		
+	});
+
+</script>
+<style type="text/css">
+	.insert1, .insert2{
+		border:1px solid red;
+		margin-bottom: 20px;
+	}
+</style>
+</head>
+<body>
+<h1>내부요소추가하기</h1>
+<button>prepend</button>
+<button>append</button>
+<button>html</button>
+<button>text</button>
+<button>DOM요소 이동</button>
+<h1>외부요소추가하기</h1>
+<button>before</button>
+<button>after</button>
+<button>wrap</button>
+<button>DOM요소 이동</button>
+<div class="insert1">
+	<p class="a">내부추가하기</p>
+</div>
+
+<div class="insert2">
+	<p class="a">외부추가하기</p>
+</div>
+
+</body>
+</html>
+
+
+
