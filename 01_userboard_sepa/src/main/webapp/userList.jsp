@@ -33,7 +33,7 @@
 			<td><%=dto.getName()%></td>
 			<td><%=dto.getmDate()%></td>
 			<td>
-				<a href="#">수정</a>
+				<a href="userUpdateForm.jsp?userId=<%=dto.getUserID()%>">수정</a>
 			</td>
 			<td>
 				<a href="#">삭제</a>

@@ -190,7 +190,72 @@ public class UserDao {
 		return count>0?true:false;
 	}
 	//회원정보 상세 조회: select문 (반환타입:DTO)
-	
+	public UserDto getUser(String userId) {
+		UserDto dto=new UserDto();
+		
+		Connection conn=null;//DB연결할때 사용할 객체
+		PreparedStatement psmt=null;//쿼리 준비 및 실행할때 사용할 객체
+		ResultSet rs=null;//쿼리 실행결과를 받을 객체
+		
+		//2단계:DB연결하기(localhost:3306,id,pw)
+		String url="jdbc:mariadb://localhost:3306/hk";
+		String user="root";
+		String password="manager";
+		
+		//실행할 쿼리 준비
+		String sql=" SELECT USERID, "
+				 + "        NAME, "
+				 + "        BIRTHYEAR, "
+				 + "        ADDR, "
+				 + "        MOBILE1, "
+				 + "        MOBILE2, "
+				 + "        HEIGHT, "
+				 + "        MDATE "
+				 + " FROM USERTBL "
+				 + " WHERE USERID = ? ";
+		
+		try {
+			//DB연결
+			conn=DriverManager.getConnection(url, user, password);
+			//쿼리 준비
+			psmt=conn.prepareStatement(sql);
+			psmt.setString(1, userId);
+			//쿼리 실행
+			rs=psmt.executeQuery();
+			//쿼리 결과 받기
+			while(rs.next()) {
+			   // dto맴버필드 <==== ResultSet[컬럼]
+				dto.setUserID(rs.getString(1));
+				dto.setName(rs.getString(2));
+				dto.setBirthYear(rs.getInt(3));
+				dto.setAddr(rs.getString(4));
+				dto.setMobile1(rs.getString(5));
+				dto.setMobile2(rs.getString(6));
+				dto.setHeight(rs.getInt(7));
+				dto.setmDate(rs.getDate(8));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) {
+					rs.close();
+				}
+				if(psmt!=null) {
+					psmt.close();
+				}
+				if(conn!=null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return dto;
+	}
 	//회원정보 수정: update문(반환타입:boolean)
 	
 	//회원삭제: delete문(반환타입:boolean)
