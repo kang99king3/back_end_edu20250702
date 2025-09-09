@@ -73,13 +73,13 @@ public class UserDao {
 //          web.xml에 설정
 //			resource-ref 
 			  // 1. JNDI 초기화(이름과 객체로 맵핑관리)
-            Context initCtx = new InitialContext();//Context에 접근하기 위한 객체생성
+//            Context initCtx = new InitialContext();//Context에 접근하기 위한 객체생성
             //"java:comp/env" 접근가능한 환경 이름 공간으로 
             // -> context.xml에 등록한 Resource가 "java:com/env" 안에 등록된다.
-            Context envCtx  = (Context) initCtx.lookup("java:comp/env");
+//            Context envCtx  = (Context) initCtx.lookup("java:comp/env");
 
             // 2. DataSource 찾기
-            DataSource ds   = (DataSource) envCtx.lookup("jdbc/hk");
+//            DataSource ds   = (DataSource) envCtx.lookup("jdbc/hk");
 
             // 3. Connection 얻기
 //            conn = ds.getConnection();
@@ -115,9 +115,10 @@ public class UserDao {
 		} catch (SQLException e ) {
 			System.out.println("2~5단계에서 실패");
 			e.printStackTrace();
-		} catch(NamingException e) {
-			e.printStackTrace();
-		}
+		} 
+//		catch(NamingException e) {
+//			e.printStackTrace();
+//		}
 		finally {
 			//6단계는 finally에서 작성하자
 			try {
