@@ -58,7 +58,20 @@ public class UserDao {
 				 + " FROM USERTBL ";
 		
 		try {
+	//   servers에 Context.xml에 정의
+//			<Resource name="jdbc/hk"
+//		              auth="Container"
+//		              type="javax.sql.DataSource"
+//		              maxTotal="20"    
+//		              maxIdle="10"
+//		              maxWaitMillis="10000"
+//		              username="root"
+//		              password="manager"
+//		              driverClassName="org.mariadb.jdbc.Driver"
+//		              url="jdbc:mariadb://localhost:3306/hk"/>
 			
+//          web.xml에 설정
+//			resource-ref 
 			  // 1. JNDI 초기화(이름과 객체로 맵핑관리)
             Context initCtx = new InitialContext();//Context에 접근하기 위한 객체생성
             //"java:comp/env" 접근가능한 환경 이름 공간으로 
@@ -69,9 +82,9 @@ public class UserDao {
             DataSource ds   = (DataSource) envCtx.lookup("jdbc/hk");
 
             // 3. Connection 얻기
-            conn = ds.getConnection();
+//            conn = ds.getConnection();
 			
-//			conn=DriverManager.getConnection(url, user, password);
+			conn=DriverManager.getConnection(url, user, password);
 			System.out.println("2단계:DB연결성공");
 			psmt=conn.prepareStatement(sql);//쿼리를 준비하는 중
 			System.out.println("3단계:쿼리준비성공");

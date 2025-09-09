@@ -2,7 +2,8 @@ package com.hk.board.dtos;
 
 import java.io.Serializable;
 import java.util.Date;
-
+//lombok 라이브러리-> 맴버필드만 작성하고 어노테이션으로 설정만 해주면 
+//                  생성자, setter/getter, toString등을 생략할수 있게 해줌
 //DTO객체: 데이터를 운반할때 사용할 객체
 //   java OOP 3대 개념: 상속, 은닉화, 다형성 -> 은닉화 적용
 //   DB에 테이블에 컬럼과 매칭
