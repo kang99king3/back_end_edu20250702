@@ -1,3 +1,4 @@
+<%@page import="com.hk.board.dtos.UserDto"%>
 <%@page import="com.hk.board.daos.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -26,6 +27,21 @@
 	//받은 파라미터 값들을 DB에 추가하는 작업 필요
 	//DB에 접근할 수 있는 객체-> DAO객체가 필요함
 	UserDao dao=new UserDao();
+	
+// 	UserDto dto=new UserDto();
+// 	dto.setUserID(userId);
+// 	dto.setName(name);
+// 	dto.setBirthYear(birthYearInt);
+	
+	boolean isS=
+	dao.insertUser(new UserDto(userId,name,birthYearInt,addr
+							  ,mobile1,mobile2,heightInt,null));
+	
+	if(isS){
+		response.sendRedirect("index.jsp");
+	}else{
+		response.sendRedirect("error.jsp");
+	}
 %>
 </body>
 </html>
