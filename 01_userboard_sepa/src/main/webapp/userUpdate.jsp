@@ -1,3 +1,5 @@
+<%@page import="com.hk.board.dtos.UserDto"%>
+<%@page import="com.hk.board.daos.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%request.setCharacterEncoding("utf-8"); %>
@@ -27,9 +29,31 @@
 	String height=request.getParameter("height");
 	int heightInt=Integer.parseInt(height); //String->int
 	// dao객체 생성
+	UserDao dao=new UserDao();
 	// updateUser() 실행
+	boolean isS=dao.updateUser(new UserDto(userId,name,birthYearInt,
+											addr,
+											mobile1,
+											mobile2,
+											heightInt,
+											null));
 	// 응답 페이지로 이동: 수정성공하면 index.jsp로 이동, 실패하면 error.jsp이동
-
+	if(isS){
+// 		response.sendRedirect("index.jsp");
+		//회원목록페이지로 응답..
+// 		response.sendRedirect("userList.jsp");
+		//수정폼으로 응답..
+// 		response.sendRedirect("userUpdateForm.jsp?userId="+userId);
+		%>
+<!-- 		html영역 -->
+			<script type="text/javascript">
+				alert("회원정보를 수정했습니다.!!");
+				location.href="userUpdateForm.jsp?userId=<%=userId%>";
+			</script>
+		<%
+	}else{
+		response.sendRedirect("error.jsp");
+	}
 
 
 %>
