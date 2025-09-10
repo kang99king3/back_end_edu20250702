@@ -257,7 +257,61 @@ public class UserDao {
 		return dto;
 	}
 	//회원정보 수정: update문(반환타입:boolean)
-	
+	public boolean updateUser(UserDto dto) {
+		int count=0;//쿼리 성공 여부 판단을 위해 사용
+		
+		//DB에 연결할 정보를 정의
+		//Db에 연결하고 작업할 준비를 위한 객체 선언
+		Connection conn=null;//DB연결할때 사용할 객체
+		PreparedStatement psmt=null;//쿼리 준비 및 실행할때 사용할 객체
+		
+		//2단계:DB연결하기(localhost:3306,id,pw)
+		String url="jdbc:mariadb://localhost:3306/hk";
+		String user="root";
+		String password="manager";
+		
+		// String pool 메모리영역: +연산자로 문자열 더하기
+		//               -> 값이 변경될때마다 새롭게 객체가 생성
+		String sql=" UPDATE USERTBL SET NAME=?, "
+				+ "                   BIRTHYEAR=?, "
+				+ "                   ADDR=?, "
+				+ "                   MOBILE1=?, "
+				+ "                   MOBILE2=?, "
+				+ "                   HEIGHT=? "
+				+ " WHERE USERID=? ";
+		
+		try {
+			conn=DriverManager.getConnection(url, user, password);
+			psmt=conn.prepareStatement(sql);//쿼리준비 아직 진행중
+			// 쿼리에 ?를 채우자
+			psmt.setString(1, dto.getName());
+			psmt.setInt(2, dto.getBirthYear());
+			psmt.setString(3, dto.getAddr());
+			psmt.setString(4, dto.getMobile1());
+			psmt.setString(5, dto.getMobile2());
+			psmt.setInt(6, dto.getHeight());//쿼리준비가 끝남
+			psmt.setString(7, dto.getUserID());
+			count=psmt.executeUpdate();//추가,수정,삭제작업은 executeUpdate()
+			                     //반환값: 업데이트된 행의 개수(int)
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				if(psmt!=null) {
+					psmt.close();
+				}
+				if(conn!=null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return count>0?true:false;
+	}
 	//회원삭제: delete문(반환타입:boolean)
 }
 

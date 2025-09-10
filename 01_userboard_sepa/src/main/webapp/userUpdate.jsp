@@ -17,9 +17,21 @@
 	
 	//userUpdate.jsp에서 구현할 내용
 	// 파라미터 받기
+	String userId=request.getParameter("userId");
+	String name=request.getParameter("name");
+	String birthYear=request.getParameter("birthYear");
+	int birthYearInt=Integer.parseInt(birthYear); //String->int
+	String addr=request.getParameter("addr");
+	String mobile1=request.getParameter("mobile1");
+	String mobile2=request.getParameter("mobile2");
+	String height=request.getParameter("height");
+	int heightInt=Integer.parseInt(height); //String->int
 	// dao객체 생성
 	// updateUser() 실행
 	// 응답 페이지로 이동: 수정성공하면 index.jsp로 이동, 실패하면 error.jsp이동
+
+
+
 %>
 </body>
 </html>
