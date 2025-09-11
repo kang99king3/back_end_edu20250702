@@ -1,5 +1,60 @@
 package com.hk.board.daos;
 
-public class HkDao {
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.hk.board.dtos.HkDto;
+import com.hk.datasource.Database;
+
+public class HkDao extends Database{
+
+	public HkDao() {
+		super();//생략되어 있음
+	}
+	
+	//글목록 조회 기능: 여러개의 행이 반환 --> 반환타입? List
+	public List<HkDto> getAllList(){
+		List<HkDto> list=new ArrayList<>();
+		
+		Connection conn=null;
+		PreparedStatement psmt=null;
+		ResultSet rs=null;
+		
+		String sql=" SELECT SEQ, ID, TITLE, CONTENT, REGDATE "
+				+ " FROM HKBOARD ORDER BY REGDATE DESC ";
+		
+		try {
+			conn=getConnetion();
+			psmt=conn.prepareStatement(sql);
+			rs=psmt.executeQuery();
+			while(rs.next()) {
+				//java  <==  DB : DB에 값들을 java에서 사용할 수 있게 처리
+				HkDto dto=new HkDto();
+				dto.setSeq(rs.getInt(1));
+				dto.setId(rs.getString(2));
+				dto.setTitle(rs.getString(3));
+				dto.setContent(rs.getString(4));
+				dto.setRegDate(rs.getDate(5));
+				list.add(dto);
+				System.out.println(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs, psmt, conn);
+		}
+		return list;
+	}
+	
 }
+
+
+
+
+
+
+
