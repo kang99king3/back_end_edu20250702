@@ -50,6 +50,36 @@ public class HkDao extends Database{
 		return list;
 	}
 	
+	//글추가하기: insert문실행 , 반환값 boolean
+	public boolean insertBoard(HkDto dto) {
+		int count=0;
+		
+		Connection conn=null;
+		PreparedStatement psmt=null;
+		
+		String sql=" INSERT INTO HKBOARD "
+				+ " VALUES(NULL,?,?,?,SYSDATE()) ";
+		
+		try {
+			conn=getConnetion();
+			
+			//3단계:쿼리준비, (1,dto.getId()) 여기서 1은 ?의 순서
+			psmt=conn.prepareStatement(sql);
+			psmt.setString(1, dto.getId());
+			psmt.setString(2, dto.getTitle());
+			psmt.setString(3, dto.getContent());
+			
+			count=psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(null, psmt, conn);
+		}
+		
+		return count>0?true:false;
+	}
+	
 }
 
 
