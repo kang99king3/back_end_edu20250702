@@ -24,7 +24,7 @@ public class Database {
 	}
 	
 	//2단계:DB연결(Connection pool 구현: JNDI방식)
-	public Connection getConnetion() throws SQLException {
+	public Connection getConnection() throws SQLException {
 		Connection conn=null;
 		
 		DataSource ds=null;

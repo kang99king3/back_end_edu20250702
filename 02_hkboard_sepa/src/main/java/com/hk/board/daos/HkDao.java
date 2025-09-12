@@ -28,7 +28,7 @@ public class HkDao extends Database{
 				+ " FROM HKBOARD ORDER BY REGDATE DESC ";
 		
 		try {
-			conn=getConnetion();
+			conn=getConnection();
 			psmt=conn.prepareStatement(sql);
 			rs=psmt.executeQuery();
 			while(rs.next()) {
@@ -61,7 +61,7 @@ public class HkDao extends Database{
 				+ " VALUES(NULL,?,?,?,SYSDATE()) ";
 		
 		try {
-			conn=getConnetion();
+			conn=getConnection();
 			
 			//3단계:쿼리준비, (1,dto.getId()) 여기서 1은 ?의 순서
 			psmt=conn.prepareStatement(sql);
@@ -92,7 +92,7 @@ public class HkDao extends Database{
 				+ " FROM HKBOARD WHERE SEQ = ? ";
 		
 		try {
-			conn=getConnetion();
+			conn=getConnection();
 			psmt=conn.prepareStatement(sql);
 			psmt.setInt(1, seq);// seq의 타입이 int형-> setInt()사용
 			rs=psmt.executeQuery();
@@ -128,7 +128,7 @@ public class HkDao extends Database{
 				 + " WHERE SEQ=? ";
 		
 		try {
-			conn=getConnetion();
+			conn=getConnection();
 			
 			//3단계:쿼리준비, (1,dto.getId()) 여기서 1은 ?의 순서
 			psmt=conn.prepareStatement(sql);
@@ -147,6 +147,31 @@ public class HkDao extends Database{
 		return count>0?true:false;
 	}
 	
+	public boolean deleteBoard(int seq) {
+		int count=0;
+		
+		Connection conn=null;
+		PreparedStatement psmt=null;
+		
+		String sql="DELETE FROM HKBOARD WHERE SEQ=? ";
+		
+		try {
+			conn=getConnection();
+			
+			//3단계:쿼리준비, (1,dto.getId()) 여기서 1은 ?의 순서
+			psmt=conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+
+			count=psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(null, psmt, conn);
+		}
+		
+		return count>0?true:false;
+	}
 }
 
 
