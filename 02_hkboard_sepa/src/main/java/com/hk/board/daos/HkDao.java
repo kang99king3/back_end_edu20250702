@@ -114,6 +114,39 @@ public class HkDao extends Database{
 		return dto;
 	}
 	
+	//글 수정하기: update문 실행 , 반환타입 boolean
+	//          전달받는 파라미터: seq, title, content
+	public boolean updateBoard(HkDto dto) {
+		int count=0;
+		
+		Connection conn=null;
+		PreparedStatement psmt=null;
+		
+		String sql=" UPDATE HKBOARD SET "
+				 + " TITLE=? , "
+				 + " CONTENT=? "
+				 + " WHERE SEQ=? ";
+		
+		try {
+			conn=getConnetion();
+			
+			//3단계:쿼리준비, (1,dto.getId()) 여기서 1은 ?의 순서
+			psmt=conn.prepareStatement(sql);
+			psmt.setString(1, dto.getTitle());
+			psmt.setString(2, dto.getContent());
+			psmt.setInt(3, dto.getSeq());
+			
+			count=psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(null, psmt, conn);
+		}
+		
+		return count>0?true:false;
+	}
+	
 }
 
 
