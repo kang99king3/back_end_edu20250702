@@ -15,6 +15,14 @@
 		location.href=
 	        "boardController.jsp?command=insertboardform";
 	}
+	
+	//전체선택 체크박스 기능
+	function allSel(bool){// bool:전체 선택 박스의 체크 여부(true/false)
+		const seqs=document.getElementsByName("seq");//[seq,seq..]
+		for (let i = 0; i < seqs.length; i++) {
+			seqs[i].checked=bool;//체크여부 적용
+		}
+	}
 </script>
 </head>
 <%
@@ -35,7 +43,8 @@
 	<col width="300px"/>
 	<col width="200px"/>
 	<tr><th>
-			<input type="checkbox">
+			<input type="checkbox" name="all" 
+			       onclick="allSel(this.checked)">
 		</th>
 		<th>번호</th><th>작성자</th><th>제목</th><th>작성일</th>
 	</tr>
