@@ -37,6 +37,27 @@
 		pageContext.forward("boardlist.jsp");
 	}else if(command.equals("insertboardform")){//글쓰기폼요청
 		response.sendRedirect("insertboardform.jsp");
+	}else if(command.equals("insertboard")){
+		//id, title, content
+		String id=request.getParameter("id");
+		String title=request.getParameter("title");
+		String content=request.getParameter("content");
+		
+		boolean isS=dao.insertBoard(new HkDto(id,title,content));
+		if(isS){
+			response.sendRedirect("boardController.jsp?command=boardlist");
+		}else{
+			response.sendRedirect("error.jsp");
+		}
+	}else if(command.equals("boarddetail")){//상세보기
+		//전달된 파라미터 받기
+		String sseq=request.getParameter("seq");
+		int seq=Integer.parseInt(sseq);//"5"->정수 5 변환
+		
+		HkDto dto=dao.getBoard(seq);//db에서 글하나에 대한 정보가져오기
+		//dto객체를 boarddeatil.jsp로 전달해야 함
+		request.setAttribute("dto", dto);
+		pageContext.forward("boarddetail.jsp");
 	}
 %>
 </body>

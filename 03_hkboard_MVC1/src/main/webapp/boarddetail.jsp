@@ -11,12 +11,9 @@
 <title>게시판 상세보기</title>
 </head>
 <%
-	//전달된 파라미터 받기
-	String sseq=request.getParameter("seq");
-	int seq=Integer.parseInt(sseq);//"5"->정수 5 변환
-	
-	HkDao dao=new HkDao();
-	HkDto dto=dao.getBoard(seq);
+	//controller에서 request 스코프에 ["dto":dto] 객체를 저장했음
+	// boarddetail.jsp로 전달이 되고 아래 코드처럼 받는다
+	HkDto dto=(HkDto)request.getAttribute("dto");
 %>
 <body>
 <h1>게시판 상세보기</h1>
