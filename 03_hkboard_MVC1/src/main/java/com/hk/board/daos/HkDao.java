@@ -172,6 +172,65 @@ public class HkDao extends Database{
 		
 		return count>0?true:false;
 	}
+	
+	//글삭제: delete문
+	//여러글 삭제: delete문, delete문...
+	public boolean mulDel(String[] seqs) {
+		boolean isS=true;
+		int [] count=null;//쿼리 실행결과 개수
+		
+		Connection conn=null;
+		PreparedStatement psmt=null;
+		
+		String sql="DELETE FROM HKBOARD WHERE SEQ=?";
+		
+		try {
+			conn=getConnection();//2단계 DB연결
+			//TX처리: 기본 자동커밋 -> 수동 설정
+			conn.setAutoCommit(false);
+			
+			//batch 작업:동일한 쿼리에 ?만 달라지면서 실행개수가 변하는 작업
+			//          여러 작업을 미리 준비 시켜놓고 한번에 실행
+			psmt=conn.prepareStatement(sql);
+			for (int i = 0; i < seqs.length; i++) {
+				psmt.setString(1, seqs[i]);
+				psmt.addBatch();//쿼리문을 준비시킴
+			}
+			//delete from hkboard where seq in(1,3,4,5,6);
+			
+			count=psmt.executeBatch();//batch실행후 결과는 배열로 반환
+			                          //{1,1,1,1,1}
+			//TX처리
+			conn.commit();//DB에 반영하기
+		} catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				//TX처리
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}finally {
+			try {
+				//TX처리
+				conn.setAutoCommit(true);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			close(null, psmt, conn);
+			
+			//화면처리를 위한 성공여부 확인
+			for (int i = 0; i < count.length; i++) {
+				if(count[i]!=1) {
+					isS=false;
+					break;
+				}
+			}
+		}
+		
+		return isS;
+	}
 }
 
 

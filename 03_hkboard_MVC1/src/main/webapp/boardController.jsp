@@ -58,6 +58,24 @@
 		//dto객체를 boarddeatil.jsp로 전달해야 함
 		request.setAttribute("dto", dto);
 		pageContext.forward("boarddetail.jsp");
+	}else if(command.equals("boardupdateform")){
+		//수정폼 이동
+	}else if(command.equals("boardupdate")){
+		//수정하기
+	}else if(command.equals("boarddelete")){
+		//삭제하기
+	}else if(command.equals("muldel")){
+		//여러글 삭제
+		// 전달받는 파라미터: 동일한 name으로 여러개의 값이 전달되는 상황
+	    //   url -> boardController.jsp?seq=5,6,7,8
+// 		request.getParameter("seq");// 해당 name에 대한 값 1개를 받는다
+		String[] seqs=request.getParameterValues("seq");//여러개의 값을 받아 배열로 반환
+		boolean isS=dao.mulDel(seqs);
+		if(isS){
+			response.sendRedirect("boardController.jsp?command=boardlist");
+		}else{
+			response.sendRedirect("error.jsp");
+		}
 	}
 %>
 </body>

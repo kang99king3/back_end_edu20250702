@@ -36,6 +36,7 @@
 <h1>게시판</h1>
 <h2>글목록</h2>
 <form action="boardController.jsp" method="post">
+<input type="hidden" name="command" value="muldel"/>
 <table border="1">
 	<col width="50px"/>
 	<col width="50px"/>
