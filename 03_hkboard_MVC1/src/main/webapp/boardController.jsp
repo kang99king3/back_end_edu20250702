@@ -37,7 +37,7 @@
 		pageContext.forward("boardlist.jsp");
 	}else if(command.equals("insertboardform")){//글쓰기폼요청
 		response.sendRedirect("insertboardform.jsp");
-	}else if(command.equals("insertboard")){
+	}else if(command.equals("insertboard")){//글추가하기
 		//id, title, content
 		String id=request.getParameter("id");
 		String title=request.getParameter("title");
@@ -45,7 +45,10 @@
 		
 		boolean isS=dao.insertBoard(new HkDto(id,title,content));
 		if(isS){
+			//새로 다시 요청을 해서 응답하기 때문에 주소창이 업데이트 된다.
 			response.sendRedirect("boardController.jsp?command=boardlist");
+			//글추가할때 요청 주소가 남아있어서 새로고침하면 글이 계속 추가된다.
+// 			pageContext.forward("boardController.jsp?command=boardlist");
 		}else{
 			response.sendRedirect("error.jsp");
 		}
@@ -60,10 +63,40 @@
 		pageContext.forward("boarddetail.jsp");
 	}else if(command.equals("boardupdateform")){
 		//수정폼 이동
+		//전달된 파라미터 받기
+		String sseq=request.getParameter("seq");
+		int seq=Integer.parseInt(sseq);//"5"->정수 5 변환
+		
+		HkDto dto=dao.getBoard(seq);//db에서 글하나에 대한 정보가져오기
+		//dto객체를 boardupdateform.jsp로 전달해야 함
+		request.setAttribute("dto", dto);
+		pageContext.forward("boardupdateform.jsp");
 	}else if(command.equals("boardupdate")){
 		//수정하기
+		String sseq=request.getParameter("seq");
+		int seq=Integer.parseInt(sseq);
+		String title=request.getParameter("title");
+		String content=request.getParameter("content");
+		
+		boolean isS=dao.updateBoard(new HkDto(seq,title,content));
+		if(isS){
+			response.sendRedirect("boardController.jsp?"
+					             +"command=boarddetail&seq="+seq);
+		}else{
+			response.sendRedirect("error.jsp");
+		}
 	}else if(command.equals("boarddelete")){
 		//삭제하기
+		String sseq=request.getParameter("seq");
+		int seq=Integer.parseInt(sseq);
+		boolean isS=dao.deleteBoard(seq);
+		if(isS){
+			response.sendRedirect("boardController.jsp?command=boardlist");
+		}else{
+			response.sendRedirect("error.jsp");
+		}
+		
+		
 	}else if(command.equals("muldel")){
 		//여러글 삭제
 		// 전달받는 파라미터: 동일한 name으로 여러개의 값이 전달되는 상황

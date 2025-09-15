@@ -11,16 +11,14 @@
 <title>게시판 글 수정 폼</title>
 </head>
 <%
-	//전달된 파라미터 받기
-	String sseq=request.getParameter("seq");
-	int seq=Integer.parseInt(sseq);//"5"->정수 5 변환
-	
-	HkDao dao=new HkDao();
-	HkDto dto=dao.getBoard(seq);
+	//controller.jsp에서 구한 DTO객체 requestScope("dto",DTO);
+	// forward()로 이동하면 DTO객체가 전달된다.
+	HkDto dto=(HkDto)request.getAttribute("dto");
 %>
 <body>
 <h1>게시판 수정하기</h1>
-<form action="boardupdate.jsp" method="post">
+<form action="boardController.jsp" method="post">
+<input type="hidden" name="command" value="boardupdate">
 <input type="hidden" name="seq" value="<%=dto.getSeq()%>"/>
 <table border="1">
 	<tr>
@@ -42,7 +40,7 @@
 		<td colspan="2">
 			<input type="submit" value="수정완료" />
 			<input type="button" value="글목록" 
-						onclick="location.href='boardlist.jsp'"/>
+			  onclick="location.href='boardController.jsp?command=boardlist'"/>
 		</td>
 	</tr>
 </table>
