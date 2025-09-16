@@ -34,6 +34,15 @@ public class UserDto implements Serializable{
 		this.role = role;
 		this.regDate = regDate;
 	}
+	
+	public UserDto(String id, String name, String password, String address, String email) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.password = password;
+		this.address = address;
+		this.email = email;
+	}
 
 	public int getSeq() {
 		return seq;
