@@ -46,6 +46,12 @@
 			</script>
 			<%
 		}
+	}else if(command.equals("idchk")){//id체크하기
+		String id=request.getParameter("id");
+		String resultId=dao.idCheck(id);//결과값이 null이면 사용가능
+		
+		request.setAttribute("resultId", resultId);
+		pageContext.forward("idchkform.jsp"); 
 	}
 %>
 </body>

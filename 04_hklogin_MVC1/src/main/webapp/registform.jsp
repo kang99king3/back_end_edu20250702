@@ -11,14 +11,21 @@
 <script type="text/javascript">
 	//아이디 중복체크
 	function idChk(){
-		
+		const id=document
+		        .querySelectorAll("input[name=id]")[0].value;
+		if(id==""){
+			alert("아이디를 입력하세요");
+		}else{
+			window.open("userController.jsp?command=idchk&id="+id,
+					    "아이디 확인","width=300px,height=300px");
+		}
 	}
 </script>
 </head>
 <body>
 <div id="registForm">
 	<h1>회원가입</h1>
-	<form action="userConroller.jsp" method="post">
+	<form action="userController.jsp" method="post">
 		<input type="hidden" name="command" value="insertuser" />
 		<input type="text" name="id" required="required" placeholder="ID"/>
 		<button onclick="idChk()">중복체크</button>

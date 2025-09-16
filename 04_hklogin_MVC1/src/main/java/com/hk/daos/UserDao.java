@@ -2,6 +2,7 @@ package com.hk.daos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.hk.datasource.Database;
@@ -51,6 +52,34 @@ public class UserDao extends Database{
 			close(null, psmt, conn);
 		}
 		return count>0?true:false;
+	}
+	
+	//ID 중복체크하기
+	public String idCheck(String id) {
+		String resultId=null;
+		
+		Connection conn=null;
+		PreparedStatement psmt=null;
+		ResultSet rs=null;
+		
+		String sql="SELECT id FROM userinfo WHERE id=?";
+		
+		try {
+			conn=getConnection();
+			psmt=conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			rs=psmt.executeQuery();
+			while(rs.next()) {
+				resultId=rs.getString(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rs, psmt, conn);
+		}
+
+		return resultId;
 	}
 	
 	//관리자 기능
