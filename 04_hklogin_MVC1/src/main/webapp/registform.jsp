@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>회원가입폼</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="css/registForm.css" >
+<!-- <link rel="stylesheet" href="css/registForm.css" > -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 	function sample6_execDaumPostcode() {
@@ -137,11 +137,11 @@
 			<div class="col-12">
 <!-- 				<input class="form-control" type="text" name="address" required="required" -->
 <!-- 					placeholder="ADDRESS" /> -->
-				<input type="text" id="sample6_postcode" placeholder="우편번호">
-				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-				<input type="text" id="sample6_address" placeholder="주소"><br>
-				<input type="text" id="sample6_detailAddress" placeholder="상세주소">
-				<input type="text" id="sample6_extraAddress" placeholder="참고항목">
+				<input name="addr1"  type="text" id="sample6_postcode" placeholder="우편번호">
+				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>	
+				<input name="addr2"  type="text" id="sample6_address" placeholder="주소"><br>
+				<input name="addr3"  type="text" id="sample6_detailAddress" placeholder="상세주소">
+				<input name="addr4"  type="text" id="sample6_extraAddress" placeholder="참고항목">
 			</div>
 		</div>
 		<div class="row mb-3">
