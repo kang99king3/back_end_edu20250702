@@ -41,7 +41,16 @@
 		const id=document.querySelectorAll("input[name=id]")[0].value;
 		
 		if(chkID.checked){//체크가 됐다면 쿠키에 id값을 저장
-			setCookie()
+			setCookie("rememberid",id,100);
+		}
+	}
+	
+	//cookie에 아이디값이 저장되어 있다면 id입력박스에 id를 출력시키자
+	onload=function(){
+		const cookieID=getCookie("rememberid");
+		if(cookieID!=null){
+			document.querySelectorAll("input[name=id]")[0]
+								.value=cookieID;
 		}
 	}
 	
