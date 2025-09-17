@@ -1,3 +1,10 @@
+<%@page import="com.hk.dtos.UserDto"%>
+<%
+	response.setHeader("Pragma", "no-cache");
+	response.setHeader("Cache-Control","no-cache");
+	response.setHeader("Cache-Control","no-store");
+	response.setDateHeader("Expires", 0L);
+%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%request.setCharacterEncoding("utf-8"); %>
@@ -11,6 +18,13 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 	<script src="js/cookieFunc.js" type="text/javascript"></script>
 </head>
+<%
+	//로그인 정보가 없을 경우(로그아웃된 경우) 화면처리
+	UserDto ldto=(UserDto)session.getAttribute("ldto");
+	if(ldto==null){
+		pageContext.forward("index.jsp");
+	}
+%>
 <body>
 <!-- <nav class="navbar"> -->
 <!-- 	<div id="navbar"> -->

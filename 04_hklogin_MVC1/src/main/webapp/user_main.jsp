@@ -9,9 +9,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	.main{
+		padding:10px;
+		font-size: 15pt;
+	}
+	.main a{
+		text-decoration: none;
+	}    
+</style>
 </head>
 <body>
-<% UserDto ldto=(UserDto)session.getAttribute("ldto"); %>
+<%-- <% UserDto ldto=(UserDto)session.getAttribute("ldto"); %> --%>
 <div id="container">
 	<div class="main">
 		<div>
