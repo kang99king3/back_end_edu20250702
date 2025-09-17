@@ -7,9 +7,23 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+.footer{
+	position: fixed;
+	left:0px;
+	right:0px;
+	bottom:0px;
+	text-align: center;
+	color:black;
+	background-color: #EBFBFF;
+	line-height: 100px;
+	height: 100px;
+	font-size: 15pt;
+}
+</style>
 </head>
 <body>
-<div class="footer" style="line-height:100px;font-size:20pt; height: 100px; background-color: #EBFBFF;color:black; text-align: center;">
+<div class="footer" >
 	Copyright 1999-2025. 한경닷컴 All rights reserved.
 </div>
 </body>
