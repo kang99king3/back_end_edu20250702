@@ -61,6 +61,16 @@
 		
 		request.setAttribute("resultId", resultId);
 		pageContext.forward("idchkform.jsp"); 
+	}else if(command.equals("login")){
+		String id=request.getParameter("id");
+		String password=request.getParameter("password");
+		
+		//id와 pw에 해당하는 회원정보 조회
+		UserDto dto=dao.getLogin(id, password);
+		
+		if(dto==null||dto.getId()==null){//회원이 존재하지 않는다면
+			response.sendRedirect("index.jsp");
+		}
 	}
 %>
 </body>

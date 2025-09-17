@@ -54,7 +54,7 @@ public class UserDao extends Database{
 		return count>0?true:false;
 	}
 	
-	//ID 중복체크하기
+	//2.ID 중복체크하기
 	public String idCheck(String id) {
 		String resultId=null;
 		
@@ -81,6 +81,39 @@ public class UserDao extends Database{
 
 		return resultId;
 	}
+	
+	//3.로그인 기능 : 파리미터 ID, PASSWORD
+	public UserDto getLogin(String id,String password) {
+		UserDto dto=new UserDto();
+		
+		Connection conn=null;
+		PreparedStatement psmt=null;
+		ResultSet rs=null;
+		
+		String sql="SELECT id,name,role FROM userinfo "
+				 + " WHERE id=? and password=? and enabled='Y' ";
+		
+		try {
+			conn=getConnection();
+			psmt=conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			psmt.setString(2, password);
+			rs=psmt.executeQuery();
+			while(rs.next()) {
+				dto.setId(rs.getString(1));
+				dto.setPassword(rs.getString(2));
+				dto.setRole(rs.getString(3));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rs, psmt, conn);
+		}
+
+		return dto;
+	}
+	
 	
 	//관리자 기능
 }

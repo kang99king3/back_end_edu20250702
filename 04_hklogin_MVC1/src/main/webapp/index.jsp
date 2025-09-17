@@ -10,7 +10,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="">
+<form action="userController.jsp" method="post">
 	<input type="hidden" name="command" value="login">
 	<h1>Login</h1>
 	<input type="text" name="id" placeholder="ID" 
@@ -21,6 +21,7 @@
 	<button type="submit">Sign In</button>
 	<button type="button" onclick="registForm()">Sign Up</button>
 </form>
+
 <script type="text/javascript">
 	function registForm(){
 		location.href="userController.jsp?command=registform";
