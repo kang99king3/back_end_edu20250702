@@ -1,3 +1,4 @@
+<%@page import="java.net.URLEncoder"%>
 <%@page import="com.hk.dtos.UserDto"%>
 <%@page import="com.hk.daos.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -69,8 +70,28 @@
 		UserDto dto=dao.getLogin(id, password);
 		
 		if(dto==null||dto.getId()==null){//회원이 존재하지 않는다면
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("index.jsp?msg="
+			      +URLEncoder.encode("회원가입을 해주세요","utf-8"));
+		}else{
+			//회원이라면!
+			//sessionScope객체에 로그인 정보를 저장
+			session.setAttribute("ldto", dto);
+			session.setMaxInactiveInterval(10*60);//10분간 유지
+			
+			//등급[ADMIN,MANAGER,USER]을 확인해서 해당 Main페이지로 이동하기
+			if(dto.getRole().toUpperCase().equals("ADMIN")){
+				response.sendRedirect("admin_main.jsp");
+			}else if(dto.getRole().toUpperCase().equals("MANAGER")){
+				response.sendRedirect("manager_main.jsp");
+			}else if(dto.getRole().toUpperCase().equals("USER")){
+				response.sendRedirect("user_main.jsp");
+			}
 		}
+	}else if(command.equals("logout")){//로그아웃하기
+		//session의 로그인 정보를 삭제한다.
+// 		session.removeAttribute("ldto");// ldto만 삭제
+		session.invalidate();//session의 모든 정보 삭제
+		response.sendRedirect("index.jsp");
 	}
 %>
 </body>
