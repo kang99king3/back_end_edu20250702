@@ -22,7 +22,14 @@
 	//로그인 정보가 없을 경우(로그아웃된 경우) 화면처리
 	UserDto ldto=(UserDto)session.getAttribute("ldto");
 	if(ldto==null){
-		pageContext.forward("index.jsp");
+		//로그인 요청 :   localhost:8080/04_userlogin/login.jsp 
+		// 로그인정보가 존재하지 않아 index.jsp로 돌아가도록 응답
+		//    pageContext.forward("index.jsp");
+		//        화면은 index.jsp이지만 주소창은 localhost:8080/04_userlogin/login.jsp
+// 		pageContext.forward("index.jsp");//요청할때 URL을 표현
+		//sendRedirect는 응답URL을 클라이언트한테 재요청해 달라고 해서 응답
+		response.sendRedirect("index.jsp");//요청할때 URL(X), 응답할때 URL을 표현
+		return; // 현재 코드 이후의 코드는 실행X
 	}
 %>
 <body>

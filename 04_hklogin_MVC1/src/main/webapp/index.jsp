@@ -42,6 +42,8 @@
 		
 		if(chkID.checked){//체크가 됐다면 쿠키에 id값을 저장
 			setCookie("rememberid",id,100);
+		}else{
+			removeCookie("rememberid");
 		}
 	}
 	
@@ -51,6 +53,8 @@
 		if(cookieID!=null){
 			document.querySelectorAll("input[name=id]")[0]
 								.value=cookieID;
+			document.querySelectorAll("input[type=checkbox]")[0]
+								.checked=true;
 		}
 	}
 	
