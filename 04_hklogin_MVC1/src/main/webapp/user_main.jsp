@@ -10,13 +10,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-	.main{
-		padding:10px;
-		font-size: 15pt;
-	}
-	.main a{
-		text-decoration: none;
-	}    
+/* 	.main{ */
+/* 		padding:10px; */
+/* 		font-size: 15pt; */
+/* 	} */
+/* 	.main a{ */
+/* 		text-decoration: none; */
+/* 	}     */
 </style>
 </head>
 <body>
@@ -30,7 +30,7 @@
 			</span>
 			<span>
 				<a href="userController.jsp?command=userinfo&id=<%=ldto.getId()%>">나의 정보</a>
-			</span>
+			</span>|
 			<span>
 				<a href="userController.jsp?command=logout">로그아웃</a>
 			</span>

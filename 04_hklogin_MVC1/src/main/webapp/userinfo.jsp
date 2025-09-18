@@ -14,11 +14,12 @@
 	<div class="main">
 		<div>
 			<span>
-			<%=ldto.getId()%>[<%=ldto.getRole()%>]
+<%-- 			<%=ldto.getId()%>[<%=ldto.getRole()%>] --%>
+			${sessionScope.ldto.id}[${sessionScope.ldto.role}]
 			님이 로그인 하였습니다.
 			</span>
 			<span>
-				<a href="userController.jsp?command=userinfo&id=<%=ldto.getId()%>">나의 정보</a>
+				<a href="userController.jsp?command=userinfo&id=${ldto.id}">나의 정보</a>
 			</span>
 			<span>
 				<a href="userController.jsp?command=logout">로그아웃</a>
@@ -33,7 +34,36 @@
 		<div id="myinfo">
 			<form action="userController.jsp" method="post">
 				<input type="hidden" name="command" value="userupdate"/>
-				<input type="hidden" name="id" value="${dto.id}"/>
+				<input type="hidden" name="id" value="${requestScope.dto.id}"/>
+				<table border="1" class="table table-striped table-hover">
+					<tr>
+						<th>아이디</th>
+						<td>${dto.id}</td>
+					</tr>
+					<tr>
+						<th>이름</th>
+						<td>${dto.name}</td>
+					</tr>
+					<tr>
+						<th>등급</th>
+						<td>${dto.role}</td>
+					</tr>
+					<tr>
+						<th>주소</th>
+						<td><input type="text" name="address" value="${dto.address}"/></td>
+					</tr>
+					<tr>
+						<th>이메일</th>
+						<td><input type="email" name="email" value="${dto.email}"/></td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<button class="btn btn-primary" type="submit">수정</button>
+							<button class="btn btn-primary" type="button" 
+							   onclick="delUser('${dto.id}')">탈퇴</button>
+						</td>
+					</tr>
+				</table>
 			</form>
 		</div>
 	</div>
