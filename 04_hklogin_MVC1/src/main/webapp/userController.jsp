@@ -92,6 +92,18 @@
 // 		session.removeAttribute("ldto");// ldto만 삭제
 		session.invalidate();//session의 모든 정보 삭제
 		response.sendRedirect("index.jsp");
+	}else if(command.equals("userinfo")){//회원상세조회
+		//로그인할때 select문 모든 정보조회로 구현
+		// --> 나의정보 조회할때도 활용하는 경우가 있음
+		//    --> sessoin에 저장하고 그 정보를 사용 --> 이렇게 사용하면 안됨
+		
+		String id=request.getParameter("id");
+		UserDto dto=dao.getUser(id);
+		
+		//객체(dto)를 스코프객체에 저장하고
+		request.setAttribute("dto", dto);
+		//이동한다.
+		pageContext.forward("userinfo.jsp");
 	}
 %>
 </body>

@@ -114,7 +114,43 @@ public class UserDao extends Database{
 		return dto;
 	}
 	
+	//4. 나의 정보 조회
+	public UserDto getUser(String id) {
+		UserDto dto=new UserDto();
+		
+		Connection conn=null;
+		PreparedStatement psmt=null;
+		ResultSet rs=null;
+		
+		String sql="SELECT seq,id,name,address,email,role,regdate"
+				 + " FROM userinfo "
+				 + " WHERE id=? ";
+		
+		try {
+			conn=getConnection();
+			psmt=conn.prepareStatement(sql);
+			psmt.setString(1, id);
 	
+			rs=psmt.executeQuery();
+			while(rs.next()) {
+				dto.setSeq(rs.getInt(1));
+				dto.setId(rs.getString(2));
+				dto.setName(rs.getString(3));
+				dto.setAddress(rs.getString(4));
+				dto.setEmail(rs.getString(5));
+				dto.setRole(rs.getString(6));
+				dto.setRegDate(rs.getDate(7));
+			}
+			System.out.println(dto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rs, psmt, conn);
+		}
+
+		return dto;
+	}
 	//관리자 기능
 }
 
