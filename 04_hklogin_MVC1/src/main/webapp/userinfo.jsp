@@ -50,11 +50,11 @@
 					</tr>
 					<tr>
 						<th>주소</th>
-						<td><input type="text" name="address" value="${dto.address}"/></td>
+						<td><input class="form-control" type="text" name="address" value="${dto.address}"/></td>
 					</tr>
 					<tr>
 						<th>이메일</th>
-						<td><input type="email" name="email" value="${dto.email}"/></td>
+						<td><input class="form-control" type="email" name="email" value="${dto.email}"/></td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -68,6 +68,13 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	function delUser(id){
+		if(confirm("정말 탈퇴하시겠습니까?")){
+			location.href="userController.jsp?command=deluser&id="+id;
+		}
+	}
+</script>
 </body>
 </html>
 <%@ include file="footer.jsp" %>

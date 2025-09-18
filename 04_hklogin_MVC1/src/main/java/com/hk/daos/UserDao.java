@@ -151,6 +151,56 @@ public class UserDao extends Database{
 
 		return dto;
 	}
+	
+	//5.나의 정보 수정하기
+	public boolean updateUser(UserDto dto) {
+		int count=0;
+		
+		Connection conn=null;
+		PreparedStatement psmt=null;
+		
+		String sql=" UPDATE USERINFO SET ADDRESS=? , EMAIL=? "
+				 + " WHERE ID=? ";
+		
+		try {
+			conn=getConnection();
+			psmt=conn.prepareStatement(sql);
+			psmt.setString(1, dto.getAddress());
+			psmt.setString(2, dto.getEmail());
+			psmt.setString(3, dto.getId());
+
+			count=psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(null, psmt, conn);
+		}
+		return count>0?true:false;
+	}
+	
+	//6.탈퇴하기
+	public boolean delUser(String id) {
+		int count=0;
+		
+		Connection conn=null;
+		PreparedStatement psmt=null;
+		
+		String sql=" UPDATE USERINFO SET ENABLED='N' "
+				 + " WHERE ID=? ";
+		
+		try {
+			conn=getConnection();
+			psmt=conn.prepareStatement(sql);
+			psmt.setString(1, id);
+
+			count=psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(null, psmt, conn);
+		}
+		return count>0?true:false;
+	}
 	//관리자 기능
 }
 
