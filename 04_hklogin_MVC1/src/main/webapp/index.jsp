@@ -1,4 +1,4 @@
-<%-- <%@ include file="header.jsp" %> --%>
+<%@ include file="header.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%request.setCharacterEncoding("utf-8"); %>
@@ -51,8 +51,10 @@
 	onload=function(){
 		const cookieID=getCookie("rememberid");
 		if(cookieID!=null){
+			//저장된 id가 있다면 id입력박스에 해당id를 입력
 			document.querySelectorAll("input[name=id]")[0]
 								.value=cookieID;
+			//저장된 id가 있다면, id체크박스에 체크되게 함
 			document.querySelectorAll("input[type=checkbox]")[0]
 								.checked=true;
 		}

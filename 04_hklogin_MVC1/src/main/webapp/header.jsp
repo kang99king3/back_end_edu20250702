@@ -19,6 +19,7 @@
 	<script src="js/cookieFunc.js" type="text/javascript"></script>
 </head>
 <%
+/*
 	//로그인 정보가 없을 경우(로그아웃된 경우) 화면처리
 	UserDto ldto=(UserDto)session.getAttribute("ldto");
 	if(ldto==null){
@@ -31,6 +32,32 @@
 		response.sendRedirect("index.jsp");//요청할때 URL(X), 응답할때 URL을 표현
 		return; // 현재 코드 이후의 코드는 실행X
 	}
+*/
+	// index.jsp, registform.jsp -> 로그인 정보가 필요없음
+	// -->문제점: 로그인정보가 없기때문에 index.jsp로 무조건 이동된다.
+	// 요청URL을 확인해서 2개의 페이지 url이 해당된다면 제외시키자
+	System.out.println("요청URL:"+request.getRequestURI());
+	UserDto ldto=null;
+	String requestPath=request.getRequestURI();
+	
+	//요청 URL에 index.jsp와 registform.jsp가 포함되지 않았을 경우
+	if(!requestPath.contains("index.jsp")&&
+	   !requestPath.contains("registform.jsp")){
+		ldto=(UserDto)session.getAttribute("ldto");
+		if(ldto==null){
+			response.sendRedirect("index.jsp");
+			return ;
+		}
+	}
+	
+	//폴더별로 페이지를 구분 관리
+	// user/user_main.jsp
+	//     /user_info.jsp
+	
+	// user/* --> 로그인이 필요한 페이지 처리
+	// admin/*
+	
+	// filter 개념 : 클라이언트에서 서버(컨테이너)로 요청들어가기전에 실행
 %>
 <body>
 <!-- <nav class="navbar"> -->
