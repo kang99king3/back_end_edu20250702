@@ -60,7 +60,7 @@ public class AdminDao extends Database{
 
 		return list;
 	}
-	//2.회원목록 전체 조회[사용중]
+	//2.회원목록 전체 조회[사용중] ---> 등급수정을 위한 목록 조회
 	// getUserList: select문
 	public List<UserDto> getUserList() {
 		List<UserDto>list=new ArrayList<UserDto>();

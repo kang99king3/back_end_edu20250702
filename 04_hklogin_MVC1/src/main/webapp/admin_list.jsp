@@ -51,7 +51,7 @@
 							<td><%=dto.getId()%></td>
 							<td><%=dto.getName()%></td>
 							<td><%=dto.getRole()%>
-								<%
+								<%  //로그인한 아이디와 목록에 아이디가 다를 경우만 변경버튼 출력
 									if(!(dto.getId().equals(ldto.getId()))){
 										%>										
 										<a href="adminController.jsp?command=userrole&id=<%=dto.getId()%>" 

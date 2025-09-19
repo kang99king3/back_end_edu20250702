@@ -14,7 +14,7 @@
 	<div class="main">
 		<div>
 			<span>
-			<%=ldto.getId()%>[<%=ldto.getRole()%>]
+			${sessionScope.ldto.id}[${sessionScope.ldto.role}]
 			님이 로그인 하였습니다.
 			</span>
 			<span>
@@ -38,11 +38,11 @@
 				<table border="1" class="table table-striped table-hover">
 					<tr>
 						<th>아이디</th>
-						<td>${dto.id}</td>
+						<td>${requestScope.dto.id}</td>
 					</tr>
 					<tr>
 						<th>이름</th>
-						<td>${dto.name}</td>
+						<td>${requestScope.dto.name}</td>
 					</tr>
 					<tr>
 						<th>등급</th>

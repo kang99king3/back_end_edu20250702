@@ -45,7 +45,7 @@
 	if(!requestPath.contains("index.jsp")&&
 	   !requestPath.contains("registform.jsp")){
 		ldto=(UserDto)session.getAttribute("ldto");
-		if(ldto==null){
+		if(ldto==null){// 로그인이 안되어 있는 경우
 			response.sendRedirect("index.jsp");
 			return ;
 		}
