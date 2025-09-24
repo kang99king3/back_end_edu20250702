@@ -44,7 +44,7 @@ public class BoardController extends HttpServlet {
 		
 		HkDao dao=new HkDao();
 		
-		if(command.equals("/boardlist.board")) {
+		if(command.equals("/boardlist.board")) { // 글목록
 			List<HkDto> list=dao.getAllList();
 			request.setAttribute("list", list);
 			
@@ -52,9 +52,9 @@ public class BoardController extends HttpServlet {
 //			request.getRequestDispatcher("boardlist.jsp")
 //			       .forward(request, response);
 			dispatch("boardlist.jsp", request, response);
-		}else if(command.equals("/insertboardform.board")) {
+		}else if(command.equals("/insertboardform.board")) {//글추가폼
 			response.sendRedirect("insertboardform.jsp");
-		}else if(command.equals("/insertboard.board")) {
+		}else if(command.equals("/insertboard.board")) {//글추가하기
 			//id, title, content
 			String id=request.getParameter("id");
 			String title=request.getParameter("title");
@@ -67,12 +67,21 @@ public class BoardController extends HttpServlet {
 			}else{
 				response.sendRedirect("error.jsp");
 			}
+		}else if(command.equals("/muldel.board")) {//여러글 삭제
+			String[] seqs=request.getParameterValues("seq");//여러개의 값을 받아 배열로 반환
+			boolean isS=dao.mulDel(seqs);
+			if(isS){
+				response.sendRedirect("boardlist.board");
+			}else{
+				response.sendRedirect("error.jsp");
+			}
 		}
 	}
 
 	//클라이언트에서 post방식으로 요청을 하면 실행하는 메서드
+	// tomcat이 요청을 받아서 doPost에 파라미터로 request,response객체를 전달해주는 개념
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		doGet(request, response);//클라이언트에서 요청X -> 서버 내부에서 호출
 //		test(request);
 	}
 	

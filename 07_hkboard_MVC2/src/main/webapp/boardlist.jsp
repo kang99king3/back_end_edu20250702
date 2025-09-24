@@ -50,7 +50,6 @@
 <h1>게시판</h1>
 <h2>글목록</h2>
 <form action="muldel.board" method="post" onsubmit="return isAllCheck()">
-
 <table border="1">
 	<col width="50px"/>
 	<col width="50px"/>
