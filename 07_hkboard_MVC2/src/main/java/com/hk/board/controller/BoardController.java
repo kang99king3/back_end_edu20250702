@@ -1,6 +1,7 @@
 package com.hk.board.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -102,6 +103,29 @@ public class BoardController extends HttpServlet {
 			request.setAttribute("dto", dto);
 //			pageContext.forward("boardupdateform.jsp");
 			dispatch("boardupdateform.jsp", request, response);
+		}else if(command.equals("/boardupdate.board")) {
+			//수정하기
+			String sseq=request.getParameter("seq");
+			int seq=Integer.parseInt(sseq);
+			String title=request.getParameter("title");
+			String content=request.getParameter("content");
+			
+			boolean isS=dao.updateBoard(new HkDto(seq,title,content));
+			if(isS){
+//				response.sendRedirect("boarddetail.board?seq="+seq);
+//				PrintWriter out=response.getWriter();
+//				String js=
+//				 "<script type='text/javascript'>"
+//				+"	alert('수정완료');"
+//				+"	location.href='boarddetail.board?seq="+seq+"';"
+//				+"</script>" ;
+//				
+//				out.print(js);//브라우저로 출력한다.
+				jsResponse("boarddetail.board?seq="+seq
+						  ,"수정완료", response);
+			}else{
+				response.sendRedirect("error.jsp");
+			}
 		}
 	}
 
@@ -122,6 +146,19 @@ public class BoardController extends HttpServlet {
 			             HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher(url)
 	       .forward(request, response);
+	}
+	
+	public void jsResponse(String url, String msg,
+						   HttpServletResponse response) 
+						   throws IOException {
+		PrintWriter out=response.getWriter();
+		String js=
+		 "<script type='text/javascript'>"
+		+"	alert('"+msg+"');"
+		+"	location.href='"+url+"';"
+		+"</script>" ;
+		
+		out.print(js);//브라우저로 출력한다.
 	}
 
 }
