@@ -44,6 +44,7 @@ public class HkDao extends Database{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new RuntimeException(e); // 예외를 던져서 톰캣까지 올라가게 함
 		}finally {
 			close(rs, psmt, conn);
 		}
@@ -73,6 +74,7 @@ public class HkDao extends Database{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new RuntimeException(e); // 예외를 던져서 톰캣까지 올라가게 함
 		}finally {
 			close(null, psmt, conn);
 		}

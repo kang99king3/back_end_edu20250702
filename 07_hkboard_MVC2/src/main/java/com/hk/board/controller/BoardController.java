@@ -126,6 +126,16 @@ public class BoardController extends HttpServlet {
 			}else{
 				response.sendRedirect("error.jsp");
 			}
+		}else if(command.equals("/boarddelete.board")) {
+			//삭제하기
+			String sseq=request.getParameter("seq");
+			int seq=Integer.parseInt(sseq);
+			boolean isS=dao.deleteBoard(seq);
+			if(isS){
+				response.sendRedirect("boardlist.board");
+			}else{
+				response.sendRedirect("error.jsp");
+			}
 		}
 	}
 
