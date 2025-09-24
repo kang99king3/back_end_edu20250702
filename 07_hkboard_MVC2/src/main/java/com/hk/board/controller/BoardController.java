@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.hk.board.daos.HkDao;
 import com.hk.board.dtos.HkDto;
@@ -19,7 +20,12 @@ public class BoardController extends HttpServlet {
 
 	//클라이언트에서 get방식으로 요청을 하면 실행하는 메서드
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		request.setCharacterEncoding("utf-8");
+		
+		//session객체를 얻어오기
+//		HttpSession session=request.getSession();
+//					session.setAttribute("ldto", dto);
+		
+		//		request.setCharacterEncoding("utf-8");
 //		response.setContentType("text/html;charset=utf-8");
 		//--> 인코딩처리: filter에서 구현함
 		
@@ -75,6 +81,27 @@ public class BoardController extends HttpServlet {
 			}else{
 				response.sendRedirect("error.jsp");
 			}
+		}else if(command.equals("/boarddetail.board")) {//상세보기
+			//전달된 파라미터 받기
+			String sseq=request.getParameter("seq");
+			int seq=Integer.parseInt(sseq);//"5"->정수 5 변환
+			
+			HkDto dto=dao.getBoard(seq);//db에서 글하나에 대한 정보가져오기
+			//dto객체를 boarddeatil.jsp로 전달해야 함
+			request.setAttribute("dto", dto);
+//			pageContext.forward("boarddetail.jsp");//JSP문법 
+			dispatch("boarddetail.jsp", request, response);
+		}else if(command.equals("/boardupdateform.board")) {//수정폼이동
+			//수정폼 이동          
+			//전달된 파라미터 받기
+			String sseq=request.getParameter("seq");
+			int seq=Integer.parseInt(sseq);//"5"->정수 5 변환
+			
+			HkDto dto=dao.getBoard(seq);//db에서 글하나에 대한 정보가져오기
+			//dto객체를 boardupdateform.jsp로 전달해야 함
+			request.setAttribute("dto", dto);
+//			pageContext.forward("boardupdateform.jsp");
+			dispatch("boardupdateform.jsp", request, response);
 		}
 	}
 
