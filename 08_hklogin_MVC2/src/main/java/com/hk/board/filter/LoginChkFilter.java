@@ -21,7 +21,7 @@ public class LoginChkFilter extends HttpFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        //false: 요청과연결된 세션이 있으면 있는거 쓰고, 없으면 새로 생성해라
+        //false: 요청과 연결된 세션이 있으면 있는거 쓰고, 없으면 새로 생성해라
         HttpSession session = req.getSession(false);
         String uri = req.getRequestURI();
 
