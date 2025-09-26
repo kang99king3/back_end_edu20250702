@@ -17,4 +17,24 @@
            (SELECT NVL(MAX(REFER),0)+1 FROM ANSWERBOARD),
            0,0,0,'N')
   </insert>
+  
+  <select id="getboard" parameterType="Integer" resultType="AnsDto">
+  	SELECT SEQ,ID,TITLE,CONTENT,REGDATE
+  	FROM ANSWERBOARD
+  	WHERE SEQ=#{seq}
+  </select>
+  
+  <!-- 조회수 -->
+  <update id="readcount" parameterType="Integer">
+  	UPDATE ANSWERBOARD SET READCOUNT = READCOUNT+1
+  	WHERE SEQ = #{seq}
+  </update>
 </mapper>
+
+
+
+
+
+
+
+

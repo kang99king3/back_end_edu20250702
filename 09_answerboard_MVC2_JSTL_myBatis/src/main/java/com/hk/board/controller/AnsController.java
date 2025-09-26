@@ -36,13 +36,24 @@ public class AnsController extends HttpServlet{
 			dispatch("boardlist.jsp", request, response);
 		}else if(command.equals("/insertboardform.board")) {
 			response.sendRedirect("insertboardform.jsp");
+		}else if(command.equals("/insertboard.board")) {
+			String id=request.getParameter("id");
+			String title=request.getParameter("title");
+			String content=request.getParameter("content");
+			
+			boolean isS=dao.insertBoard(new AnsDto(0,id,title,content));
+			if(isS) {
+				response.sendRedirect("boardlist.board");
+			}else {
+				response.sendRedirect("error.jsp");
+			}
 		}
 	
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		super.doGet(request, response);
+		doGet(request, response);
 	}
 	
 	//forward 기능 구현

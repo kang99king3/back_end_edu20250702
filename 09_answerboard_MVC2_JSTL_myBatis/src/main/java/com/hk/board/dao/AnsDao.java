@@ -1,7 +1,9 @@
 package com.hk.board.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -41,6 +43,43 @@ public class AnsDao extends SqlMapConfig{
 			sqlSession=getSessionFactory().openSession(true);
 			//파라미터 타입: dto, Array, Map, String, Integer 등
 			count=sqlSession.insert(namespace+"insertboard",dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			sqlSession.close();
+		}
+		return count>0?true:false;
+	}
+	
+	//3.글상세 조회
+	public AnsDto getBoard(int seq){
+		AnsDto dto=new AnsDto();
+		SqlSession sqlSession=null;
+		//파라미터 전달 방식의 기본은 map에 담아서 전달한다.
+//		Map<String, Integer>map=new HashMap<String, Integer>();
+//		map.put("seq", seq);
+		try {
+			sqlSession=getSessionFactory().openSession(true);
+			dto=sqlSession.selectOne(namespace+"getboard",seq);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			sqlSession.close();
+		}
+		return dto;
+	}
+	
+	//4. 조회수 올리기
+	public boolean readCount(int seq){
+		int count=0;
+		SqlSession sqlSession=null;
+		
+		try {
+			sqlSession=getSessionFactory().openSession(true);
+			//파라미터 타입: dto, Array, Map, String, Integer 등
+			count=sqlSession.update(namespace+"readcount",seq);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

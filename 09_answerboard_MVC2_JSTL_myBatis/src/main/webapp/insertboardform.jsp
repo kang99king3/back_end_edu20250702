@@ -11,7 +11,7 @@
 </head>
 <body>
 <h1>글 추가하기</h1>
-<form  action="insertboard.board" method="post">
+<form action="insertboard.board" method="post">
 	<table class="table table-striped" border="1">
 		<tr>
 			<th>작성자(ID)</th>
