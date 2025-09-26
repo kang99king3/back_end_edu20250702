@@ -7,8 +7,10 @@
 <mapper namespace="com.hk.board.dao">
 
   <select id="boardlist" resultType="AnsDto">
-    SELECT SEQ,ID,TITLE,CONTENT,REGDATE 
+    SELECT SEQ,ID,TITLE,CONTENT,REGDATE,
+    	   REFER, STEP, DEPTH, READCOUNT, DELFLAG 
     FROM ANSWERBOARD 
+    ORDER BY REFER DESC, STEP ASC
   </select>
   
   <insert id="insertboard" parameterType="AnsDto" >

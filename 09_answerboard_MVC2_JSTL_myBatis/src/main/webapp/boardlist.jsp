@@ -51,16 +51,19 @@
 <h2>글목록</h2>
 <form action="muldel.board" method="post" onsubmit="return isAllCheck()">
 <table class="table table-striped" border="1">
-	<col width="50px"/>
-	<col width="50px"/>
-	<col width="100px"/>
-	<col width="300px"/>
-	<col width="200px"/>
 	<tr><th>
 			<input class="form-check-input" type="checkbox" name="all" 
 			       onclick="allSel(this.checked)">
 		</th>
-		<th>번호</th><th>작성자</th><th>제목</th><th>작성일</th>
+		<th>번호</th>
+		<th>작성자</th>
+		<th>제목</th>
+		<th>작성일</th>
+		<th>조회수</th>
+		<th>삭제여부</th>
+		<th>REFER</th>
+		<th>STEP</th>
+		<th>DEPTH</th>
 	</tr>
 	<c:choose>
 		<c:when test="${empty list}">
@@ -75,15 +78,19 @@
 					<td>${dto.seq}</td>
 					<td>${dto.id}</td>
 					<td><a href="boarddetail.board?seq=${dto.seq}">${dto.title}</a></td>
-<%-- 					<td><fmt:formatDate value="${dto.regDate}"  --%>
-<%-- 										pattern="yyyy년 MM월 dd일"/> </td> --%>
-					<td>${dto.regDate}</td>
+					<td><fmt:formatDate value="${dto.regDate}" 
+										pattern="yyyy년 MM월 dd일"/> </td> 
+					<td>${dto.readCount}</td>
+					<td>${dto.delflag}</td>
+					<td>${dto.refer}</td>
+					<td>${dto.step}</td>
+					<td>${dto.depth}</td>
 				</tr>	
 			</c:forEach>
 		</c:otherwise>
 	</c:choose>
 	<tr>
-		<td colspan="5">
+		<td colspan="10">
 			<button class="btn btn-primary" type="button" onclick="insertBoardForm()">글추가</button>	
 			<button class="btn btn-primary" type="submit">글삭제</button>
 			<span id="msg"></span>
