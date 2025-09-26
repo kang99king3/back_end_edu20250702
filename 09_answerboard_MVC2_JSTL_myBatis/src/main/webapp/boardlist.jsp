@@ -77,7 +77,7 @@
 					<td><input class="form-check-input" type="checkbox" name="seq" value="${dto.seq}" /></td>
 					<td>${dto.seq}</td>
 					<td>${dto.id}</td>
-					<td><a href="boarddetail.board?seq=${dto.seq}">${dto.title}</a></td>
+					<td><a href="boarddetail.board?seq=${dto.seq}&review=y">${dto.title}</a></td>
 					<td><fmt:formatDate value="${dto.regDate}" 
 										pattern="yyyy년 MM월 dd일"/> </td> 
 					<td>${dto.readCount}</td>

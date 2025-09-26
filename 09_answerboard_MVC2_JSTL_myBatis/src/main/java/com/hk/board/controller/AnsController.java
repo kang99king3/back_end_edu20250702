@@ -47,8 +47,24 @@ public class AnsController extends HttpServlet{
 			}else {
 				response.sendRedirect("error.jsp");
 			}
+		}else if(command.equals("/boarddetail.board")){	
+			String sseq=request.getParameter("seq");
+			int seq=Integer.parseInt(sseq);
+			
+			AnsDto dto=dao.getBoard(seq);//상세내용 조회
+			
+			String review=request.getParameter("review");
+			//글목록 페이지에서 요청한 경우
+			if(review!=null&&review.equals("y")) {
+				dao.readCount(seq);//조회수 증가
+				response.sendRedirect("boarddetail.board?seq="+seq);
+			}else {
+				request.setAttribute("dto", dto);
+			}
+			dispatch("boarddetail.jsp", request, response);
+			
+			//sessionScope를 이용해서 처리하는 방법
 		}
-	
 	}
 	
 	@Override
