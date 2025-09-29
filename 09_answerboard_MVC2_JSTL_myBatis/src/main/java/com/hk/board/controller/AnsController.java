@@ -66,6 +66,26 @@ public class AnsController extends HttpServlet{
 			//sessionScope를 이용해서 처리하는 방법
 			
 			//cookie를 이용해서 처리하는 방법
+		}else if(command.equals("/boardupdateform.board")) {
+			String sseq=request.getParameter("seq");
+			int seq=Integer.parseInt(sseq);
+			AnsDto dto=dao.getBoard(seq);
+			
+			request.setAttribute("dto", dto);
+			dispatch("boardupdateform.jsp", request, response);
+		}else if(command.equals("/boardupdate.board")) {//수정완료 요청
+			String sseq=request.getParameter("seq");
+			int seq=Integer.parseInt(sseq);
+			String title=request.getParameter("title");
+			String content=request.getParameter("content");
+			
+			boolean isS=dao.boardUpdate(title, content, seq);
+			
+			if(isS) {
+				response.sendRedirect("boarddetail.board?seq="+seq);
+			}else {
+				response.sendRedirect("error.jsp");
+			}
 		}
 	}
 	

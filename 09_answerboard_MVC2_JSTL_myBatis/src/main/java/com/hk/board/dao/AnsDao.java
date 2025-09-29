@@ -88,6 +88,33 @@ public class AnsDao extends SqlMapConfig{
 		}
 		return count>0?true:false;
 	}
+	
+	//5.수정하기
+	public boolean boardUpdate(String title, String content, int seq){
+		int count=0;
+		SqlSession sqlSession=null;
+		
+		Map<String, Object>map=new HashMap<String, Object>();
+		map.put("title", title);
+		map.put("content", content);
+		map.put("seq", seq);
+		try {
+			// SessionFactory객체.openSessoin() -> SqlSession객체 얻어옴
+			// configuration.xml을 읽어서 생성된 객체
+			sqlSession=getSessionFactory().openSession(true);
+			//파라미터 타입: dto, Array, Map, String, Integer 등
+			count=sqlSession.update(namespace+"boardupdate",map);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			sqlSession.close();
+		}
+		return count>0?true:false;
+	}
+	//6.삭제하기
+	
+	//7.여러글 삭제하기
 }
 
 
