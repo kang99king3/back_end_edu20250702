@@ -86,6 +86,27 @@ public class AnsController extends HttpServlet{
 			}else {
 				response.sendRedirect("error.jsp");
 			}
+		}else if(command.equals("/boarddelete.board")) {
+			String sseq=request.getParameter("seq");
+			int seq=Integer.parseInt(sseq);
+			
+			boolean isS=dao.deleteBoard(seq);
+			
+			if(isS) {
+				response.sendRedirect("boardlist.board");
+			}else {
+				response.sendRedirect("error.jsp");
+			}
+		}else if(command.equals("/muldel.board")) {
+			String[]seqs=request.getParameterValues("seq");
+			
+			boolean isS=dao.mulDel(seqs);
+			
+			if(isS) {
+				response.sendRedirect("boardlist.board");
+			}else {
+				response.sendRedirect("error.jsp");
+			}
 		}
 	}
 	

@@ -113,8 +113,43 @@ public class AnsDao extends SqlMapConfig{
 		return count>0?true:false;
 	}
 	//6.삭제하기
-	
+	public boolean deleteBoard(int seq){
+		int count=0;
+		SqlSession sqlSession=null;
+		
+		try {
+			sqlSession=getSessionFactory().openSession(true);
+			//파라미터 타입: dto, Array, Map, String, Integer 등
+			count=sqlSession.update(namespace+"boarddelete",seq);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			sqlSession.close();
+		}
+		return count>0?true:false;
+	}
 	//7.여러글 삭제하기
+	public boolean mulDel(String[] seqs){
+		int count=0;
+		SqlSession sqlSession=null;
+		
+		//동적쿼리에 전달되는 파리미터는 Map에 담아서 전달한다.
+		Map<String, String[]>map=new HashMap<String, String[]>();
+		map.put("seqs", seqs);
+		
+		try {
+			sqlSession=getSessionFactory().openSession(true);
+			//파라미터 타입: dto, Array, Map, String, Integer 등
+			count=sqlSession.update(namespace+"muldel",map);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			sqlSession.close();
+		}
+		return count>0?true:false;
+	}
 }
 
 

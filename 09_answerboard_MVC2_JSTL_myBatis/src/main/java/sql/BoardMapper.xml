@@ -23,29 +23,36 @@
   <select id="getboard" parameterType="Integer" resultType="AnsDto">
   	SELECT SEQ,ID,TITLE,CONTENT,REGDATE
   	FROM ANSWERBOARD
-  	WHERE SEQ=#{seq}
+  	<include refid="seqParam"/>
   </select>
   
   <!-- 조회수 -->
   <update id="readcount" parameterType="Integer">
   	UPDATE ANSWERBOARD SET READCOUNT = READCOUNT+1
-  	WHERE SEQ = #{seq}
+  	<include refid="seqParam"/>
   </update>
   
   <!-- 수정하기 -->
   <update id="boardupdate" parameterType="Map">
   	UPDATE ANSWERBOARD SET TITLE=#{title}, CONTENT=#{content}
-  	WHERE SEQ = #{seq}
+  	<include refid="seqParam"/>
   </update>
   
   <!-- 삭제하기: delflag = Y update 실행 -->
-  <update id="boardDelete" parameterType="Integer">
+  <update id="boarddelete" parameterType="Integer">
   	UPDATE ANSWERBOARD SET DELFLAG='Y'
-  	WHERE SEQ=#{seq}
+  	<include refid="seqParam"/>
   </update>
+  
+  <!-- 공통 쿼리 한번 작성하고 필요한곳에서 사용 -->
+  <sql id="seqParam">
+  	WHERE SEQ=#{seq}
+  </sql>
   
   <!-- 여러글 삭제하기: 동적쿼리 사용하기 : parameter는 Map("seqs":array[1,2,3])-->
   <!-- 동적쿼리사용할때 전달하는 파라미터는 Map으로 전달하자 -->
+  <!-- UPDATE ANSWERBOARD SET DELFLAG='Y'
+  	   WHERE SEQ IN (1,2,3,4,5)  -->
   <update id="muldel" parameterType="Map">
   	UPDATE ANSWERBOARD SET DELFLAG='Y'
   	WHERE SEQ IN 
