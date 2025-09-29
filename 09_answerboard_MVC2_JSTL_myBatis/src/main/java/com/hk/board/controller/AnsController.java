@@ -56,14 +56,16 @@ public class AnsController extends HttpServlet{
 			String review=request.getParameter("review");
 			//글목록 페이지에서 요청한 경우
 			if(review!=null&&review.equals("y")) {
-				dao.readCount(seq);//조회수 증가
+				dao.readCount(seq);//조회수 증가(글목록에서 요청했다면)
 				response.sendRedirect("boarddetail.board?seq="+seq);
 			}else {
-				request.setAttribute("dto", dto);
+				request.setAttribute("dto", dto);//dto(상세내용)
+				dispatch("boarddetail.jsp", request, response);
 			}
-			dispatch("boarddetail.jsp", request, response);
 			
 			//sessionScope를 이용해서 처리하는 방법
+			
+			//cookie를 이용해서 처리하는 방법
 		}
 	}
 	
