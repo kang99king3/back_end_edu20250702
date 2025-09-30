@@ -107,6 +107,19 @@ public class AnsController extends HttpServlet{
 			}else {
 				response.sendRedirect("error.jsp");
 			}
+		}else if(command.equals("/replyboard.board")) {
+			String sseq=request.getParameter("seq");
+			int seq=Integer.parseInt(sseq);
+			String id=request.getParameter("id");
+			String title=request.getParameter("title");
+			String content=request.getParameter("content");
+			
+			boolean isS=dao.replyBoard(new AnsDto(seq,id,title,content));
+			if(isS) {
+				response.sendRedirect("boardlist.board");
+			}else {
+				response.sendRedirect("error.jsp");
+			}
 		}
 	}
 	

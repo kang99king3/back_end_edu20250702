@@ -83,6 +83,7 @@
 								---삭제된 글입니다.---
 							</c:when>
 							<c:otherwise>
+								<img src="img/arrow.png" alt="답글" width="15px" height="15px"/>
 								<a href="boarddetail.board?seq=${dto.seq}&review=y">${dto.title}</a>							
 							</c:otherwise>
 						</c:choose>
