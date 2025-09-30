@@ -1,27 +1,5 @@
 @charset "UTF-8";
 
-.main{
-		padding:10px;
-		font-size: 15pt;
-	}
-.main a{
-	text-decoration: none;
-}   
-
-.content{
-	width: 600px;
-	margin:0px auto;
-}
-
-.admin_content{
-	width: 1200px;
-	margin:0px auto;
-}
-
-.admin_content .userRole{
-	width:600px;
-}
-
 /* .arrow1{ */
 /* 	width: 15px; */
 /* 	height: 15px; */
@@ -34,10 +12,10 @@
    width: 1000px;
    margin: 0 auto;
    min-height: calc(90vh - 50px); /* 50px은 푸터 높이 */
-   
+   border:1px solid red;
 }
 
-#footer2{
+#footer1{
 	text-align: center;
 	color:white;
 	background-color: #3c3c3c;

@@ -13,6 +13,7 @@
 </style>
 </head>
 <body>
+<div id="container">
 <h1>게시판 상세보기</h1>
 <table class="table table-striped" border="1">
 	<tr>
@@ -78,6 +79,7 @@
 		</table>
 	</form>
 </div>
+</div>
 <script type="text/javascript">
 
 	// 필요한 파라미터 pk값
@@ -99,7 +101,7 @@
 </script>
 </body>
 </html>
-<%-- <jsp:include page="footer.jsp"/> --%>
+<jsp:include page="footer.jsp"/>
 
 
 

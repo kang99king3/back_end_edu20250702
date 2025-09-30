@@ -45,6 +45,7 @@
 		}//if종류
 	}
 </script>
+
 </head>
 <body>
 <div id="container">
@@ -90,7 +91,7 @@
 								<c:forEach begin="1" end="${dto.depth}" var="i" step="1">
 									&nbsp;&nbsp;&nbsp;&nbsp;
 									<c:if test="${i==dto.depth}">
-										<img src="img/arrow.png" width="15px" height="15px"/>
+										<img src="img/arrow.png" class="arrow"/>
 									</c:if>
 								</c:forEach>
 								<a href="boarddetail.board?seq=${dto.seq}&review=y">

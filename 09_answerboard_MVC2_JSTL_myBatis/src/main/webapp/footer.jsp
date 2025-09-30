@@ -24,7 +24,6 @@
 </head>
 <body>
 <div class="footer bg-primary-subtle" >
-<!-- <div id="footer2" > -->
 	Copyright 1999-2025. 한경닷컴 All rights reserved.
 </div>
 </body>

@@ -53,7 +53,7 @@
 <!--     </p> -->
 <%--   </c:if> --%>
 
-<!--   <!-- 상태 코드와 요청 URI가 있는 경우 --> -->
+   <!-- 상태 코드와 요청 URI가 있는 경우 --> 
 <%--   <c:if test="${not empty requestScope['javax.servlet.error.status_code'] and --%>
 <%--                 not empty requestScope['javax.servlet.error.request_uri']}"> --%>
 <!--     <p> -->

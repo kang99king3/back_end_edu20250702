@@ -10,10 +10,27 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
+	<link href="css/layout1.css" rel="stylesheet"/>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 	<script src="js/cookieFunc.js" type="text/javascript"></script>
-	<link href="css/layout1.css" rel="stylesheet"/>
+<style type="text/css">
+	 .arrow{ 
+	 	width: 15px; 
+	 	height: 15px; 
+	 } 
+	#container {
+	   width: 1000px;
+	   margin: 0 auto;
+	   min-height: calc(90vh - 50px); /* 50px은 푸터 높이 */
+	}
+	
+	.footer{
+		text-align: center;
+		line-height: 50px;
+		height: 50px;
+	}
+</style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-primary-subtle">

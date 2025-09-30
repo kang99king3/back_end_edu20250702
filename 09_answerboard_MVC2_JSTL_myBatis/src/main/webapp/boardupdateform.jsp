@@ -10,6 +10,7 @@
 <title>게시판 글 수정 폼</title>
 </head>
 <body>
+<div id="container">
 <h1>게시판 수정하기</h1>
 <form action="boardupdate.board" method="post">
 <input type="hidden" name="seq" value="${dto.seq}"/>
@@ -38,6 +39,7 @@
 	</tr>
 </table>
 </form>
+</div>
 </body>
 </html>
 <jsp:include page="footer.jsp" />

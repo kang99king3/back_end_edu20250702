@@ -10,6 +10,7 @@
 <title>게시판 글 추가하기</title>
 </head>
 <body>
+<div id="container"> 
 <h1>글 추가하기</h1>
 <form action="insertboard.board" method="post">
 	<table class="table table-striped" border="1">
@@ -37,6 +38,7 @@
 		</tr>
 	</table>
 </form>
+</div>
 </body>
 </html>
 <jsp:include page="footer.jsp" />
