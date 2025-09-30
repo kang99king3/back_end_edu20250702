@@ -15,16 +15,19 @@ public class AnsDao extends SqlMapConfig{
 	private String namespace="com.hk.board.dao.";
 	
 	//1.글목록 조회
-	public List<AnsDto> getAllList(){
+	public List<AnsDto> getAllList(String pnum){
 		List<AnsDto> list=new ArrayList<AnsDto>();
 		SqlSession sqlSession=null;
+		
+		Map<String, String>map=new HashMap<String, String>();
+		map.put("pnum", pnum);
 		
 		try {
 			//sqlSession객체를 구하려면 openSession()를 통해 얻어온다
 			//openSession(true/false): t(autocommit)
 			sqlSession=getSessionFactory().openSession(true);
 			// selectList(쿼리ID) 해당 쿼리를 실행시킨다.
-			list=sqlSession.selectList(namespace+"boardlist");
+			list=sqlSession.selectList(namespace+"boardlist",map);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -32,6 +35,22 @@ public class AnsDao extends SqlMapConfig{
 			sqlSession.close();
 		}
 		return list;
+	}
+	
+	//1-2.페이지수 구하기
+	public int getPCount() {
+		int count=0;
+		SqlSession sqlSession=null;
+		
+		try {
+			sqlSession=getSessionFactory().openSession(true);
+			count=sqlSession.selectOne(namespace+"getpcount");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			sqlSession.close();
+		}
+		return count;
 	}
 	
 	//2. 글추가하기

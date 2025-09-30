@@ -2,6 +2,7 @@ package com.hk.board.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hk.board.dao.AnsDao;
 import com.hk.board.dto.AnsDto;
+import com.hk.board.util.Paging;
 
 //servlet으로 만들기: HttpServlet을 상속받아야 함
 @WebServlet("*.board")
@@ -31,8 +33,21 @@ public class AnsController extends HttpServlet{
 		AnsDao dao=new AnsDao();
 		
 		if(command.equals("/boardlist.board")) {
-			List<AnsDto> list=dao.getAllList();
+			//페이지번호 받기
+			String pnum=request.getParameter("pnum");
+			
+			List<AnsDto> list=dao.getAllList(pnum);
 			request.setAttribute("list", list);
+			
+			//페이지 개수 구해서 boardlist.jsp로 보내기 위해 스코프에 담기
+			int pcount=dao.getPCount();
+			request.setAttribute("pcount", pcount);
+			
+			//페이지에 페이징 처리 기능 추가
+			//필요한 값: pcount(총페이지개수), pnum(요청 페이지번호), 페이지 범위(페이지 수)
+			Map<String, Integer>map=Paging.pagingValue(pcount, pnum, 5);
+			request.setAttribute("pMap", map);
+			
 			dispatch("boardlist.jsp", request, response);
 		}else if(command.equals("/insertboardform.board")) {
 			response.sendRedirect("insertboardform.jsp");

@@ -8,22 +8,23 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-.footer{
-	position: fixed;
-	left:0px;
-	right:0px;
-	bottom:0px;
-	text-align: center;
-	color:black;
-/* 	background-color: #EBFBFF; */
-	line-height: 50px;
-	height: 50px;
-	font-size: 15pt;
-}
+/* .footer{ */
+/* 	position: fixed; */
+/* 	left:0px; */
+/* 	right:0px; */
+/* 	bottom:0px; */
+/* 	text-align: center; */
+/* 	color:black; */
+/* /* 	background-color: #EBFBFF; */ */
+/* 	line-height: 50px; */
+/* 	height: 50px; */
+/* 	font-size: 15pt; */
+/* } */
 </style>
 </head>
 <body>
 <div class="footer bg-primary-subtle" >
+<!-- <div id="footer2" > -->
 	Copyright 1999-2025. 한경닷컴 All rights reserved.
 </div>
 </body>
