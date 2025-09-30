@@ -62,7 +62,7 @@
   	</foreach>
   </update>
   
-  <!-- 답글달기 -->
+  <!-- 답글달기: update문, insert문 2개 작업 필요-->
   
   <update id="replyupdate" parameterType="AnsDto">
   	<![CDATA[
@@ -70,7 +70,6 @@
 		WHERE refer=(SELECT refer FROM answerboard WHERE seq=#{seq})
 		AND step > (SELECT step FROM answerboard WHERE seq=#{seq})
   	]]>
-  	
   </update>
   
   <insert id="replyinsert" parameterType="AnsDto">
