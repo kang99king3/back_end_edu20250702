@@ -15,7 +15,7 @@
 /* 	bottom:0px; */
 /* 	text-align: center; */
 /* 	color:black; */
-/* /* 	background-color: #EBFBFF; */ */
+/*  background-color: #EBFBFF;  */
 /* 	line-height: 50px; */
 /* 	height: 50px; */
 /* 	font-size: 15pt; */
