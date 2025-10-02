@@ -34,18 +34,14 @@
   	WHERE SEQ=#{seq}
   </delete>
   
-  <!-- 여러글 삭제하기: 동적쿼리 사용하기 : parameter는 Map("seqs":array[1,2,3])-->
-  <!-- 동적쿼리사용할때 전달하는 파라미터는 Map으로 전달하자 -->
-  <!-- UPDATE ANSWERBOARD SET DELFLAG='Y'
-  	   WHERE SEQ IN (1,2,3,4,5)  -->
-  <update id="muldel" parameterType="Map">
+  <delete id="muldel" parameterType="Map">
   	DELETE FROM HKBOARD 
   	WHERE SEQ IN 
   	<foreach collection="seqs" item="seq" open="(" close=")"
   			 separator=",">
   		#{seq}
   	</foreach>
-  </update>
+  </delete>
 
 </mapper>
 
