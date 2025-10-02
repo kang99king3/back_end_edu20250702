@@ -33,9 +33,9 @@
 	</bean>
 	
 	<!-- 내가 만든 클래스도 당연히 등록 가능 -->
-	<bean id="testDto" class="com.hk.board.dtos.TestDto">
+<!-- 	<bean id="testDto" class="com.hk.board.dtos.TestDto"> -->
 		
-	</bean>
+<!-- 	</bean> -->
 </beans>
 
 
