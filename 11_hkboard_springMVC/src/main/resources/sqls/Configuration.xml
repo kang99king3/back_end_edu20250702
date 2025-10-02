@@ -7,7 +7,7 @@
   
 <!-- 변수설정 -->
   <typeAliases>
-  	<typeAlias type="com.hk.board.dtos.TestDto" alias="TestDto" />
+  	<typeAlias type="com.hk.board.dtos.HkDto" alias="HkDto" />
   </typeAliases> 
   
   

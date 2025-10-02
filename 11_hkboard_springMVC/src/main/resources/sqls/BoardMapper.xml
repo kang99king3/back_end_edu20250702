@@ -6,6 +6,47 @@
 <!-- namespace속성: 반드시 정의를 하자 -->
 <mapper namespace="com.hk.board.dao">
 
+  <select id="boardlist" resultType="HkDto">
+    SELECT SEQ,ID,TITLE,CONTENT,REGDATE
+    FROM HKBOARD 
+  </select>
+  
+  <insert id="insertboard" parameterType="HkDto" >
+  	INSERT INTO HKBOARD
+	VALUES( NULL,#{id},#{title},#{content},SYSDATE())
+  </insert>
+  
+  <select id="getboard" parameterType="Integer" resultType="HkDto">
+  	SELECT SEQ,ID,TITLE,CONTENT,REGDATE
+  	FROM HKBOARD
+  	WHERE SEQ=#{seq}
+  </select>
+  
+  <!-- 수정하기 -->
+  <update id="boardupdate" parameterType="Map">
+  	UPDATE HKBOARD SET TITLE=#{title}, CONTENT=#{content}
+  	WHERE SEQ=#{seq}
+  </update>
+  
+  <!-- 삭제하기: delflag = Y update 실행 -->
+  <delete id="boarddelete" parameterType="Integer">
+  	DELETE FROM HKBOARD 
+  	WHERE SEQ=#{seq}
+  </delete>
+  
+  <!-- 여러글 삭제하기: 동적쿼리 사용하기 : parameter는 Map("seqs":array[1,2,3])-->
+  <!-- 동적쿼리사용할때 전달하는 파라미터는 Map으로 전달하자 -->
+  <!-- UPDATE ANSWERBOARD SET DELFLAG='Y'
+  	   WHERE SEQ IN (1,2,3,4,5)  -->
+  <update id="muldel" parameterType="Map">
+  	DELETE FROM HKBOARD 
+  	WHERE SEQ IN 
+  	<foreach collection="seqs" item="seq" open="(" close=")"
+  			 separator=",">
+  		#{seq}
+  	</foreach>
+  </update>
+
 </mapper>
 
 
