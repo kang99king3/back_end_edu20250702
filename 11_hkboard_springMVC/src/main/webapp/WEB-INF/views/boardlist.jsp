@@ -13,7 +13,7 @@
 <title>글목록 조회</title>
 <script type="text/javascript">
 	function insertBoardForm(){
-		location.href="insertboardform.board";
+		location.href="insertboardform.do";
 	}
 	
 	//전체선택 체크박스 기능
@@ -47,7 +47,7 @@
 <body>
 <h1>게시판</h1>
 <h2>글목록</h2>
-<form action="muldel.board" method="post" onsubmit="return isAllCheck()">
+<form action="muldel.do" method="post" onsubmit="return isAllCheck()">
 <table border="1">
 	<col width="50px"/>
 	<col width="50px"/>
@@ -72,7 +72,7 @@
 					<td><input type="checkbox" name="seq" value="${dto.seq}" /></td>
 					<td>${dto.seq}</td>
 					<td>${dto.id}</td>
-					<td><a href="boarddetail.board?seq=${dto.seq}">${dto.title}</a></td>
+					<td><a href="boarddetail.do?seq=${dto.seq}">${dto.title}</a></td>
 					<td><fmt:formatDate value="${dto.regDate}" 
 										pattern="yyyy년 MM월 dd일"/> </td>
 				</tr>	

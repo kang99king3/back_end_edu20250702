@@ -10,7 +10,7 @@
 </head>
 <body>
 <h1>글 추가하기</h1>
-<form action="insertboard.board" method="post">
+<form action="insertboard.do" method="post">
 	<table border="1">
 		<tr>
 			<th>작성자(ID)</th>
@@ -31,7 +31,7 @@
 			<td colspan="2">
 				<input type="submit" value="글등록"/>
 				<input type="button" value="글목록" 
-			        onclick="location.href='boardlist.board'"/>
+			        onclick="location.href='boardlist.do'"/>
 			</td>
 		</tr>
 	</table>

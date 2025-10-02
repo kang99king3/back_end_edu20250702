@@ -23,7 +23,7 @@
   </select>
   
   <!-- 수정하기 -->
-  <update id="boardupdate" parameterType="Map">
+  <update id="boardupdate" parameterType="HkDto">
   	UPDATE HKBOARD SET TITLE=#{title}, CONTENT=#{content}
   	WHERE SEQ=#{seq}
   </update>

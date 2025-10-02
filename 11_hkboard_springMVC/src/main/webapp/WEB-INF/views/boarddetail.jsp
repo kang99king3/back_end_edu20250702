@@ -35,7 +35,7 @@
 								 onclick="delBoard('${dto.seq}')"/>
 								 
 			<input type="button" value="글목록" 
-						onclick="location.href='boardlist.board'"/>
+						onclick="location.href='boardlist.do'"/>
 		</td>
 	</tr>
 </table>
@@ -46,11 +46,11 @@
 	function updateForm(seq){
 		// 수정폼 이동-> 수정폼에서는 글의 상세내용 보여주고, 
 		//             수정완료버튼클릭하면 수정되게 처리(제목,내용만 수정)
-		location.href="boardupdateform.board?seq="+seq;
+		location.href="boardupdateform.do?seq="+seq;
 	}
 	// boardDelete.jsp
 	function delBoard(seq){
-		location.href="boarddelete.board?seq="+seq;
+		location.href="muldel.do?seq="+seq;
 	}
 </script>
 </body>

@@ -38,7 +38,7 @@ public class HkDaoImp implements IHkDao{
 
 	@Override
 	public boolean updateBoard(HkDto dto) {
-		int count=sqlSession.update(namespace+"updateboard", dto);
+		int count=sqlSession.update(namespace+"boardupdate", dto);
 		return count>0?true:false;
 	}
 
