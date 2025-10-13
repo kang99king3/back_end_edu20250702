@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.hk.ansboard.dtos.AnsDto;
@@ -13,11 +14,16 @@ import com.hk.ansboard.dtos.AnsDto;
 import lombok.RequiredArgsConstructor;
 
 @Repository
-@RequiredArgsConstructor //생성자를 통해 주입하는 방법
+//@RequiredArgsConstructor //생성자를 통해 주입하는 방법
 public class AnsDaoImp implements IAnsDao{
-
-//	@Autowired
-	private final SqlSessionTemplate sqlSession;
+	
+	//생성자 주입
+//	private final SqlSessionTemplate sqlSession;
+	
+	@Autowired
+	@Qualifier("sqlSessionTemplate") //보조역할: Autowired와 같이 사용(이름으로 구별)
+//	@Resource(name = "sqlSessionTemplate") //이름으로 매칭, 이름 없을 경우 타입으로 매칭(별도 라이브러리추가해야함)
+	private SqlSessionTemplate sqlSession;
 	
 	private String namespace="com.hk.ansboard.dao.";
 	

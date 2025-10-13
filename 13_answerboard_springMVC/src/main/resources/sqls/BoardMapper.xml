@@ -25,6 +25,19 @@
 		</choose>
 	</where>
   </select>
+<!-- where태그 기능: 해당 조건을 실행할때 필요없는 문법은 제거하고, where절을 추가해준다. -->
+<!--   <where> -->
+<!--     <if test="seq != null"> -->
+<!--       SEQ = #{seq} -->
+<!--     </if> -->
+<!--     <if test="name != null"> -->
+<!--       AND NAME = #{name} -->
+<!--     </if> -->
+<!--   </where> -->
+  
+  
+  
+  
   
    <!-- 공통 쿼리 한번 작성하고 필요한곳에서 사용 -->
   <sql id="seqParam">
