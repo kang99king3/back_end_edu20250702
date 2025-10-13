@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.hk.board.daos.IHkDao;
 import com.hk.board.dtos.HkDto;
 
-//Constroller <---> Service <---> Dao(repository)
+//Controller <---> Service <---> Dao(repository)
 @Service
 public class HkServiceImp implements IHkService{
 

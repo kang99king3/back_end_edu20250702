@@ -49,7 +49,7 @@ public class HomeController {
 		return "insertboardform";
 	}
 	
-	//글추가폼 이동
+	//글추가하기
 	@RequestMapping(value="/insertboard.do",
 			        method= RequestMethod.POST)
 	public String insertBoard(HkDto dto) {
