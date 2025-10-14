@@ -15,11 +15,11 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Repository
-@RequiredArgsConstructor //생성자를 통해 주입하는 방법
+//@RequiredArgsConstructor //생성자를 통해 주입하는 방법
 public class AnsDaoImp implements IAnsDao{
 	
 	//생성자 주입
-	private final SqlSessionTemplate sqlSession;
+//	private @NonNull SqlSessionTemplate sqlSession;
 	
 //	public AnsDaoImp() {
 //		// TODO Auto-generated constructor stub
@@ -29,10 +29,10 @@ public class AnsDaoImp implements IAnsDao{
 //		this.sqlSession=sqlSession;
 //	}
 	
-//	@Autowired // 타입으로 찾아서 주입하는 기능
+	@Autowired // 타입으로 찾아서 주입하는 기능
 //	@Qualifier("sqlSessionTemplate") //보조역할: Autowired와 같이 사용(이름으로 구별)
 //	@Resource(name = "sqlSessionTemplate") //이름으로 매칭, 이름 없을 경우 타입으로 매칭(별도 라이브러리추가해야함)
-//	private SqlSessionTemplate sqlSession;
+	private SqlSessionTemplate sqlSession;
 	
 	private String namespace="com.hk.ansboard.dao.";
 	
