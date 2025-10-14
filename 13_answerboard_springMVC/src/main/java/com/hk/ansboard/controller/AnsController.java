@@ -69,7 +69,7 @@ public class AnsController {
 		}else {
 			AnsDto dto=ansService.getBoard(Integer.parseInt(seq));
 			model.addAttribute("dto", dto);
-			return "detailboard";
+			return "boarddetail";
 		}
 	}
 	
