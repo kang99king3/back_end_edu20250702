@@ -61,20 +61,26 @@ public class AnsDaoImp implements IAnsDao{
 
 	@Override
 	public boolean boardUpdate(String title, String content, int seq) {
-		// TODO Auto-generated method stub
-		return false;
+		Map<String, Object>map=new HashMap<String, Object>();
+		map.put("title", title);
+		map.put("content", content);
+		map.put("seq", seq);
+		int count = sqlSession.update(namespace+"boardupdate", map);
+		return count>0?true:false;
 	}
 
 	@Override
 	public boolean deleteBoard(int seq) {
-		// TODO Auto-generated method stub
-		return false;
+		int count=sqlSession.update(namespace+"boarddelete", seq);
+		return count>0?true:false;
 	}
 
 	@Override
 	public boolean mulDel(String[] seqs) {
-		// TODO Auto-generated method stub
-		return false;
+		Map<String, String[]>map=new HashMap<>();
+		map.put("seqs", seqs);
+		int count=sqlSession.update(namespace+"muldel", map);
+		return count>0?true:false;
 	}
 
 	@Override
