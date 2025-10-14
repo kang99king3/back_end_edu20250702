@@ -13,7 +13,7 @@
 	(SELECT ROW_NUMBER() OVER(ORDER BY refer DESC,step) rn	,
 	       seq, id, title, content, regdate, readcount
 	       ,refer,step, depth, delflag
-	FROM answerboard) a
+	FROM answerboard) a 
 	<where>
 		<choose>
 			<when test="seq!=null">
@@ -34,10 +34,6 @@
 <!--       AND NAME = #{name} -->
 <!--     </if> -->
 <!--   </where> -->
-  
-  
-  
-  
   
    <!-- 공통 쿼리 한번 작성하고 필요한곳에서 사용 -->
   <sql id="seqParam">
