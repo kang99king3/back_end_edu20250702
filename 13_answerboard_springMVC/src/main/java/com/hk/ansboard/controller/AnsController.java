@@ -55,4 +55,49 @@ public class AnsController {
 	
 		return "boardlist";
 	}
+	
+	//상세보기
+	@RequestMapping(value="/boarddetail.do",
+					method=RequestMethod.GET)
+	public String getBoard(Model model,
+			               String seq, 
+			               String review) {
+		
+		if(review!=null&&review.equals("y")) {
+			ansService.readCount(Integer.parseInt(seq));
+			return "redirect:boarddetail.do?seq="+seq;
+		}else {
+			AnsDto dto=ansService.getBoard(Integer.parseInt(seq));
+			model.addAttribute("dto", dto);
+			return "detailboard";
+		}
+	}
+	
+	//글추가 폼이동
+	@RequestMapping(value="/insertboardform.do",
+			method=RequestMethod.GET)
+	public String insertBoardForm() {
+	
+		return "insertboardform";
+	}
+	
+	//글추가 폼이동
+	@RequestMapping(value="/insertboard.do",
+			        method=RequestMethod.POST)
+	public String insertBoard(AnsDto dto) {
+		boolean isS=ansService.insertBoard(dto);
+		if(isS) {
+			return "redirect:boardlist.do";
+		}else {
+			return "error";
+		}
+	}
 }
+
+
+
+
+
+
+
+

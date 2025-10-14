@@ -52,6 +52,12 @@ class AnsControllerTest {
 		//OK는 200코드 == 현재실행 된 상태코드와 비교
 		assertEquals(HttpStatus.OK.value(), statusCode);
 	}
+	
+	//상세보기
+	
+	//글추가폼이동
+	
+	//글추가하기
 
 }
 
