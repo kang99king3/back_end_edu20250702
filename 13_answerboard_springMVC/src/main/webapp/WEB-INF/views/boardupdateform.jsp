@@ -12,7 +12,7 @@
 <body>
 <div id="container">
 <h1>게시판 수정하기</h1>
-<form action="boardupdate.board" method="post">
+<form action="boardupdate.do" method="post">
 <input type="hidden" name="seq" value="${dto.seq}"/>
 <table class="table table-striped" border="1">
 	<tr>
@@ -34,7 +34,7 @@
 		<td colspan="2">
 			<input class="btn btn-primary" type="submit" value="수정완료" />
 			<input class="btn btn-primary" type="button" value="글목록" 
-			  onclick="location.href='boardlist.board'"/>
+			  onclick="location.href='boardlist.do'"/>
 		</td>
 	</tr>
 </table>

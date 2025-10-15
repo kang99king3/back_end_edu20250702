@@ -42,13 +42,13 @@
 								 onclick="delBoard('${dto.seq}')"/>
 								 
 			<input class="btn btn-primary" type="button" value="글목록" 
-						onclick="location.href='boardlist.board'"/>
+						onclick="location.href='boardlist.do'"/>
 		</td>
 	</tr>
 </table>
 <div id="replyForm">
 	<h1>답글 작성하기</h1>
-	<form action="replyboard.board" method="post">
+	<form action="replyboard.do" method="post">
 		<input type="hidden" name="seq" value="${dto.seq}"/>
 		<table class="table table-striped" border="1">
 			<tr>
@@ -73,7 +73,7 @@
 				<td colspan="2">
 					<input class="btn btn-primary" type="submit" value="답글등록"/>
 					<input class="btn btn-primary" type="button" value="글목록" 
-				        onclick="location.href='boardlist.board'"/>
+				        onclick="location.href='boardlist.do'"/>
 				</td>
 			</tr>
 		</table>
@@ -87,11 +87,11 @@
 	function updateForm(seq){
 		// 수정폼 이동-> 수정폼에서는 글의 상세내용 보여주고, 
 		//             수정완료버튼클릭하면 수정되게 처리(제목,내용만 수정)
-		location.href="boardupdateform.board?seq="+seq;
+		location.href="boardupdateform.do?seq="+seq;
 	}
 	// boardDelete.jsp
 	function delBoard(seq){
-		location.href="boarddelete.board?seq="+seq;
+		location.href="boarddelete.do?seq="+seq;
 	}
 	//답글 폼 보여주기
 	function replyForm(){

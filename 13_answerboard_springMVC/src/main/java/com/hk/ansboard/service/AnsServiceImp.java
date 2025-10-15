@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.hk.ansboard.daos.IAnsDao;
 import com.hk.ansboard.dtos.AnsDto;
@@ -58,9 +60,11 @@ public class AnsServiceImp implements IAnsService{
 	//Transactoin 처리
 	// - 선언적 처리 방법 : 어노테이션 작성 방식
 	// - AOP 처리 방법 : AOP 적용 처리 방식
-	@Transactional
+	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public boolean replyBoard(AnsDto dto) {
+		 boolean txActive = TransactionSynchronizationManager.isActualTransactionActive();
+		    System.out.println("트랜잭션 활성 상태: " + txActive);
 		ansDao.replyUpdate(dto);
 		int count=ansDao.replyInsert(dto);
 		return count>0?true:false;
