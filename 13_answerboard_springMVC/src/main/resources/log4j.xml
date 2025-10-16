@@ -38,8 +38,8 @@
 	</logger>
 	<!-- Root Logger -->
 	<root>
-<!-- 		<priority value="TRACE" />  -->
-		<priority value="info" />
+		<priority value="TRACE" /> 
+<!-- 		<priority value="info" /> -->
 		<appender-ref ref="rollingFile" /> 
 		<appender-ref ref="console" />
 	</root>
