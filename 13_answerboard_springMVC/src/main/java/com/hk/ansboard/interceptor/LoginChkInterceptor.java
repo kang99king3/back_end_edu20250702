@@ -26,8 +26,8 @@ public class LoginChkInterceptor
 		
 		if(session == null||session.getAttribute("ldto")==null) {
 			logger.info("로그인이 필요함");
-			response.sendRedirect("index.jsp");
-			return false;//컨트롤러로 진입 못함
+//			response.sendRedirect("index.jsp");
+//			return false;//컨트롤러로 진입 못함
 		}
 		
 		return true;// true가 반환되면 컨트롤러로 진입

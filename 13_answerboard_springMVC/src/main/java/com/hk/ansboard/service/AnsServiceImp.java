@@ -60,13 +60,18 @@ public class AnsServiceImp implements IAnsService{
 	//Transactoin 처리
 	// - 선언적 처리 방법 : 어노테이션 작성 방식
 	// - AOP 처리 방법 : AOP 적용 처리 방식
-	@Transactional(propagation = Propagation.REQUIRED)
+//	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public boolean replyBoard(AnsDto dto) {
 		 boolean txActive = TransactionSynchronizationManager
 				 		   .isActualTransactionActive();
 		    System.out.println("트랜잭션 활성 상태: " + txActive);
 		ansDao.replyUpdate(dto);//Step을 증가시켜주는 작업
+		
+		if (true) {
+	        throw new RuntimeException("트랜잭션 롤백 테스트");
+	    }
+		
 		int count=ansDao.replyInsert(dto);//답글 추가하는 작업
 		return count>0?true:false;
 	}
