@@ -1,6 +1,10 @@
 package com.hk.ansboard.aop;
 
+import java.util.Arrays;
+
 import org.aspectj.lang.JoinPoint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // log 기록 기능--> 메서드 실행 기준
 // Advice 구현 객체
@@ -17,15 +21,31 @@ public class LogExecute {
 	 *  			-toShortName(): 메서드를 축약해서 표현(메서드의 이름나 표시)
 	 */
 	
+	//target 메서드가 실행되기 전에 수행될 기능을 정의
 	public void before(JoinPoint join) {
-		
+		Logger log=LoggerFactory.getLogger(join.getClass()+"");
+		log.info("before실행(info):시작:{}",join.getSignature().getName());
+		log.debug("before실행(debug):시작:{}",join.toLongString());
 	}
-	
+	//target 메서드가 실행된 후 반환값을 성공적으로 리턴했다면 수행될 기능을 정의
 	public void afterReturning(JoinPoint join) {
-		
+		Logger log=LoggerFactory.getLogger(join.getClass()+"");
+		log.info("afterReturning실행(info):시작:{}",join.getSignature().getName());
+		log.debug("afterReturning실행(debug):시작:{}",join.toLongString());
+		Object[]args=join.getArgs();
+		log.debug("전달 파라미터:{}",Arrays.toString(args));
 	}
-	
+	//target 메서드에서 오류가 발생했을때 수행될 기능 정의
 	public void daoError(JoinPoint join) {
-		
+		Logger log=LoggerFactory.getLogger(join.getClass()+"");
+		log.info("daoError실행(info):시작:{}",join.getSignature().getName());
+		log.debug("daoError실행(debug):시작:{}",join.toLongString());
+		log.debug("daoError실행(debug):시작:오류발생");
 	}
 }
+
+
+
+
+
+
