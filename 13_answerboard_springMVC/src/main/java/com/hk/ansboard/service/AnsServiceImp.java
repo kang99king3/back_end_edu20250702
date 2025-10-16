@@ -63,10 +63,11 @@ public class AnsServiceImp implements IAnsService{
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public boolean replyBoard(AnsDto dto) {
-		 boolean txActive = TransactionSynchronizationManager.isActualTransactionActive();
+		 boolean txActive = TransactionSynchronizationManager
+				 		   .isActualTransactionActive();
 		    System.out.println("트랜잭션 활성 상태: " + txActive);
-		ansDao.replyUpdate(dto);
-		int count=ansDao.replyInsert(dto);
+		ansDao.replyUpdate(dto);//Step을 증가시켜주는 작업
+		int count=ansDao.replyInsert(dto);//답글 추가하는 작업
 		return count>0?true:false;
 	}
 

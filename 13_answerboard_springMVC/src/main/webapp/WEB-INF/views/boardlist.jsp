@@ -45,7 +45,6 @@
 		}//if종류
 	}
 </script>
-
 </head>
 <body>
 <div id="container">
