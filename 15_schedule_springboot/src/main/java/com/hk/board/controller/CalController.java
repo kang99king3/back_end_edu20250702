@@ -5,10 +5,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.hk.board.command.InsertCalCommand;
 import com.hk.board.service.CalServiceImp;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,9 +50,31 @@ public class CalController {
 	
 	//일정 추가 폼 이동
 	@GetMapping("/addcalboardform")
-	public String addCalBoardForm(Model model) {
+	public String addCalBoardForm(Model model,
+								  InsertCalCommand insertCalCommand) {
 		log.info("일정추가폼이동");
+		//입력폼 요청시에도 command객체를 보내야 된다.
+		model.addAttribute("insertCalCommand", insertCalCommand);
+		
 		return "calboard/addcalboardform";
+	}
+	
+	@PostMapping("/addcalboard")
+	public String addCalBoard(@Validated InsertCalCommand insertCalCommand,
+			                  BindingResult result) {
+		
+		//유효값 처리 결과를 받아 에러를 확인
+		if(result.hasErrors()) {
+			log.info("일정을 모두 입력해야 됨");
+			return "calboard/addcalboardform";
+		}
+		
+		//일정추가하기 실행 코드 작성
+		//calService에 코드가 구현되어야 함.
+		
+		return "redirect:/schedule/calendar?year="
+								+insertCalCommand.getYear()
+								+"&month="+insertCalCommand.getMonth();
 	}
 }
 
