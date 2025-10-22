@@ -11,11 +11,13 @@ import jakarta.servlet.http.HttpServletRequest;
 @Service
 public class CalServiceImp {
 
+	// 파리미터로 request객체를 전달받음---> 요청정보를 처리할 수 있는 환경
 	public Map<String, Integer> makeCalendar(HttpServletRequest request) {
 		
 		String paramYear=request.getParameter("year");
 		String paramMonth=request.getParameter("month");
 		
+		//달력에 필요한 값을 구하기 위해 calendar객체가 필요함
 		Calendar cal=Calendar.getInstance();
 		
 		//paramYear등의 값이 null이 아니면 사용자가 원하는 달을 요청

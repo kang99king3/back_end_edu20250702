@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,11 +30,15 @@ public class CalController {
 		return "index";
 	}
 	
+	// localhost:9090/member/loginpage   --> /member/*
+	// localhost:9090/schedule/calendar  --> /schedule/* --> login 확인 기능 실행
 	@GetMapping("/calendar")
-	public String calendar(HttpServletRequest request) {
+	public String calendar(Model model, HttpServletRequest request) {
 		System.out.println("calendar페이지");
 		//request(요청)객체를 전달하면, 받은쪽에서도 요청처리를 할 수 있다.
 		Map<String, Integer> calMap = calService.makeCalendar(request);
+		model.addAttribute("calMap", calMap);
+		
 		return "calboard/calendar";
 	}
 }
