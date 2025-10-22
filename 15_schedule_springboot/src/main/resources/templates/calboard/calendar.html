@@ -26,7 +26,17 @@
 				<div>수</div><div>목</div><div>금</div><div>토</div>
 			</div>
 			<div id="tbody">
-				<!-- 해당 달의 1일의 요일 -->
+				<!-- 해당 달의 1일의 요일: 만약 월요일이라면 2라는 값 반환 -->
+				<th:block th:if="${calMap.dayOfWeek>1}">
+					<div th:each="num:${#numbers.sequence(1,calMap.dayOfWeek-1)}">&nbsp;</div>
+				</th:block>
+				<th:block th:each="i:${#numbers.sequence(1,calMap.lastDay)}">
+					<div>
+						<a href="#"
+						   th:text="${i}"></a>
+						<a href="#"></a>
+					</div>
+				</th:block>
 			</div>
 		</div>
 	</div>
