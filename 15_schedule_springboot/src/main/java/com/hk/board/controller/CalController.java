@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.hk.board.service.CalServiceImp;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/schedule")
 public class CalController {
@@ -26,7 +28,7 @@ public class CalController {
 	// localhost:9090/schedule/
 	@GetMapping("/")
 	public String home() {
-		System.out.println("index");
+		log.info("index페이지");
 		return "index";
 	}
 	
@@ -34,12 +36,19 @@ public class CalController {
 	// localhost:9090/schedule/calendar  --> /schedule/* --> login 확인 기능 실행
 	@GetMapping("/calendar")
 	public String calendar(Model model, HttpServletRequest request) {
-		System.out.println("calendar페이지");
+		log.info("calendar페이지");
 		//request(요청)객체를 전달하면, 받은쪽에서도 요청처리를 할 수 있다.
 		Map<String, Integer> calMap = calService.makeCalendar(request);
 		model.addAttribute("calMap", calMap);
 		
 		return "calboard/calendar";
+	}
+	
+	//일정 추가 폼 이동
+	@GetMapping("/addcalboardform")
+	public String addCalBoardForm(Model model) {
+		log.info("일정추가폼이동");
+		return "calboard/addcalboardform";
 	}
 }
 

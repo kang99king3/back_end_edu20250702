@@ -28,6 +28,17 @@ public class CalServiceImp {
 		int month=(paramMonth==null)?
 		cal.get(Calendar.MONTH)+1:Integer.parseInt(paramMonth);
 	
+		//문제점: 월을 이동할때 11, 12, 13, 14... 또는 2, 1, 0, -1, -2...
+		if(month>12) {
+			month=1;
+			year++;
+		}
+		
+		if(month<1) {
+			month=12;
+			year--;
+		}
+		
 		//1. 해당 월의 1일에 대한 요일을 구하기
 		//  - 1~7숫자를 반환: 1은 일요일 ~ 7은 토요일
 		cal.set(year, month-1,1);//월:0~11월 
