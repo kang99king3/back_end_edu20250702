@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +20,10 @@ public class CalServiceImp {
 
 	@Autowired
 	private CalMapper calMapper;
-	
 	@Autowired
 	private Util util;
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	//달력폼만드는 기능
 	// 파리미터로 request객체를 전달받음---> 요청정보를 처리할 수 있는 환경
@@ -84,12 +86,14 @@ public class CalServiceImp {
 				    +util.isTwo(insertCalCommand.getMin()+"");
 		
 		//command -> dto로 값을 복사해서 넣는 작업
-		CalDto dto=new CalDto();
-		dto.setId(insertCalCommand.getId());
-		dto.setTitle(insertCalCommand.getTitle());
-		dto.setContent(insertCalCommand.getContent());
-		dto.setMdate(mdate);
-		
+//		CalDto dto=new CalDto();
+//		dto.setId(insertCalCommand.getId());
+//		dto.setTitle(insertCalCommand.getTitle());
+//		dto.setContent(insertCalCommand.getContent());
+//		dto.setMdate(mdate);
+		                        //(복사할 대상 객체, 붙여넣을 객체의 타입)
+		CalDto dto=modelMapper.map(insertCalCommand, CalDto.class);
+		dto.setMdate(mdate);//맴버필드 불일치일 경우만 따로 저장
 		int count=calMapper.insertCalBoard(dto);
 		
 		return count>0?true:false;
