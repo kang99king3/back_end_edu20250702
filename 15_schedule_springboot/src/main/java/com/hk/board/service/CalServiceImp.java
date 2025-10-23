@@ -4,13 +4,22 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.hk.board.command.InsertCalCommand;
+import com.hk.board.utils.Util;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class CalServiceImp {
 
+	
+	@Autowired
+	private Util util;
+	
+	//달력폼만드는 기능
 	// 파리미터로 request객체를 전달받음---> 요청정보를 처리할 수 있는 환경
 	public Map<String, Integer> makeCalendar(HttpServletRequest request) {
 		
@@ -56,8 +65,35 @@ public class CalServiceImp {
 		
 		return map;
 	}
+	
+	//일정 추가하기
+	public boolean insertCalBoard(InsertCalCommand insertCalCommand) {
+		//command에는 id,title,content,y,m,d,h,m <-DB와 일치X
+		//ymdhm --> mdate로 변환 작업
+		//command --> dto 로 데이터 옮기기
+		
+		//"202510230939"--> mdate 12자리로 저장
+		String mdate=insertCalCommand.getYear()
+				    +util.isTwo(insertCalCommand.getMonth()+"")
+				    +util.isTwo(insertCalCommand.getDate()+"")
+				    +util.isTwo(insertCalCommand.getHour()+"")
+				    +util.isTwo(insertCalCommand.getMin()+"");
+		
+		
+		
+		return true;
+	}
 
+	
 }
+
+
+
+
+
+
+
+
 
 
 
