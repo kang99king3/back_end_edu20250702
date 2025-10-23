@@ -9,7 +9,7 @@
 <body>
 <div layout:fragment="content">
 	<div id="container">
-		<form>
+		<form th:action="@{/schedule/calmuldel}" method="post">
 			<table class="table caption-top">
 				<caption>
 					<span th:text="${param.year}"></span>.
@@ -47,6 +47,7 @@
 						        th:onclick="|location.href='@{/schedule/calendar(year=${param.year},month=${param.month})}'|">
 							달력보기
 						</button>
+						<span>유효값 처리시 오류 메시지 출력 부분</span>
 					</td>
 				</tr>
 			</table>

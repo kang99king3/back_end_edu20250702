@@ -94,6 +94,11 @@ public class CalController {
 		
 		return "calboard/calboardlist";
 	}
+	
+	//여러글 삭제하기
+	// 실습: 기능 구현하기
+	//    - 유효값처리: 예전 방식은 JS로 처리
+	//                command객체 이용해서 validation 사용해서 처리
 }
 
 
