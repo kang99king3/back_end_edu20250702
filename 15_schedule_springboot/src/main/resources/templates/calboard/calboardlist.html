@@ -10,8 +10,12 @@
 <div layout:fragment="content">
 	<div id="container">
 		<form>
-			<table class="table">
-				<caption>날짜</caption>
+			<table class="table caption-top">
+				<caption>
+					<span th:text="${param.year}"></span>.
+					<span th:text="${param.month}"></span>.
+					<span th:text="${param.date}"></span>.
+				</caption>
 				<tr>
 					<th><input class="form-check-input" type="checkbox" name="all"/></th>
 					<th>일정</th>
@@ -27,14 +31,22 @@
 					<tr th:each="dto:${list}">
 						<td><input class="form-check-input" type="checkbox" name="seq" th:value="${dto.seq}"/></td>
 						<td th:text="${dto.mdate}"></td>
-						<td th:text="${dto.title}"></td>
-						<td th:text="${dto.regdate}"></td>
+						<td>
+							<a th:href="@{/schedule/calboarddetail(seq=${dto.seq})}"  
+							   th:text="${dto.title}"></a>
+						</td>
+						<td th:text="${#dates.format(dto.regdate,'yyyy-MM-dd')}"></td>
 					</tr>
 				</th:block>
 				<tr>
 					<td colspan="4">
-						
-						
+						<button type="submit" title="일정삭제" class="btn btn-primary">
+							일정삭제
+						</button>
+						<button type="button" title="달력보기" class="btn btn-primary"
+						        th:onclick="|location.href='@{/schedule/calendar(year=${param.year},month=${param.month})}'|">
+							달력보기
+						</button>
 					</td>
 				</tr>
 			</table>
