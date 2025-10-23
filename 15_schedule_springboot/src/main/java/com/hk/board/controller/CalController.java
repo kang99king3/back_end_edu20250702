@@ -1,5 +1,6 @@
 package com.hk.board.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hk.board.command.InsertCalCommand;
+import com.hk.board.dtos.CalDto;
 import com.hk.board.service.CalServiceImp;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -82,9 +84,13 @@ public class CalController {
 	//일정목록 보기
 	@GetMapping("/calboardlist")
 	//                year,month,date --> Map{"year":"2025","month":"10"..}
-	public String calBoardList(@RequestParam Map<String, String>map) {
-		String id="hk";
+	public String calBoardList(@RequestParam Map<String, String>map,
+			                   Model model) {
+		
+		String id="hk";//로그인기능있을때 세션으로부터 가져올 수 있다.
 		//Service객체에 메서드 정의
+		List<CalDto>list=calService.calBoardList(id, map);
+		model.addAttribute("list", list);
 		
 		return "calboard/calboardlist";
 	}

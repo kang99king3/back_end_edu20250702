@@ -101,11 +101,20 @@ public class CalServiceImp {
 	}
 
 	//일정목록보기
-//	public List<CalDto> calBoardList(String id,
-//			                         Map<String,String>paramMap){
-//		
-//		
-//	}
+	public List<CalDto> calBoardList(String id,
+			                         Map<String,String>paramMap){
+		//조회할 일정의 날짜 8자리 만들어주기-> "9"->09 -> "20250910"
+		String yyyyMMdd=paramMap.get("year")
+				       +util.isTwo(paramMap.get("month"))  
+				       +util.isTwo(paramMap.get("date"));
+		
+		//쿼리에 파라미터로 전달할 map객체 생성
+		Map<String, String>map=new HashMap<>();
+		map.put("id", id);
+		map.put("yyyyMMdd", yyyyMMdd);
+		
+		return calMapper.calBoardList(map);
+	}
 	
 }
 
