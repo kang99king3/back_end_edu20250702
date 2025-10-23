@@ -71,7 +71,7 @@ public class CalController {
 		
 		//일정추가하기 실행 코드 작성
 		//calService에 코드가 구현되어야 함.
-		
+		calService.insertCalBoard(insertCalCommand);
 		
 		return "redirect:/schedule/calendar?year="
 								+insertCalCommand.getYear()

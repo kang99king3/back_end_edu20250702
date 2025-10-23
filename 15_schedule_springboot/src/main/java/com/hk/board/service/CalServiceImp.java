@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hk.board.command.InsertCalCommand;
+import com.hk.board.dtos.CalDto;
+import com.hk.board.mapper.CalMapper;
 import com.hk.board.utils.Util;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +17,8 @@ import jakarta.servlet.http.HttpServletRequest;
 @Service
 public class CalServiceImp {
 
+	@Autowired
+	private CalMapper calMapper;
 	
 	@Autowired
 	private Util util;
@@ -79,9 +83,16 @@ public class CalServiceImp {
 				    +util.isTwo(insertCalCommand.getHour()+"")
 				    +util.isTwo(insertCalCommand.getMin()+"");
 		
+		//command -> dto로 값을 복사해서 넣는 작업
+		CalDto dto=new CalDto();
+		dto.setId(insertCalCommand.getId());
+		dto.setTitle(insertCalCommand.getTitle());
+		dto.setContent(insertCalCommand.getContent());
+		dto.setMdate(mdate);
 		
+		int count=calMapper.insertCalBoard(dto);
 		
-		return true;
+		return count>0?true:false;
 	}
 
 	
