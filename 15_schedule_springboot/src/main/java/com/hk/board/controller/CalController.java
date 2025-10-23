@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hk.board.command.InsertCalCommand;
 import com.hk.board.service.CalServiceImp;
@@ -76,6 +77,16 @@ public class CalController {
 		return "redirect:/schedule/calendar?year="
 								+insertCalCommand.getYear()
 								+"&month="+insertCalCommand.getMonth();
+	}
+	
+	//일정목록 보기
+	@GetMapping("/calboardlist")
+	//                year,month,date --> Map{"year":"2025","month":"10"..}
+	public String calBoardList(@RequestParam Map<String, String>map) {
+		String id="hk";
+		//Service객체에 메서드 정의
+		
+		return "calboard/calboardlist";
 	}
 }
 

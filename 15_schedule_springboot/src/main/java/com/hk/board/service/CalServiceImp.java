@@ -2,6 +2,7 @@ package com.hk.board.service;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.modelmapper.ModelMapper;
@@ -99,6 +100,12 @@ public class CalServiceImp {
 		return count>0?true:false;
 	}
 
+	//일정목록보기
+//	public List<CalDto> calBoardList(String id,
+//			                         Map<String,String>paramMap){
+//		
+//		
+//	}
 	
 }
 
