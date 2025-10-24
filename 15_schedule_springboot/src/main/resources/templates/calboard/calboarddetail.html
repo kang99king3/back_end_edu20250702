@@ -12,6 +12,7 @@
 		<h1>일정 상세보기</h1>
 		<form th:action="@{/schedule/calboardupdate}" method="post"
 		      th:object="${updateCalCommand}">
+		    <input type="hidden" name="seq" th:field="*{seq}"/>  
 			<table class="table">
 				<tr>
 					<th>아이디</th>

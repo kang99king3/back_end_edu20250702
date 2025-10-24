@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hk.board.command.InsertCalCommand;
+import com.hk.board.command.UpdateCalCommand;
 import com.hk.board.dtos.CalDto;
 import com.hk.board.mapper.CalMapper;
 import com.hk.board.utils.Util;
@@ -128,6 +129,23 @@ public class CalServiceImp {
 	//일정 상세보기
 	public CalDto calBoardDetail(int seq) {
 		return calMapper.calBoardDetail(seq);
+	}
+	
+	//일정 수정하기
+	public int calBoardUpdate(UpdateCalCommand updateCalCommand) {
+		//Client                Server
+		//      ------> command --> dto --> mapper전달
+		//  commad--> dto로 값 복사
+		CalDto dto=modelMapper.map(updateCalCommand, CalDto.class);
+		//"202510230939"--> mdate 12자리로 저장
+		String mdate=updateCalCommand.getYear()
+				    +util.isTwo(updateCalCommand.getMonth()+"")
+				    +util.isTwo(updateCalCommand.getDate()+"")
+				    +util.isTwo(updateCalCommand.getHour()+"")
+				    +util.isTwo(updateCalCommand.getMin()+"");
+		dto.setMdate(mdate);//필드매칭이 안되는 값은 따로 처리해준다.
+		
+		return calMapper.calBoardUpdate(dto);
 	}
 }
 
