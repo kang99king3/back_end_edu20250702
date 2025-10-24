@@ -1,5 +1,6 @@
 package com.hk.board.controller;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hk.board.command.DeleteCalCommand;
 import com.hk.board.command.InsertCalCommand;
 import com.hk.board.dtos.CalDto;
 import com.hk.board.service.CalServiceImp;
@@ -59,6 +61,10 @@ public class CalController {
 		//입력폼 요청시에도 command객체를 보내야 된다.
 		model.addAttribute("insertCalCommand", insertCalCommand);
 		
+		//현재시간구하기
+		LocalTime now = LocalTime.now();
+        model.addAttribute("now", now);
+        
 		return "calboard/addcalboardform";
 	}
 	
@@ -98,7 +104,17 @@ public class CalController {
 	//여러글 삭제하기
 	// 실습: 기능 구현하기
 	//    - 유효값처리: 예전 방식은 JS로 처리
-	//                command객체 이용해서 validation 사용해서 처리
+	//               DeleteCalcommand객체 이용해서 validation 사용해서 처리
+	//    - 삭제 쿼리는 다이나믹 쿼리로 작성하면 됨
+	@PostMapping("/calmuldel")
+	public String calMulDel(@Validated DeleteCalCommand deleteCalCommand,
+			                BindingResult result,
+			                Model model) {
+		
+		return "";
+	}
+	
+	
 }
 
 
