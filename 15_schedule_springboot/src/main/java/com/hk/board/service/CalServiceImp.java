@@ -125,6 +125,10 @@ public class CalServiceImp {
 		return calMapper.calMulDel(map); 
 	}
 	
+	//일정 상세보기
+	public CalDto calBoardDetail(int seq) {
+		return calMapper.calBoardDetail(seq);
+	}
 }
 
 

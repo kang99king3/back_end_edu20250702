@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hk.board.command.DeleteCalCommand;
 import com.hk.board.command.InsertCalCommand;
+import com.hk.board.command.UpdateCalCommand;
 import com.hk.board.dtos.CalDto;
 import com.hk.board.service.CalServiceImp;
 
@@ -35,6 +37,9 @@ public class CalController {
 	@Autowired
 	private CalServiceImp calService;
 
+	@Autowired
+	private ModelMapper modelMapper;
+	
 	// localhost:9090/schedule/
 	@GetMapping("/")
 	public String home() {
@@ -95,7 +100,7 @@ public class CalController {
 			                   Model model,
 			                   HttpServletRequest request) {
 		
-		HttpSession session=request.getSession(false);
+		HttpSession session=request.getSession();
 		if(map.get("year")==null) {
 			//schedule/calboardlist 요청했을 경우 
 			// 세션에 저장된 ymd를 가져와서 쓰겠다.
@@ -147,7 +152,29 @@ public class CalController {
 		return "redirect:/schedule/calboardlist";
 	}
 	
-	
+	// 일정상세보기: 파라미터 seq전달받음
+	@GetMapping("/calboarddetail")
+	public String calboardDetail(UpdateCalCommand updateCalCommand,
+								Model model) {
+		CalDto dto=calService.calBoardDetail(updateCalCommand.getSeq());
+		
+		//dto --> command 값 이동
+//		updateCalCommand.setSeq(dto.getSeq());
+//		updateCalCommand.setId(dto.getId());// <--id 추가
+//		updateCalCommand.setTitle(dto.getTitle());
+//		updateCalCommand.setContent(dto.getContent());
+//		updateCalCommand.setYear(Integer.parseInt(dto.getMdate().substring(0, 4)));
+//		updateCalCommand.setMonth(Integer.parseInt(dto.getMdate().substring(4, 6)));
+//		updateCalCommand.setDate(Integer.parseInt(dto.getMdate().substring(6, 8)));
+//		updateCalCommand.setHour(Integer.parseInt(dto.getMdate().substring(8, 10)));
+//		updateCalCommand.setMin(Integer.parseInt(dto.getMdate().substring(10)));
+		updateCalCommand=modelMapper.map(dto, UpdateCalCommand.class);
+		//필드끼리 매칭되지 않는 값들은 직접 처리해준다.
+		updateCalCommand.mdateToYMDHM(dto.getMdate());
+		
+		model.addAttribute("updateCalCommand", updateCalCommand);
+		return "calboard/calboarddetail";
+	}
 }
 
 

@@ -29,6 +29,12 @@
  		</foreach>
  	</delete>
 
+	<select id="calBoardDetail" parameterType="Integer"
+	        resultType="CalDto">
+		SELECT SEQ, ID ,TITLE,CONTENT, MDATE, REGDATE
+		FROM CALBOARD
+		WHERE SEQ = #{seq}        
+	</select>
 </mapper>
 
 
