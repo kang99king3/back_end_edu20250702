@@ -177,6 +177,22 @@ public class CalController {
 		model.addAttribute("updateCalCommand", updateCalCommand);
 		return "calboard/calboarddetail";
 	}
+	
+	//수정하기
+	@PostMapping("/calboardupdate")
+	public String calBoardUpdate(@Validated UpdateCalCommand updateCalCommand,
+			   				    BindingResult result) {
+		if(result.hasErrors()) {
+			log.info("수정오류");
+			
+			return "calboard/calboarddetail";
+		}
+		
+		calService.calBoardUpdate(updateCalCommand);
+		
+		return "redirect:/schedule/calboarddetail?seq="
+		        +updateCalCommand.getSeq();
+	}
 }
 
 
