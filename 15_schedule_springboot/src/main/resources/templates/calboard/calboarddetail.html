@@ -54,8 +54,8 @@
 					                th:selected="${updateCalCommand.hour==i}"></option>
 					      </th:block>
 					    </select>
+					    
 					    <span>시</span>
-					
 					    <select name="min" class="form-select w-auto">
 					      <th:block th:each="i:${#numbers.sequence(0,59)}">
 					        <option th:value="${i}" th:text="${i}"
@@ -92,9 +92,11 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<input type="submit" value="일정추가" class="btn btn-primary"/>
+						<input type="submit" value="일정수정" class="btn btn-primary"/>
+						<input type="button" value="일정목록" class="btn btn-primary"
+						       th:onclick="|location.href='@{/schedule/calboardlist}'|"/>
 						<input type="button" value="달력" class="btn btn-primary"
-						       th:onclick="|location.href='@{/schedule/calendar}'|"/>
+						       th:onclick="|location.href='@{/schedule/calendar(year=${session.ymd.year},month=${session.ymd.month})}'|"/>
 					</td>
 				</tr>
 			</table>
