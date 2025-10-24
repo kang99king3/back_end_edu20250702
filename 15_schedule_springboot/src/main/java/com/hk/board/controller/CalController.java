@@ -21,6 +21,7 @@ import com.hk.board.dtos.CalDto;
 import com.hk.board.service.CalServiceImp;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -91,12 +92,27 @@ public class CalController {
 	@GetMapping("/calboardlist")
 	//                year,month,date --> Map{"year":"2025","month":"10"..}
 	public String calBoardList(@RequestParam Map<String, String>map,
-			                   Model model) {
+			                   Model model,
+			                   HttpServletRequest request) {
+		
+		HttpSession session=request.getSession(false);
+		if(map.get("year")==null) {
+			//schedule/calboardlist 요청했을 경우 
+			// 세션에 저장된 ymd를 가져와서 쓰겠다.
+			map=(Map<String,String>)session.getAttribute("ymd");
+		}else {
+			//schedule/calboardlist?year=2025&month=10&date=24
+			//ymd 파라미터를 전송한 경우 세션에 저장
+			session.setAttribute("ymd", map);
+		}
 		
 		String id="hk";//로그인기능있을때 세션으로부터 가져올 수 있다.
 		//Service객체에 메서드 정의
 		List<CalDto>list=calService.calBoardList(id, map);
 		model.addAttribute("list", list);
+		//일정목록 페이지에서 유효값처리를 위한 deleteCalCommand를 정의했기때문에
+		//해당 객체를 전달해야 오류가 안남
+		model.addAttribute("deleteCalCommand", new DeleteCalCommand());
 		
 		return "calboard/calboardlist";
 	}
@@ -109,9 +125,26 @@ public class CalController {
 	@PostMapping("/calmuldel")
 	public String calMulDel(@Validated DeleteCalCommand deleteCalCommand,
 			                BindingResult result,
-			                Model model) {
+			                Model model,
+			                HttpServletRequest request) {
 		
-		return "";
+		if(result.hasErrors()) {
+			log.info("여러글 삭제시 오류가 발생");
+			
+			String id="hk";
+			//ymd값이 없기때문에 session에서 가져옴
+			HttpSession session=request.getSession();
+			Map<String,String>map=
+			(Map<String,String>)session.getAttribute("ymd");
+			
+			List<CalDto>list=calService.calBoardList(id,map);
+			model.addAttribute("list", list);
+			return "calboard/calboardlist";
+		}
+		
+		calService.calMulDel(deleteCalCommand.getSeq());
+		
+		return "redirect:/schedule/calboardlist";
 	}
 	
 	

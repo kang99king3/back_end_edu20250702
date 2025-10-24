@@ -9,12 +9,13 @@
 <body>
 <div layout:fragment="content">
 	<div id="container">
-		<form th:action="@{/schedule/calmuldel}" method="post">
+		<form th:action="@{/schedule/calmuldel}" method="post"
+		      th:object="${deleteCalCommand}">
 			<table class="table caption-top">
 				<caption>
-					<span th:text="${param.year}"></span>.
-					<span th:text="${param.month}"></span>.
-					<span th:text="${param.date}"></span>.
+					<span th:text="${session.ymd.year}"></span>.
+					<span th:text="${session.ymd.month}"></span>.
+					<span th:text="${session.ymd.date}"></span>.
 				</caption>
 				<tr>
 					<th><input class="form-check-input" type="checkbox" name="all"/></th>
@@ -47,7 +48,9 @@
 						        th:onclick="|location.href='@{/schedule/calendar(year=${param.year},month=${param.month})}'|">
 							달력보기
 						</button>
-						<span>유효값 처리시 오류 메시지 출력 부분</span>
+						<span class="errorField"
+						      th:if="${#fields.hasErrors('seq')}"
+						      th:errors="*{seq}"></span>
 					</td>
 				</tr>
 			</table>
