@@ -168,6 +168,8 @@ public class CalController {
 //		updateCalCommand.setDate(Integer.parseInt(dto.getMdate().substring(6, 8)));
 //		updateCalCommand.setHour(Integer.parseInt(dto.getMdate().substring(8, 10)));
 //		updateCalCommand.setMin(Integer.parseInt(dto.getMdate().substring(10)));
+		
+		//modelMapper를 이용한 값 복사 자동화
 		updateCalCommand=modelMapper.map(dto, UpdateCalCommand.class);
 		//필드끼리 매칭되지 않는 값들은 직접 처리해준다.
 		updateCalCommand.mdateToYMDHM(dto.getMdate());
