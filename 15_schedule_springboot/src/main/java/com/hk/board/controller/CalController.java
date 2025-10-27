@@ -1,6 +1,7 @@
 package com.hk.board.controller;
 
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -195,10 +196,24 @@ public class CalController {
 		        +updateCalCommand.getSeq();
 	}
 	
-	@ResponseBody 
-	@GetMapping("/calcountajax")
-	public String test() {
-		return "test";
+//	@ResponseBody // body로 데이터를 보냄
+//	@GetMapping("/calcountajax")
+//	public String test() {
+//		return "test";
+//	}
+	
+	@ResponseBody // body로 데이터를 보냄
+	@GetMapping("/calcountajax")         
+	public Map<String,Integer> calCountAjax(String yyyyMMdd,HttpSession session) {
+//		String id=(String)session.getAttribute("id");
+		String id="hk";
+		int count=calService.calBoardCount(id, yyyyMMdd);
+		
+		//json으로 변환하기위해 비슷한 형식의 Map객체로 전달한다.
+		Map<String,Integer>map=new HashMap<>();
+		map.put("count", count);
+		
+		return map;
 	}
 }
 

@@ -13,10 +13,10 @@
 				$.ajax({         
 					url:"/schedule/calcountajax",
 					method:"get",
-					dataType:"text", //서버로부터 받을때 타입 정의
+					dataType:"json", //서버로부터 받을때 타입 정의
 					success:function(data){//서버로 부터 받는 데이터 data변수에 저장
 // 						console.log(data);
-						$("body").append(data);
+						$("body").append(data.count);
 					},
 					error:function(){
 						console.log("통신실패");
