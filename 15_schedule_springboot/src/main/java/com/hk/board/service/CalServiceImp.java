@@ -166,7 +166,7 @@ public class CalServiceImp {
 	public int calBoardCount(String id, String yyyyMMdd) {
 		Map<String,String> map=new HashMap<String, String>();
 		map.put("id", id);
-		map.put("yyyyMM", yyyyMMdd);
+		map.put("yyyyMMdd", yyyyMMdd);
 		return calMapper.calBoardCount(map);
 	}
 }
