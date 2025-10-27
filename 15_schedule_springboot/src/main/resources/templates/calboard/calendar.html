@@ -5,6 +5,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+	$(
+		function(){
+// 			alert("jquery 테스트");
+			$(".d").hover(function(){console.log("마우스 올렸을때")},
+					      function(){console.log("마우스 나갔을때")});
+		}
+	);
+</script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -33,7 +42,7 @@
 				<th:block th:each="i:${#numbers.sequence(1,calMap.lastDay)}">
 					<div>
 						<a th:href="@{/schedule/calboardlist(year=${calMap.year},month=${calMap.month},date=${i})}"
-						   th:text="${i}"></a>
+						   th:text="${i}" class="d"></a>
 						<a th:href="@{/schedule/addcalboardform(year=${calMap.year},month=${calMap.month},date=${i})}">
 							<img class="pen" th:src="@{/img/pen.png}" alt="일정추가"/>
 						</a>
