@@ -2,8 +2,11 @@ package com.hk.board.utils;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
+
+import com.hk.board.dtos.CalDto;
 
 @Component
 public class Util {
@@ -28,6 +31,22 @@ public class Util {
 		//java에 SimpleDateFormat 객체
 		SimpleDateFormat sdf=new SimpleDateFormat(p);
 		return sdf.format(tm);
+	}
+	
+	//일일별 일정 목록을 출력해주는 기능
+	// calendar.html에서 날짜 출력할때 사용된 변수 i
+	public String getCalViewList(int i,List<CalDto> clist) {
+		String d=isTwo(i+"");
+		String calList="";//"<p>일정제목</p><p>일정제목</p>"
+		for (int j = 0; j < clist.size(); j++) {
+			if(clist.get(j).getMdate().substring(6, 8).equals(d)) {
+				String ctitle=clist.get(j).getTitle();
+				calList+="<p>"
+						+(ctitle.length()>7?ctitle.substring(0, 7)+"..":ctitle)
+			            +"</p>";
+			}
+		}
+		return calList;
 	}
 }
 

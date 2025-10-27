@@ -38,6 +38,7 @@
 							<img class="pen" th:src="@{/img/pen.png}" alt="일정추가"/>
 						</a>
 						<!-- i값하고 clist의 날짜와 비교해서 일정 출력 -->
+						[(${@util.getCalViewList(i,clist)})]
 					</div>
 				</th:block>
 			</div>
