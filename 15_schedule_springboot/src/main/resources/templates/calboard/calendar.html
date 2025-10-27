@@ -9,8 +9,21 @@
 	$(
 		function(){
 // 			alert("jquery 테스트");
-			$(".d").hover(function(){console.log("마우스 올렸을때")},
-					      function(){console.log("마우스 나갔을때")});
+			$(".d").hover(function(){
+				$.ajax({         
+					url:"/schedule/calcountajax",
+					method:"get",
+					dataType:"text", //서버로부터 받을때 타입 정의
+					success:function(data){//서버로 부터 받는 데이터 data변수에 저장
+// 						console.log(data);
+						$("body").append(data);
+					},
+					error:function(){
+						console.log("통신실패");
+					}
+				});
+			},
+			function(){console.log("마우스 나갔을때")});
 		}
 	);
 </script>

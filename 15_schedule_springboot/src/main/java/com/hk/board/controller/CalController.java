@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hk.board.command.DeleteCalCommand;
 import com.hk.board.command.InsertCalCommand;
@@ -192,6 +193,12 @@ public class CalController {
 		
 		return "redirect:/schedule/calboarddetail?seq="
 		        +updateCalCommand.getSeq();
+	}
+	
+	@ResponseBody 
+	@GetMapping("/calcountajax")
+	public String test() {
+		return "test";
 	}
 }
 
