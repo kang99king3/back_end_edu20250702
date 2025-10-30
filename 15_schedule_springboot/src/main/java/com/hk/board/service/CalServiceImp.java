@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.hk.board.command.InsertCalCommand;
 import com.hk.board.command.UpdateCalCommand;
@@ -32,7 +33,9 @@ public class CalServiceImp {
 	//달력폼만드는 기능
 	// 파리미터로 request객체를 전달받음---> 요청정보를 처리할 수 있는 환경
 	public Map<String, Integer> makeCalendar(HttpServletRequest request) {
-		
+		 boolean txActive = TransactionSynchronizationManager
+		 		   .isActualTransactionActive();
+  System.out.println("트랜잭션 활성 상태: " + txActive);
 		String paramYear=request.getParameter("year");
 		String paramMonth=request.getParameter("month");
 		
