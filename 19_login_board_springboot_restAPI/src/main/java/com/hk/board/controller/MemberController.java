@@ -49,10 +49,10 @@ public class MemberController {
 			             ,BindingResult result,Model model) {
 		System.out.println("회원가입하기");
 		
-		if(result.hasErrors()) {
-			System.out.println("회원가입 유효값 오류");
-			return ResponseEntity.badRequest().body("회원가입 유효성 검사 실패");//400코드
-		}
+//		if(result.hasErrors()) {
+//			System.out.println("회원가입 유효값 오류");
+//			return ResponseEntity.badRequest().body("회원가입 유효성 검사 실패");//400코드
+//		}
 		
 		try {
 			  // 회원가입 성공 시 CREATED 상태와 성공 메시지 반환
