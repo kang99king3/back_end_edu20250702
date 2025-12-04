@@ -1,0 +1,21 @@
+[증권사 UDP] --22101/UDP--> [Spring Boot UDP 수신]
+   ├→ 당일 1분 버퍼(배열 390개, in-memory)
+   ├→ Redis(Hash)에 최신 PriceTick 저장
+   └→ (1~2초마다) WebSocket으로 /topic/price.{종목코드} 에 390개 배열 브로드캐스트
+
+[브라우저]
+   ├ HTML + Chart.js + Luxon
+   ├ 09:00~15:30 라벨 미리 생성
+   ├ /api/price/latest/{symbol} 로 현재가 1번 요청
+   ├ /api/price/series/{symbol} 로 초기 1일차트 배열 1번 요청
+   └ /topic/price.{symbol} STOMP 구독 → 실시간 갱신
+
+   
+[UDP Receiver] ──► Redis (symbol → 최신값 저장)
+                         │
+                         ▼
+               [Scheduler(2초)] ──► WebSocket(STOMP)
+                         │
+                         ▼
+                   React/HTML JS Chart.js
+   

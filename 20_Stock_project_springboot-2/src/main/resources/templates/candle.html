@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>주식 차트 (09:00 ~ 15:30 표시)</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.1/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.2.0/dist/chartjs-adapter-luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.0/dist/chartjs-chart-financial.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        #chartContainer { width: 100%; max-width: 1000px; height: 500px; border: 1px solid #ccc; padding: 10px; }
+    </style>
+</head>
+<body>
+
+<h3>실시간 캔들 (09:00 ~ 15:30)</h3>
+
+<select id="symbol">
+    <option value="005930">삼성전자</option>
+    <option value="000660">SK하이닉스</option>
+    <option value="450080">에코프로머티</option>
+</select>
+<button onclick="initChart()">조회</button>
+
+<div id="chartContainer">
+    <canvas id="candleChart"></canvas>
+</div>
+
+<script>
+
+    let chart = null;
+    let stompClient = null;
+
+    async function initChart() {
+        const symbol = document.getElementById("symbol").value;
+
+        // 1. 기존 연결 및 차트 정리
+        if (stompClient) stompClient.disconnect();
+        if (chart) chart.destroy();
+
+        // 2. [과거 데이터 로드] REST API를 호출하여 백엔드(CandleService)가 필터링한 09시 이후 데이터 가져오기
+        try {
+            const resp = await fetch(`/api/chart/candles/${symbol}`);
+            const data = await resp.json();
+
+            const candles = data.map(d => ({
+                x: d.ts, 
+                o: d.open, h: d.high, l: d.low, c: d.close
+            }));
+
+            // 3. 차트 그리기
+            drawChart(symbol, candles);
+
+            // 4. 소켓 연결 (실시간 데이터 갱신)
+            connectSocket(symbol);
+        } catch (error) {
+            console.error("차트 데이터 로드 실패:", error);
+            alert("차트 데이터를 불러오지 못했습니다. 백엔드 서버 상태를 확인해주세요.");
+        }
+    }
+
+    function drawChart(symbol, data) {
+        const ctx = document.getElementById("candleChart").getContext("2d");
+
+        // [핵심] 오늘 날짜 기준 09:00 ~ 15:30 시간 구하기
+        const today = luxon.DateTime.now();
+        const marketOpen = today.set({ hour: 9, minute: 0, second: 0, millisecond: 0 }).toMillis();
+        const marketClose = today.set({ hour: 15, minute: 30, second: 0, millisecond: 0 }).toMillis();
+
+        chart = new Chart(ctx, {
+            type: 'candlestick',
+            data: {
+                datasets: [{
+                    label: symbol,
+                    data: data,
+                    color: { up: 'red', down: 'blue', unchanged: '#333' },
+                    borderColor: { up: 'red', down: 'blue', unchanged: '#333' }
+                }]
+            },
+            
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                
+                // ✨ [시각적 개선] 캔들 너비 조절을 위한 설정 추가/수정
+                datasets: {
+                    candlestick: {
+//                         barPercentage: 1.0,    // 캔들 너비를 넓게 (0.1 ~ 1.0)
+//                         categoryPercentage: 1.0 // 캔들 간 간격을 촘촘하게 (0.1 ~ 1.0)
+                    	 barThickness: 10,
+                    	 maxBarThickness: 14,
+                    	 minBarLength: 5
+                    }
+                },
+                
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'minute',
+                            tooltipFormat: 'HH:mm',
+                            displayFormats: { minute: 'HH:mm' }
+                        },
+// 						time: { unit: 'minute', displayFormats: { minute: 'HH:mm' } },
+                        // [과거 데이터 표시 핵심] X축 시작점 강제 고정
+//                         min: marketOpen, // 09:00부터 차트가 시작
+//                         max: marketClose,
+                        ticks: {
+                            source: 'auto'
+                        }
+                    },
+                    y: {
+                        position: 'right'
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+           
+        });
+    }
+
+    // [소켓 연결 및 갱신 로직은 이전과 동일]
+    function connectSocket(symbol) {
+        const socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+        stompClient.debug = null; 
+
+        stompClient.connect({}, () => {
+            stompClient.subscribe(`/topic/price.${symbol}`, (msg) => {
+                const tick = JSON.parse(msg.body);
+                updateChart(tick);
+            });
+        });
+   
+    }
+    
+    function updateChart(tick) {
+        if (!chart) return;
+
+        const ts = tick.ts;
+        const price = tick.price;
+        const candleTime = Math.floor(ts / 60000) * 60000;
+
+        const datasets = chart.data.datasets[0];
+        const last = datasets.data[datasets.data.length - 1];
+
+        if (last && last.x === candleTime) {
+            last.h = Math.max(last.h, price);
+            last.l = Math.min(last.l, price);
+            last.c = price;
+        } else {
+            datasets.data.push({ x: candleTime, o: price, h: price, l: price, c: price });
+        }
+        
+        chart.update('none');
+    }
+
+    document.addEventListener("DOMContentLoaded", initChart);
+</script>
+
+</body>
+</html>
