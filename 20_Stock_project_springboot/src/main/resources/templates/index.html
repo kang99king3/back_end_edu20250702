@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>실시간 주가 차트 - 네이버 스타일</title>
+
+    <!-- SockJS / STOMP -->
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+
+    <!-- Chart.js + 시간 어댑터(Luxon) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1/dist/chartjs-adapter-luxon.umd.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Noto Sans KR', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f6f8;
+        }
+        .page {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* 상단 종목 요약 영역 (네이버 느낌) */
+        .quote-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            background: #ffffff;
+            border: 1px solid #e3e5e8;
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-bottom: 16px;
+        }
+        .quote-left {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .stock-name {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .stock-code {
+            font-size: 14px;
+            color: #666;
+        }
+        .quote-right {
+            text-align: right;
+        }
+        .price-now {
+            font-size: 32px;
+            font-weight: 700;
+        }
+        .price-change {
+            margin-top: 4px;
+            font-size: 14px;
+        }
+        .price-up {
+            color: #d60000;
+        }
+        .price-down {
+            color: #0051c7;
+        }
+        .price-flat {
+            color: #333;
+        }
+
+        .quote-extra {
+            display: flex;
+            margin-top: 8px;
+            gap: 16px;
+            font-size: 13px;
+            color: #555;
+        }
+        .quote-extra span.label {
+            color: #888;
+            margin-right: 4px;
+        }
+
+        /* 탭 영역 (1일, 1주 ... UI만) */
+        .chart-tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 8px;
+            margin-top: 6px;
+            font-size: 13px;
+        }
+        .chart-tabs button {
+            border: 1px solid #e3e5e8;
+            background: #f7f7f9;
+            border-radius: 14px;
+            padding: 4px 10px;
+            cursor: pointer;
+        }
+        .chart-tabs button.active {
+            background: #03c75a;
+            border-color: #03c75a;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* 종목 선택 영역 */
+        .control-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+        .control-bar select {
+            padding: 4px 8px;
+            font-size: 14px;
+        }
+
+        /* 차트 영역 카드 */
+        .chart-card {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e3e5e8;
+            padding: 16px 20px 22px;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 360px !important;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- 상단 종목 요약 -->
+    <div class="quote-header">
+        <div class="quote-left">
+            <div class="stock-name" id="stockName">SK하이닉스</div>
+            <div class="stock-code" id="stockCode">000660 · 코스피</div>
+
+            <div class="quote-extra">
+                <div><span class="label">기준가</span><span id="basePrice">-</span></div>
+                <div><span class="label">시가</span><span id="openPrice">-</span></div>
+                <div><span class="label">고가</span><span id="highPrice">-</span></div>
+                <div><span class="label">저가</span><span id="lowPrice">-</span></div>
+            </div>
+        </div>
+
+        <div class="quote-right">
+            <div class="price-now" id="currentPrice">0</div>
+            <div class="price-change price-flat" id="changeInfo">
+                0 (0.00%)
+            </div>
+        </div>
+    </div>
+
+    <!-- 차트 카드 -->
+    <div class="chart-card">
+
+        <!-- 탭 / 컨트롤 -->
+        <div class="control-bar">
+            <span>📌 종목 선택:</span>
+            <select id="symbolSelect">
+                <option value="000660">SK하이닉스 (000660)</option>
+                <option value="005930">삼성전자 (005930)</option>
+                <option value="450080">에코프로머티 (450080)</option>
+            </select>
+        </div>
+
+        <div class="chart-tabs">
+            <button class="active">1일</button>
+            <button disabled>1주</button>
+            <button disabled>3개월</button>
+            <button disabled>1년</button>
+        </div>
+
+        <!-- 차트 -->
+        <canvas id="priceChart"></canvas>
+    </div>
+</div>
+
+<script>
+    // ------------------------------
+    // 전역 상태
+    // ------------------------------
+    let stompClient = null;
+    let subscription = null;
+
+    const state = {
+        basePrice: null,   // 기준가 (지금은 "첫 틱"을 기준가처럼 사용)
+        openPrice: null,
+        highPrice: null,
+        lowPrice: null
+    };
+
+    // ------------------------------
+    // Chart.js 설정
+    // ------------------------------
+    const ctx = document.getElementById("priceChart").getContext("2d");
+
+    const priceChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: [],
+            datasets: [{
+                label: "가격",
+                data: [],
+                borderColor: "#2e8de5",
+                backgroundColor: "rgba(46,141,229,0.08)",
+                borderWidth: 1.8,
+                pointRadius: 0,      // 점 없애기
+                tension: 0.25        // 곡선 부드럽게
+            }]
+        },
+        options: {
+            animation: false,
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    callbacks: {
+                        label: (ctx) => ` ${ctx.parsed.y.toLocaleString()}원`
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    type: "time",
+                    time: {
+                        unit: "minute",
+                        tooltipFormat: "HH:mm:ss"
+                    },
+                    grid: {
+                        color: "#eeeeee"
+                    },
+                    ticks: {
+                        autoSkip: true,
+                        maxTicksLimit: 8
+                    }
+                },
+                y: {
+                    grid: {
+                        color: "#f1f1f1"
+                    },
+                    ticks: {
+                        callback: (value) => value.toLocaleString()
+                    }
+                }
+            }
+        }
+    });
+
+    // ------------------------------
+    // WebSocket / STOMP 연결
+    // ------------------------------
+    function connectWs() {
+        const socket = new SockJS("/ws");
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, () => {
+            console.log("STOMP connected");
+            const defaultSymbol = document.getElementById("symbolSelect").value;
+            subscribeSymbol(defaultSymbol);
+            loadInitialPrice(defaultSymbol);
+        });
+    }
+
+    // ------------------------------
+    // 심볼별 구독
+    // ------------------------------
+    function subscribeSymbol(symbol) {
+        if (subscription) {
+            subscription.unsubscribe();
+        }
+
+        resetChartAndState();
+
+        subscription = stompClient.subscribe(`/topic/price.${symbol}`, (message) => {
+            const tick = JSON.parse(message.body);
+            handleTick(tick);
+        });
+
+        updateHeaderSymbol(symbol);
+    }
+
+    // ------------------------------
+    // 초기 1번 REST로 현재가 가져오기
+    // ------------------------------
+    async function loadInitialPrice(symbol) {
+        try {
+            const res = await fetch(`/api/price/${symbol}`);
+            if (!res.ok) return;
+            const tick = await res.json();
+            if (tick && tick.price) {
+                handleTick(tick, true);
+            }
+        } catch (e) {
+            console.error("initial load error", e);
+        }
+    }
+
+    // ------------------------------
+    // 가격 틱 처리 (네이버 스타일)
+    // ------------------------------
+    function handleTick(tick, isInitial = false) {
+        const price = tick.price;
+        const ts = new Date(tick.timestamp);
+
+        if (state.basePrice == null) {
+            // 첫 번째 수신 가격을 기준가/시가로 사용 (실제로는 전일 종가를 넣는게 맞음)
+            state.basePrice = price;
+            state.openPrice = price;
+            state.highPrice = price;
+            state.lowPrice = price;
+        } else {
+            // 고가/저가 갱신
+            if (price > state.highPrice) state.highPrice = price;
+            if (price < state.lowPrice) state.lowPrice = price;
+        }
+
+        // 차트에 데이터 추가
+        priceChart.data.labels.push(ts);
+        priceChart.data.datasets[0].data.push(price);
+
+        // 너무 많아지면 앞쪽 제거 (메모리/성능)
+        const MAX_POINTS = 600; // 약 20분 (2초 x 600)
+        if (priceChart.data.labels.length > MAX_POINTS) {
+            priceChart.data.labels.shift();
+            priceChart.data.datasets[0].data.shift();
+        }
+
+        priceChart.update("none"); // 애니메이션 없이 즉시 업데이트
+
+        // 헤더 가격 정보 업데이트
+        updateHeaderPrice(price);
+    }
+
+    // ------------------------------
+    // UI 업데이트
+    // ------------------------------
+    function updateHeaderSymbol(symbol) {
+        const nameEl = document.getElementById("stockName");
+        const codeEl = document.getElementById("stockCode");
+
+        if (symbol === "000660") {
+            nameEl.textContent = "SK하이닉스";
+        } else if (symbol === "005930") {
+            nameEl.textContent = "삼성전자";
+        } else {
+            nameEl.textContent = symbol;
+        }
+        codeEl.textContent = `${symbol} · 코스피`;
+    }
+
+    function updateHeaderPrice(price) {
+        const currentEl = document.getElementById("currentPrice");
+        const changeEl = document.getElementById("changeInfo");
+        const baseEl = document.getElementById("basePrice");
+        const openEl = document.getElementById("openPrice");
+        const highEl = document.getElementById("highPrice");
+        const lowEl = document.getElementById("lowPrice");
+
+        currentEl.textContent = price.toLocaleString();
+
+        if (state.basePrice != null) {
+            const diff = price - state.basePrice;
+            const rate = state.basePrice === 0 ? 0 : (diff / state.basePrice) * 100;
+
+            let cls = "price-flat";
+            let sign = "";
+            if (diff > 0) {
+                cls = "price-up";
+                sign = "+";
+            } else if (diff < 0) {
+                cls = "price-down";
+            }
+
+            changeEl.className = "price-change " + cls;
+            changeEl.textContent =
+                `${sign}${diff.toLocaleString()} (${sign}${rate.toFixed(2)}%)`;
+        }
+
+        baseEl.textContent  = state.basePrice  != null ? state.basePrice.toLocaleString()  : "-";
+        openEl.textContent  = state.openPrice  != null ? state.openPrice.toLocaleString()  : "-";
+        highEl.textContent  = state.highPrice  != null ? state.highPrice.toLocaleString()  : "-";
+        lowEl.textContent   = state.lowPrice   != null ? state.lowPrice.toLocaleString()   : "-";
+    }
+
+    function resetChartAndState() {
+        // 상태 초기화
+        state.basePrice = null;
+        state.openPrice = null;
+        state.highPrice = null;
+        state.lowPrice = null;
+
+        // 차트 초기화
+        priceChart.data.labels = [];
+        priceChart.data.datasets[0].data = [];
+        priceChart.update("none");
+
+        document.getElementById("currentPrice").textContent = "0";
+        const changeEl = document.getElementById("changeInfo");
+        changeEl.className = "price-change price-flat";
+        changeEl.textContent = "0 (0.00%)";
+
+        document.getElementById("basePrice").textContent = "-";
+        document.getElementById("openPrice").textContent = "-";
+        document.getElementById("highPrice").textContent = "-";
+        document.getElementById("lowPrice").textContent = "-";
+    }
+
+    // ------------------------------
+    // 이벤트 바인딩
+    // ------------------------------
+    document.getElementById("symbolSelect").addEventListener("change", (e) => {
+        const symbol = e.target.value;
+        subscribeSymbol(symbol);
+        loadInitialPrice(symbol);
+    });
+
+    // ------------------------------
+    // 초기 실행
+    // ------------------------------
+    connectWs();
+</script>
+
+</body>
+</html>
